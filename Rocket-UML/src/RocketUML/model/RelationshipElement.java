@@ -18,4 +18,9 @@ public class RelationshipElement extends AbstractElement implements Drawable {
     @Override
     public void draw() {
     }
+
+    @Override
+    public void destroy() {
+
+    }
 }
