@@ -2,6 +2,7 @@ package RocketUML.model;
 
 
 import RocketUML.ui.Drawable;
+import RocketUML.visitor.Visitor;
 
 /**
  * Created by rotinom on 2/19/14.
@@ -9,6 +10,11 @@ import RocketUML.ui.Drawable;
 public class RelationshipElement extends AbstractElement implements Drawable {
 
     private RelationshipElement() {
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 
     public static RelationshipElement create() {
@@ -21,6 +27,7 @@ public class RelationshipElement extends AbstractElement implements Drawable {
 
     @Override
     public void destroy() {
-
     }
+
+
 }

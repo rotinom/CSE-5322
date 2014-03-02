@@ -1,6 +1,7 @@
 package RocketUML.model;
 
 import RocketUML.ui.Drawable;
+import RocketUML.visitor.Visitor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,11 @@ public class ClassElement extends AbstractElement implements Drawable {
      * CTOR
      */
     private ClassElement() {
+    }
+
+    @Override
+    public void accept(Visitor v) {
+
     }
 
     /**

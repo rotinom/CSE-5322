@@ -1,9 +1,11 @@
 package RocketUML.model;
 
+import RocketUML.visitor.Visitor;
+
 /**
  * Created by rotinom on 2/26/14.
  */
-public class MethodElement {
+public class MethodElement extends AbstractElement{
     private String protection; /// public/protected/private
     private String modifier;   /// const
     private String name;       /// name
@@ -39,5 +41,10 @@ public class MethodElement {
 
     public void setReturnType(String returnType) {
         this.returnType = returnType;
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

@@ -1,5 +1,7 @@
 package RocketUML.model;
 
+import RocketUML.visitor.Visitor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ enum DiagramType{
 /**
  * Represents an abstract element
  */
-public class AbstractElement {
+public abstract class AbstractElement {
 
     protected AbstractElement(){}
 
@@ -34,4 +36,6 @@ public class AbstractElement {
         }
         throw new Exception("Invalid type specified");
     }
+
+    public abstract void accept(Visitor v);
 }
