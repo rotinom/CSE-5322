@@ -12,13 +12,13 @@ import static org.junit.Assert.*;
 public class ClassElementTest {
     @Test
     public void testCreate() throws Exception {
-        ClassElement ce = ClassElement.create();
+        ClassElement ce = new ClassElement("foo");
         assertNotNull(ce);
     }
 
     @Test
     public void testAddAttribute() throws Exception {
-        ClassElement ce = ClassElement.create();
+        ClassElement ce = new ClassElement("bar");
         AttributeElement ae = AttributeElement.create();
         ae.setName("foo");
 
@@ -37,7 +37,7 @@ public class ClassElementTest {
 
     @Test
     public void testRemoveAttributeByName() throws Exception {
-        ClassElement ce = ClassElement.create();
+        ClassElement ce = new ClassElement("baz");
         AttributeElement ae = AttributeElement.create();
         ae.setName("foo");
 

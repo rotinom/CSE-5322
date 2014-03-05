@@ -3,6 +3,7 @@ package RocketUML.model;
 import RocketUML.visitor.Visitor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -10,14 +11,55 @@ import java.util.List;
  */
 public class ProjectElement extends AbstractElement{
 
-    private List<AbstractElement> diagramList_ = new ArrayList<AbstractElement>();
+    private static ProjectElement instance = new ProjectElement();
+    private List<DiagramElement> diagramList = new ArrayList<DiagramElement>();
 
-    public void addDiagram(AbstractElement ae){
-        diagramList_.add(ae);
+    /**
+     * Private constructor to enforce the singleton pattern
+     */
+    private ProjectElement() {}
+
+    /**
+     * Singleton create method
+     * @return The ProjectElement singleton
+     */
+    public static ProjectElement create(){return instance;}
+
+    /**
+     * Create a new DiagramElement and add it to the project
+     * @return The new DiagramElement
+     */
+    public DiagramElement createDiagram(){
+        DiagramElement ret = new DiagramElement(this);
+        diagramList.add(ret);
+        return ret;
     }
 
+    /**
+     * Get a list of the diagrams in the project
+     * @return The diagram list
+     */
+    public List<DiagramElement> getDiagrams(){
+        return diagramList;
+    }
+
+    /**
+     * Accept method for the visitor pattern
+     * @param v The visitor to visit
+     *
+     * @note This is a three-for.  Using visitor, composition, and iterator
+     *      in less than five lines of code!!
+     */
     @Override
     public void accept(Visitor v) {
+
+        // Visit ourselves first
         v.visit(this);
+
+        // Visit our child diagrams
+        Iterator<DiagramElement> iter = diagramList.iterator();
+        while(iter.hasNext()){
+            v.visit(iter.next());
+        }
     }
 }

@@ -10,5 +10,6 @@ public abstract class Visitor {
     public abstract void visit(AttributeElement data);
     public abstract void visit(MethodElement data);
     public abstract void visit(ProjectElement data);
+    public abstract void visit(DiagramElement data);
     public abstract void visit(RelationshipElement data);
 }

@@ -44,6 +44,11 @@ public class CppCodeGenerator extends Visitor{
     }
 
     @Override
+    public void visit(DiagramElement data) {
+        
+    }
+
+    @Override
     public void visit(RelationshipElement data) {
 
     }
@@ -59,16 +64,16 @@ public class CppCodeGenerator extends Visitor{
 
     public String toString(){
         StringBuffer output = new StringBuffer();
-        getHppHeader(output);
+//        getHppHeader(output);
 
         return output.toString();
     }
 
-    private void getHppHeader(StringBuffer output){
-        String h =
-              "#pragma once\n"
-            + "\n"
-            + "\n"
-            + "class ";
+//    private void getHppHeader(StringBuffer output){
+//        String h =
+//              "#pragma once\n"
+//            + "\n"
+//            + "\n"
+//            + "class ";
 
 }

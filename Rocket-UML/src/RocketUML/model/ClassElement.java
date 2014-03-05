@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ClassElement extends AbstractElement implements Drawable {
 
-    private String name = new String();
+    private String name_ = new String();
     private HashMap<String, AttributeElement> attributes =
             new HashMap<String, AttributeElement>();
 
@@ -21,20 +21,13 @@ public class ClassElement extends AbstractElement implements Drawable {
     /**
      * CTOR
      */
-    private ClassElement() {
+    public ClassElement(String name) {
+        name_ = name;
     }
 
     @Override
     public void accept(Visitor v) {
 
-    }
-
-    /**
-     * AbstractFactory create method
-     * @return A new class element instance
-     */
-    public static ClassElement create() {
-        return new ClassElement();
     }
 
     @Override
@@ -97,6 +90,6 @@ public class ClassElement extends AbstractElement implements Drawable {
      * @param n The name to set
      */
     public void setName(String n){
-        name = n;
+        name_ = n;
     }
 }
