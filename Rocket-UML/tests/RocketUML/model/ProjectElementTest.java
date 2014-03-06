@@ -30,7 +30,7 @@ public class ProjectElementTest {
 
 
 
-        ClassElement c2 = d1.createClass("bar");
+        ClassElement c2 = d1.createClass("Class2");
 
         CodeGenerationController cgc = CodeGenerationController.create();
         cgc.generateCppCode(pe, ".");

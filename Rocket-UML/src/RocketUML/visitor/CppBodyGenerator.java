@@ -1,7 +1,6 @@
 package RocketUML.visitor;
 
 import RocketUML.model.*;
-import com.sun.tools.doclets.internal.toolkit.util.DocFinder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +8,7 @@ import java.util.HashMap;
 /**
  * Created by rotinom on 3/1/14.
  */
-public class CppHeaderGenerator extends Visitor{
+public class CppBodyGenerator extends Visitor{
     private StringBuffer output = new StringBuffer();
 
     private ArrayList<AbstractElement> priv_elems = new ArrayList<AbstractElement>();
@@ -19,7 +18,9 @@ public class CppHeaderGenerator extends Visitor{
     private HashMap<ProtectionEnum, ArrayList<AbstractElement>> elem_map =
             new HashMap<ProtectionEnum, ArrayList<AbstractElement>>();
 
-    public CppHeaderGenerator() {
+    private ClassElement class_element;
+
+    public CppBodyGenerator() {
         elem_map.put(ProtectionEnum.PRIVATE,   priv_elems);
         elem_map.put(ProtectionEnum.PROTECTED, prot_elems);
         elem_map.put(ProtectionEnum.PUBLIC,    pub_elems);
@@ -31,20 +32,9 @@ public class CppHeaderGenerator extends Visitor{
      */
     private class OutputVisitor extends Visitor{
 
-        private StringBuffer output = new StringBuffer();
-
-        public OutputVisitor(StringBuffer sb){
-            output = sb;
-        }
-
-        @Override
-        public void visit(AttributeElement data) {
-            output.append("    " + data.getType() + " " + data.getName() + ";\n");
-        }
-
         @Override
         public void visit(MethodElement data) {
-            output.append("    " + data.getReturnType() + " " + data.getName() + "(");
+            output.append(data.getReturnType() + " " + class_element.getName() + "::" + data.getName() + "(");
 
             for(int i = 0; i < data.getParameters().size(); ++i){
                 data.getParameters().get(i).accept(this);
@@ -52,13 +42,16 @@ public class CppHeaderGenerator extends Visitor{
                     output.append(", ");
                 }
             }
-            output.append(");\n\n");
+            output.append(")\n{\n}\n\n");
         }
 
         @Override
         public void visit(MethodParameter data) {
             output.append(data.getType() + " " + data.getName());
         }
+
+        @Override
+        public void visit(AttributeElement data) {}
 
         @Override
         public void visit(ClassElement data) {}
@@ -76,7 +69,7 @@ public class CppHeaderGenerator extends Visitor{
 
     @Override
     public void visit(ClassElement data) {
-        output.append("class " + data.getName() + " {\n");
+        class_element = data;
 
         // Clear our lists
         priv_elems.clear();
@@ -92,29 +85,23 @@ public class CppHeaderGenerator extends Visitor{
             me.accept(this);
         }
 
-        OutputVisitor ov = new OutputVisitor(output);
-
-        output.append("\npublic:\n");
+        OutputVisitor ov = new OutputVisitor();
 
         // CTOR/DTOR
-        output.append("    " + data.getName() + "();\n");
-        output.append("    virtual ~" + data.getName() + "();\n");
+        output.append(data.getName() + "::" + data.getName() + "()\n{}\n\n");
+        output.append(data.getName() + "::~" + data.getName() + "()\n{}\n\n");
 
         for(AbstractElement ae : pub_elems) {
             ae.accept(ov);
         }
 
-        output.append("\nprotected:\n");
         for(AbstractElement ae : prot_elems) {
             ae.accept(ov);
         }
 
-        output.append("\nprivate:\n");
         for(AbstractElement ae : priv_elems) {
             ae.accept(ov);
         }
-
-        output.append("};\n\n");
     }
 
     @Override
