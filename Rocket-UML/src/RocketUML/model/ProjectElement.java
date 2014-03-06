@@ -13,11 +13,14 @@ public class ProjectElement extends AbstractElement{
 
     private static ProjectElement instance = new ProjectElement();
     private List<DiagramElement> diagramList = new ArrayList<DiagramElement>();
+    private String name;
 
     /**
      * Private constructor to enforce the singleton pattern
      */
-    private ProjectElement() {}
+    private ProjectElement() {
+        name = "proj1"; /// @todo Make this random
+    }
 
     /**
      * Singleton create method
@@ -46,20 +49,17 @@ public class ProjectElement extends AbstractElement{
     /**
      * Accept method for the visitor pattern
      * @param v The visitor to visit
-     *
-     * @note This is a three-for.  Using visitor, composition, and iterator
-     *      in less than five lines of code!!
      */
     @Override
     public void accept(Visitor v) {
-
-        // Visit ourselves first
         v.visit(this);
+    }
 
-        // Visit our child diagrams
-        Iterator<DiagramElement> iter = diagramList.iterator();
-        while(iter.hasNext()){
-            v.visit(iter.next());
-        }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

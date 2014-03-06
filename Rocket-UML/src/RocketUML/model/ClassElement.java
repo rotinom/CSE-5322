@@ -3,6 +3,7 @@ package RocketUML.model;
 import RocketUML.ui.Drawable;
 import RocketUML.visitor.Visitor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,12 +12,12 @@ import java.util.List;
  */
 public class ClassElement extends AbstractElement implements Drawable {
 
-    private String name_ = new String();
-    private HashMap<String, AttributeElement> attributes =
-            new HashMap<String, AttributeElement>();
+    private String name_;
 
-    private HashMap<String, MethodElement> methods =
-            new HashMap<String, MethodElement>();
+    private ArrayList<AttributeElement> attributes =
+            new ArrayList<AttributeElement>();
+    private ArrayList<MethodElement> methods =
+            new ArrayList<MethodElement>();
 
     /**
      * CTOR
@@ -27,7 +28,7 @@ public class ClassElement extends AbstractElement implements Drawable {
 
     @Override
     public void accept(Visitor v) {
-
+        v.visit(this);
     }
 
     @Override
@@ -40,50 +41,63 @@ public class ClassElement extends AbstractElement implements Drawable {
 
     /**
      * Add an attribute to the class
-     * @param ae The attribute to add
+     * @param name The attribute to add
      */
-    public void addAttribute(AttributeElement ae){
-        attributes.put(ae.getName(), ae);
+    public AttributeElement createAttribute(String name){
+        AttributeElement ae = AttributeElement.create(name);
+        attributes.add(ae);
+        return ae;
+    }
+
+    /**
+     * Add a method to the class
+     * @param name The name of the method to create
+     * @return
+     */
+    public MethodElement createMethod(String name){
+        MethodElement ae = MethodElement.create(name);
+        methods.add(ae);
+        return ae;
     }
 
     /**
      * Get the attribute HashMap
      * @return The attribute HashMap
      */
-    public HashMap<String, AttributeElement> getAttributes(){
+    public ArrayList<AttributeElement> getAttributes(){
         return attributes;
     }
 
-    /**
-     * Remove an attribute by its name
-     * @param name The name of the attribute to remove
-     * @return The attribute removed or null if it was not found
-     */
-    public AttributeElement removeAttributeByName(String name){
-        AttributeElement ret = null;
+//    /**
+//     * Remove an attribute by its name
+//     * @param name The name of the attribute to remove
+//     * @return The attribute removed or null if it was not found
+//     */
+//    public AttributeElement removeAttributeByName(String name){
+//        AttributeElement ret = null;
+//
+//        if(attributes.containsKey(name)){
+//            ret = attributes.get(name);
+//            attributes.remove(name);
+//        }
+//        return ret;
+//    }
 
-        if(attributes.containsKey(name)){
-            ret = attributes.get(name);
-            attributes.remove(name);
-        }
-        return ret;
-    }
-
-    /**
-     * Add a method to the class
-     * @param m The method to add
-     */
-    public void addMethod(MethodElement m){
-        methods.put(m.getName(), m);
-    }
-
-    /**
-     * Get the methods in the class
-     * @return The HashMap of the methods in the class
-     */
-    public HashMap<String, MethodElement> getMethods(){
-        return methods;
-    }
+//    /**
+//     * Add a method to the class
+//     * @param m The method to add
+//     */
+//    public void addMethod(MethodElement m){
+//        methods.add(m.getName(), m);
+//    }
+//
+//    /**
+//     * Get the methods in the class
+//     * @return The HashMap of the methods in the class
+//     */
+//    public HashMap<String, MethodElement> getMethods(){
+//        return methods;
+//    }
 
     /**
      * Set the name of the class
@@ -91,5 +105,13 @@ public class ClassElement extends AbstractElement implements Drawable {
      */
     public void setName(String n){
         name_ = n;
+    }
+
+    public String getName() {
+        return name_;
+    }
+
+    public ArrayList<MethodElement> getMethods() {
+        return methods;
     }
 }

@@ -18,12 +18,12 @@ public class CodeGenerationController {
 
     private CodeGenerationController(){}
 
-    public CodeGenerationController create(){
+    public static CodeGenerationController create(){
         return instance_;
     }
 
 
-    void generateCode(CodeTypeEnum type, ProjectElement project, String outputDir){
+    public void generateCode(CodeTypeEnum type, ProjectElement project, String outputDir){
         switch(type){
             case CPP:
                 generateCppCode(project, outputDir);
@@ -33,7 +33,9 @@ public class CodeGenerationController {
         }
     }
 
-    void generateCppCode(ProjectElement project, String outputDir){
-        
+    public void generateCppCode(ProjectElement project, String outputDir){
+        CppHeaderGenerator gen = new CppHeaderGenerator();
+        project.accept(gen);
+        System.out.println(gen.toString());
     }
 }

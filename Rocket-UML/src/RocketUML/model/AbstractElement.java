@@ -9,10 +9,9 @@ import java.util.List;
  * Created by rotinom on 2/19/14.
  */
 
-enum DiagramType{
-    RELATIONSHIP,
-    CLASS
-}
+
+
+
 
 /**
  * Represents an abstract element

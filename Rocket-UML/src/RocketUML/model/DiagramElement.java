@@ -16,9 +16,11 @@ public class DiagramElement extends AbstractElement{
     private ProjectElement parent;
     private ArrayList<ClassElement> classes = new ArrayList<ClassElement>();
     private ArrayList<RelationshipElement> relationships = new ArrayList<RelationshipElement>();
+    private String name;
 
     public DiagramElement(ProjectElement p) {
         parent = p;
+        name = "Diagram1"; // @todo Randomize this
     }
 
     public ClassElement createClass(String name){
@@ -43,21 +45,14 @@ public class DiagramElement extends AbstractElement{
 
     @Override
     public void accept(Visitor v) {
-        // Visit ourselves first
         v.visit(this);
+    }
 
-        // Visit our child classes
-        for(Iterator<ClassElement> iter = classes.iterator();
-            iter.hasNext();)
-        {
-            v.visit(iter.next());
-        }
+    public String getName() {
+        return name;
+    }
 
-        // Visit our child relationships
-        for(Iterator<RelationshipElement> iter = relationships.iterator();
-            iter.hasNext();)
-        {
-            v.visit(iter.next());
-        }
+    public void setName(String name) {
+        this.name = name;
     }
 }

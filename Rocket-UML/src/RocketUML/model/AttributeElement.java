@@ -9,10 +9,13 @@ public class AttributeElement extends AbstractElement {
 
     private String name;
     private String type;
-    private String protection;
+    private ProtectionEnum protection;
 
 
-    private AttributeElement() {
+    private AttributeElement(String n) {
+        name = n;
+        protection = ProtectionEnum.PUBLIC;
+        type = "int";
     }
 
     @Override
@@ -20,8 +23,8 @@ public class AttributeElement extends AbstractElement {
         v.visit(this);
     }
 
-    public static AttributeElement create() {
-        return new AttributeElement();
+    public static AttributeElement create(String name) {
+        return new AttributeElement(name);
     }
 
     public String getName() {
@@ -40,11 +43,11 @@ public class AttributeElement extends AbstractElement {
         type = t;
     }
 
-    public String getProtection() {
+    public ProtectionEnum getProtection() {
         return protection;
     }
 
-    public void setProtection(String p) {
+    public void setProtection(ProtectionEnum p) {
         protection = p;
     }
 }
