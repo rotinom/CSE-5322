@@ -1,7 +1,7 @@
 package RocketUML.visitor;
 
 import RocketUML.model.*;
-import com.sun.tools.doclets.internal.toolkit.util.DocFinder;
+//import com.sun.tools.doclets.internal.toolkit.util.DocFinder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

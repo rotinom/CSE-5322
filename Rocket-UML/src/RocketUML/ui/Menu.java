@@ -1,4 +1,4 @@
-package ged;
+package RocketUML.ui;
 
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -79,7 +79,7 @@ public class Menu extends JFrame implements ActionListener {
 		if(e.getSource() == newMenuItem)
 		{
 			gui.frame.getContentPane().removeAll();
-			gui.frame.revalidate();
+			//gui.frame.revalidate();
 			gui.frame.repaint();
 		}
 		else if(e.getSource() == openMenuItem)
@@ -138,7 +138,7 @@ public class Menu extends JFrame implements ActionListener {
 		else if (e.getSource() == clearScreenItem)
 		{
 			gui.frame.getContentPane().removeAll();
-			gui.frame.revalidate();
+		//	gui.frame.revalidate();
 			gui.frame.repaint();
 		}
 	}

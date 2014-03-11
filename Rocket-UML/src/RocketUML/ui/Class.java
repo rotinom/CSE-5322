@@ -1,4 +1,4 @@
-package ged;
+package RocketUML.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
