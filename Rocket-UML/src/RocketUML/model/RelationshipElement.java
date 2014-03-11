@@ -4,11 +4,9 @@ package RocketUML.model;
 import RocketUML.ui.Drawable;
 import RocketUML.visitor.Visitor;
 
-enum RelationshipType{
-    Inheritance,
-    Composition,
-    Association
-};
+import javax.management.relation.Relation;
+
+;
 
 /**
  * Created by rotinom on 2/19/14.
@@ -29,6 +27,10 @@ public class RelationshipElement extends AbstractElement implements Drawable {
         type_ = type;
     }
 
+    public static RelationshipElement create(RelationshipType type){
+        return new RelationshipElement(type);
+    }
+
     @Override
     public void accept(Visitor v) {
         v.visit(this);
@@ -42,44 +44,50 @@ public class RelationshipElement extends AbstractElement implements Drawable {
     public void destroy() {
     }
 
-
     public String getSrceMultiplicity() {
         return srceMultiplicity;
     }
 
-    public void setSrceMultiplicity(String srceMultiplicity) {
+    public RelationshipElement setSrceMultiplicity(String srceMultiplicity) {
         this.srceMultiplicity = srceMultiplicity;
+        return this;
     }
 
     public String getDestMultiplicity() {
         return destMultiplicity;
     }
 
-    public void setDestMultiplicity(String destMultiplicity) {
+    public RelationshipElement setDestMultiplicity(String destMultiplicity) {
         this.destMultiplicity = destMultiplicity;
+        return this;
     }
 
     public ClassElement getAssc() {
         return assc;
     }
 
-    public void setAssc(ClassElement assc) {
+    public RelationshipElement setAssc(ClassElement assc) {
         this.assc = assc;
+        return this;
     }
 
     public ClassElement getDest() {
         return dest;
     }
 
-    public void setDest(ClassElement dest) {
+    public RelationshipElement setDest(ClassElement dest) {
         this.dest = dest;
+        return this;
     }
 
     public ClassElement getSrce() {
         return srce;
     }
 
-    public void setSrce(ClassElement srce) {
+    public RelationshipElement setSrce(ClassElement srce) {
         this.srce = srce;
+        return this;
     }
+
+    public RelationshipType getType() {return type_;}
 }

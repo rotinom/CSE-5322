@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Created by rotinom on 3/1/14.
  */
-public class CppHeaderGenerator extends Visitor{
+public class CppHeaderGenerator extends Visitor implements CodeGenerator{
     private StringBuffer output = new StringBuffer();
 
     private ArrayList<AbstractElement> priv_elems = new ArrayList<AbstractElement>();

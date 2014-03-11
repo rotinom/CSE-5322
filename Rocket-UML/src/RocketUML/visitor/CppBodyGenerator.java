@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * Created by rotinom on 3/1/14.
  */
-public class CppBodyGenerator extends Visitor{
+public class CppBodyGenerator extends Visitor implements CodeGenerator{
     private StringBuffer output = new StringBuffer();
 
     private ArrayList<AbstractElement> priv_elems = new ArrayList<AbstractElement>();
@@ -49,21 +49,6 @@ public class CppBodyGenerator extends Visitor{
         public void visit(MethodParameter data) {
             output.append(data.getType() + " " + data.getName());
         }
-
-        @Override
-        public void visit(AttributeElement data) {}
-
-        @Override
-        public void visit(ClassElement data) {}
-
-        @Override
-        public void visit(ProjectElement data) {}
-
-        @Override
-        public void visit(DiagramElement data) {}
-
-        @Override
-        public void visit(RelationshipElement data) {}
     }
 
 
@@ -132,23 +117,6 @@ public class CppBodyGenerator extends Visitor{
         }
 
         output.append("} // namespace " + data.getName() + "\n");
-    }
-
-    @Override
-    public void visit(RelationshipElement data) {
-
-    }
-
-    @Override
-    public void visit(MethodParameter methodParameter) {
-
-    }
-
-    /**
-     * Clear the visitor
-     */
-    public void clear(){
-        output.setLength(0);
     }
 
     public String toString(){

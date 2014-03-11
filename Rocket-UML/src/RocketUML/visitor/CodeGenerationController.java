@@ -35,8 +35,6 @@ public class CodeGenerationController {
     }
 
     public void generateCppCode(ProjectElement project, String outputDir){
-
-
         try {
 
             // Write the hpp file
@@ -63,5 +61,11 @@ public class CodeGenerationController {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void generateJavaCode(ProjectElement project, String outputDir){
+        // Write the hpp file
+        JavaGenerator gen = new JavaGenerator(outputDir);
+        project.accept(gen);
     }
 }

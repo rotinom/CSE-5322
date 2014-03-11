@@ -12,10 +12,19 @@ public class ProjectElementTest {
     public void testProject(){
         ProjectElement pe = ProjectElement.create();
         DiagramElement d1 = pe.createDiagram();
+
+        ClassElement base = d1.createClass("base");
+
         ClassElement c1 = d1.createClass("foo");
         AttributeElement ae1 = c1.createAttribute("attrib1");
         ae1.setProtection(ProtectionEnum.PRIVATE);
-        ae1.setType("std::string");
+        ae1.setType("String");
+
+        // Use the builder pattern
+        RelationshipElement re =
+            d1.createRelationship(RelationshipType.Inheritance)
+                .setSrce(c1)
+                .setDest(base);
 
 
         MethodElement me1 = c1.createMethod("method1");
@@ -34,6 +43,7 @@ public class ProjectElementTest {
 
         CodeGenerationController cgc = CodeGenerationController.create();
         cgc.generateCppCode(pe, ".");
+        cgc.generateJavaCode(pe, ".");
     }
 
 //    @org.junit.Test

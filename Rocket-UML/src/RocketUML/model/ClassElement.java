@@ -60,6 +60,8 @@ public class ClassElement extends AbstractElement implements Drawable {
         return ae;
     }
 
+
+
     /**
      * Get the attribute HashMap
      * @return The attribute HashMap
