@@ -23,6 +23,10 @@ public class Main extends JFrame {
 		Menu gMenu = new Menu(this);
 		Toolbar Tool = new Toolbar();
 
+        //Add mouse listener
+        final MouseListener mouseHandler = new MouseListener();
+        frame.addMouseListener(mouseHandler);
+
         //Create and set up the window.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int) (screenSize.getWidth()/2);
@@ -39,13 +43,18 @@ public class Main extends JFrame {
 
         popup = new JPopupMenu();
         // add menu items to popup
-        popup.add(new JMenuItem("Add Class"));
+        JMenuItem menuItem = new JMenuItem("Add Class");
+        popup.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Element classElement = Flyweight.getElement("Class");
+                classElement.Draw(frame.getGraphics(), mouseHandler.getX(), mouseHandler.getY(),100,100,"New Class");
+            }
+        });
+
         popup.add(new JMenuItem("Add Relationship"));
         popup.addSeparator();
         popup.add(new JMenuItem("Clear All"));
-        System.out.println("test one two");
-        //Add listener to components that can bring up popup menus.
-        frame.addMouseListener(new MouseListener());
     }
 	
 	public static void main(String[] args) {
@@ -54,6 +63,12 @@ public class Main extends JFrame {
 
 
     class MouseListener extends MouseAdapter {
+        int x;
+        int y;
+
+        public int getX(){return x;}
+        public int getY(){return y;}
+
         public void mousePressed(MouseEvent e) {
             handleMousePress(e);
         }
@@ -62,13 +77,19 @@ public class Main extends JFrame {
             handleMousePress(e);
         }
 
+        public void mouseDragged(MouseEvent e) {
+            System.out.println("mouseDragged");
+        }
+
         private void handleMousePress(MouseEvent e) {
 
             if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(),
-                        e.getX(), e.getY());
+                x = e.getX();
+                y = e.getY();
+                popup.show(e.getComponent(),x,y);
             }
         }
+
     }
 
 }
