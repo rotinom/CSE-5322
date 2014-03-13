@@ -1,4 +1,4 @@
-package ged;
+package RocketUML.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
