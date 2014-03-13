@@ -4,6 +4,7 @@ import RocketUML.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by rotinom on 2/19/14.
@@ -18,22 +19,20 @@ import java.util.List;
  */
 public abstract class AbstractElement {
 
-    protected AbstractElement(){}
+    private String name;
 
-//    /**
-//     * Abstract factory to create diagram elements
-//     * @return The element created
-//     * @throws Exception if invalid type specified
-//     */
-//    public static AbstractElement create(DiagramType type) throws Exception {
-//        if(DiagramType.CLASS == type){
-//            return ClassElement.create();
-//        }
-//        else if(DiagramType.RELATIONSHIP == type){
-//            return RelationshipElement.create();
-//        }
-//        throw new Exception("Invalid type specified");
-//    }
+    protected AbstractElement(){
+        name = this.getClass().getSimpleName() + "-" + UUID.randomUUID().toString().replace("-", "");
+    }
 
     public abstract void accept(Visitor v);
+
+    public String getName() {
+        return name;
+    }
+
+    public AbstractElement setName(String n) {
+        name = n;
+        return this;
+    }
 }

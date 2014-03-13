@@ -16,15 +16,13 @@ public class DiagramElement extends AbstractElement{
     private ProjectElement parent;
     private ArrayList<ClassElement> classes = new ArrayList<ClassElement>();
     private ArrayList<RelationshipElement> relationships = new ArrayList<RelationshipElement>();
-    private String name;
 
     public DiagramElement(ProjectElement p) {
         parent = p;
-        name = "Diagram1"; // @todo Randomize this
     }
 
-    public ClassElement createClass(String name){
-        ClassElement ret = new ClassElement(name);
+    public ClassElement createClass(){
+        ClassElement ret = new ClassElement();
         classes.add(ret);
         return ret;
     }
@@ -33,8 +31,8 @@ public class DiagramElement extends AbstractElement{
         return classes;
     }
 
-    public RelationshipElement createRelationship(RelationshipType type){
-        RelationshipElement ret = new RelationshipElement(type);
+    public RelationshipElement createRelationship(){
+        RelationshipElement ret = new RelationshipElement();
         relationships.add(ret);
         return ret;
     }
@@ -48,11 +46,8 @@ public class DiagramElement extends AbstractElement{
         v.visit(this);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public DiagramElement setName(String n) {
+        super.setName(n);
+        return this;
     }
 }

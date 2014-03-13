@@ -12,8 +12,6 @@ import java.util.List;
  */
 public class ClassElement extends AbstractElement implements Drawable {
 
-    private String name_;
-
     private ArrayList<AttributeElement> attributes =
             new ArrayList<AttributeElement>();
     private ArrayList<MethodElement> methods =
@@ -22,8 +20,7 @@ public class ClassElement extends AbstractElement implements Drawable {
     /**
      * CTOR
      */
-    public ClassElement(String name) {
-        name_ = name;
+    public ClassElement() {
     }
 
     @Override
@@ -41,26 +38,22 @@ public class ClassElement extends AbstractElement implements Drawable {
 
     /**
      * Add an attribute to the class
-     * @param name The attribute to add
      */
-    public AttributeElement createAttribute(String name){
-        AttributeElement ae = AttributeElement.create(name);
+    public AttributeElement createAttribute(){
+        AttributeElement ae = AttributeElement.create();
         attributes.add(ae);
         return ae;
     }
 
     /**
      * Add a method to the class
-     * @param name The name of the method to create
      * @return
      */
-    public MethodElement createMethod(String name){
-        MethodElement ae = MethodElement.create(name);
+    public MethodElement createMethod(){
+        MethodElement ae = MethodElement.create();
         methods.add(ae);
         return ae;
     }
-
-
 
     /**
      * Get the attribute HashMap
@@ -70,47 +63,13 @@ public class ClassElement extends AbstractElement implements Drawable {
         return attributes;
     }
 
-//    /**
-//     * Remove an attribute by its name
-//     * @param name The name of the attribute to remove
-//     * @return The attribute removed or null if it was not found
-//     */
-//    public AttributeElement removeAttributeByName(String name){
-//        AttributeElement ret = null;
-//
-//        if(attributes.containsKey(name)){
-//            ret = attributes.get(name);
-//            attributes.remove(name);
-//        }
-//        return ret;
-//    }
-
-//    /**
-//     * Add a method to the class
-//     * @param m The method to add
-//     */
-//    public void addMethod(MethodElement m){
-//        methods.add(m.getName(), m);
-//    }
-//
-//    /**
-//     * Get the methods in the class
-//     * @return The HashMap of the methods in the class
-//     */
-//    public HashMap<String, MethodElement> getMethods(){
-//        return methods;
-//    }
-
     /**
      * Set the name of the class
      * @param n The name to set
      */
-    public void setName(String n){
-        name_ = n;
-    }
-
-    public String getName() {
-        return name_;
+    public ClassElement setName(String n){
+        super.setName(n);
+        return this;
     }
 
     public ArrayList<MethodElement> getMethods() {

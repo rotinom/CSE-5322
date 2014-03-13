@@ -20,15 +20,12 @@ public class RelationshipElement extends AbstractElement implements Drawable {
     private String srceMultiplicity;
     private String destMultiplicity;
 
-    private RelationshipType type_;
+    private RelationshipType type_ = RelationshipType.Composition;
 
+    public RelationshipElement() {}
 
-    public RelationshipElement(RelationshipType type) {
-        type_ = type;
-    }
-
-    public static RelationshipElement create(RelationshipType type){
-        return new RelationshipElement(type);
+    public static RelationshipElement create(){
+        return new RelationshipElement();
     }
 
     @Override
@@ -43,6 +40,13 @@ public class RelationshipElement extends AbstractElement implements Drawable {
     @Override
     public void destroy() {
     }
+
+    public RelationshipElement setType(RelationshipType t) {
+        type_ = t;
+        return this;
+    }
+
+    public RelationshipType getType() {return type_;}
 
     public String getSrceMultiplicity() {
         return srceMultiplicity;
@@ -88,6 +92,4 @@ public class RelationshipElement extends AbstractElement implements Drawable {
         this.srce = srce;
         return this;
     }
-
-    public RelationshipType getType() {return type_;}
 }

@@ -2,6 +2,7 @@ package RocketUML.visitor;
 
 import RocketUML.model.*;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -43,55 +44,6 @@ public class JavaGenerator extends Visitor implements CodeGenerator{
         }
     }
 
-    /**
-     * Internal visitor class used to print out the attributes
-     * and methods exclusively
-     */
-//    private class OutputVisitor extends Visitor{
-//
-//        private StringBuffer output = new StringBuffer();
-//
-//        public OutputVisitor(StringBuffer sb){
-//            output = sb;
-//        }
-//
-//        @Override
-//        public void visit(AttributeElement data) {
-//            output.append("    " + data.getType() + " " + data.getName() + ";\n");
-//        }
-//
-//        @Override
-//        public void visit(MethodElement data) {
-//            output.append("    " + data.getReturnType() + " " + data.getName() + "(");
-//
-//            for(int i = 0; i < data.getParameters().size(); ++i){
-//                data.getParameters().get(i).accept(this);
-//                if(i < data.getParameters().size()-1){
-//                    output.append(", ");
-//                }
-//            }
-//            output.append(");\n\n");
-//        }
-//
-//        @Override
-//        public void visit(MethodParameter data) {
-//            output.append(data.getType() + " " + data.getName());
-//        }
-//
-//        @Override
-//        public void visit(ClassElement data) {}
-//
-//        @Override
-//        public void visit(ProjectElement data) {}
-//
-//        @Override
-//        public void visit(DiagramElement data) {}
-//
-//        @Override
-//        public void visit(RelationshipElement data) {}
-//    }
-
-
     @Override
     public void visit(ClassElement data) {
 
@@ -116,7 +68,13 @@ public class JavaGenerator extends Visitor implements CodeGenerator{
         output.append("};\n\n");
 
         try {
-            OutputStream file = new FileOutputStream(output_dir + "/" + data.getName() + ".java");
+            // Create the destination path
+            String out_path = output_dir + "/" + project.getName() + "/" + diagram.getName();
+            File dir = new File(out_path);
+            dir.mkdirs();
+
+            // Create the destination file
+            OutputStream file = new FileOutputStream(out_path + "/" + data.getName() + ".java");
             file.write(output.toString().getBytes());
             file.close();
         }

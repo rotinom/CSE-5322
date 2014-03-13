@@ -2,18 +2,18 @@ package RocketUML.model;
 
 import RocketUML.visitor.Visitor;
 
+import javax.management.Attribute;
+
 /**
  * Created by rotinom on 2/26/14.
  */
 public class AttributeElement extends AbstractElement {
 
-    private String name;
     private String type;
     private ProtectionEnum protection;
 
 
-    private AttributeElement(String n) {
-        name = n;
+    private AttributeElement() {
         protection = ProtectionEnum.PUBLIC;
         type = "int";
     }
@@ -23,31 +23,30 @@ public class AttributeElement extends AbstractElement {
         v.visit(this);
     }
 
-    public static AttributeElement create(String name) {
-        return new AttributeElement(name);
+    public static AttributeElement create() {
+        return new AttributeElement();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String n) {
-        name = n;
+    public AttributeElement setName(String n) {
+        super.setName(n);
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String t) {
+    public AttributeElement setType(String t) {
         type = t;
+        return this;
     }
 
     public ProtectionEnum getProtection() {
         return protection;
     }
 
-    public void setProtection(ProtectionEnum p) {
+    public AttributeElement setProtection(ProtectionEnum p) {
         protection = p;
+        return this;
     }
 }

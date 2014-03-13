@@ -13,14 +13,11 @@ public class ProjectElement extends AbstractElement{
 
     private static ProjectElement instance = new ProjectElement();
     private List<DiagramElement> diagramList = new ArrayList<DiagramElement>();
-    private String name;
 
     /**
      * Private constructor to enforce the singleton pattern
      */
-    private ProjectElement() {
-        name = "proj1"; /// @todo Make this random
-    }
+    private ProjectElement() {}
 
     /**
      * Singleton create method
@@ -55,11 +52,8 @@ public class ProjectElement extends AbstractElement{
         v.visit(this);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public ProjectElement setName(String n) {
+        super.setName(n);
+        return this;
     }
 }

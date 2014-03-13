@@ -9,47 +9,45 @@ import java.util.ArrayList;
  */
 public class MethodElement extends AbstractElement{
     private ProtectionEnum protection; /// public/protected/private
-    private String name;       /// name
     private String returnType; /// return value
 
     private ArrayList<MethodParameter> parameters = new ArrayList<MethodParameter>();
 
-    private MethodElement(String n){
-        name = n;
+    private MethodElement(){
     }
 
-    public static MethodElement create(String name) {
-        return new MethodElement(name);
+    public static MethodElement create() {
+        return new MethodElement();
     }
 
-    public MethodParameter createParameter(String name){
-        MethodParameter ret = MethodParameter.create(name);
+    public MethodParameter createParameter(){
+        MethodParameter ret = MethodParameter.create();
         parameters.add(ret);
         return ret;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public MethodElement setName(String n) {
+        super.setName(n);
+        return this;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public ProtectionEnum getProtection() {
         return protection;
     }
 
-    public void setProtection(ProtectionEnum protection) {
+    public MethodElement setProtection(ProtectionEnum protection) {
         this.protection = protection;
+        return this;
     }
 
     public String getReturnType() {
         return returnType;
     }
 
-    public void setReturnType(String returnType) {
+    public MethodElement setReturnType(String returnType) {
         this.returnType = returnType;
+        return this;
     }
 
     @Override

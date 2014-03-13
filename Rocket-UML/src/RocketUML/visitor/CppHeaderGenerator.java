@@ -19,6 +19,8 @@ public class CppHeaderGenerator extends Visitor implements CodeGenerator{
     private HashMap<ProtectionEnum, ArrayList<AbstractElement>> elem_map =
             new HashMap<ProtectionEnum, ArrayList<AbstractElement>>();
 
+    private HashMap<String, String> inheritanceMap = new HashMap<String, String>();
+
     public CppHeaderGenerator() {
         elem_map.put(ProtectionEnum.PRIVATE,   priv_elems);
         elem_map.put(ProtectionEnum.PROTECTED, prot_elems);
@@ -30,12 +32,6 @@ public class CppHeaderGenerator extends Visitor implements CodeGenerator{
      * and methods exclusively
      */
     private class OutputVisitor extends Visitor{
-
-        private StringBuffer output = new StringBuffer();
-
-        public OutputVisitor(StringBuffer sb){
-            output = sb;
-        }
 
         @Override
         public void visit(AttributeElement data) {
@@ -59,24 +55,17 @@ public class CppHeaderGenerator extends Visitor implements CodeGenerator{
         public void visit(MethodParameter data) {
             output.append(data.getType() + " " + data.getName());
         }
-
-        @Override
-        public void visit(ClassElement data) {}
-
-        @Override
-        public void visit(ProjectElement data) {}
-
-        @Override
-        public void visit(DiagramElement data) {}
-
-        @Override
-        public void visit(RelationshipElement data) {}
     }
 
 
     @Override
     public void visit(ClassElement data) {
-        output.append("class " + data.getName() + " {\n");
+        output.append("class " + data.getName() + " ");
+
+        if(inheritanceMap.containsKey(data.getName())){
+            output.append(": public " + inheritanceMap.get(data.getName()) + " ");
+        }
+        output.append(" {\n");
 
         // Clear our lists
         priv_elems.clear();
@@ -92,7 +81,7 @@ public class CppHeaderGenerator extends Visitor implements CodeGenerator{
             me.accept(this);
         }
 
-        OutputVisitor ov = new OutputVisitor(output);
+        OutputVisitor ov = new OutputVisitor();
 
         output.append("\npublic:\n");
 
@@ -140,6 +129,12 @@ public class CppHeaderGenerator extends Visitor implements CodeGenerator{
     public void visit(DiagramElement data) {
         output.append("namespace " + data.getName() + "{\n");
 
+        // Catalog the relationships so we can get the inheritances
+        for(RelationshipElement re : data.getRelationships()){
+            re.accept(this);
+        }
+
+        // Output our classes
         for(ClassElement ce : data.getClasses()){
             ce.accept(this);
         }
@@ -149,24 +144,16 @@ public class CppHeaderGenerator extends Visitor implements CodeGenerator{
 
     @Override
     public void visit(RelationshipElement data) {
+        // We only care if the relationship is a "inheritance" type
+        if(data.getType() != RelationshipType.Inheritance){
+            return;
+        }
 
-    }
-
-    @Override
-    public void visit(MethodParameter methodParameter) {
-
-    }
-
-    /**
-     * Clear the visitor
-     */
-    public void clear(){
-        output.setLength(0);
+        inheritanceMap.put(data.getSrce().getName(), data.getDest().getName());
     }
 
     public String toString(){
         return output.toString();
     }
-
 
 }

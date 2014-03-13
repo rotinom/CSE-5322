@@ -2,16 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8601ccfa-05a1-4871-96bc-ac28b2c6c190" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/RelationshipType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AbstractElement.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AbstractElement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AttributeElement.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AttributeElement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ClassElement.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ClassElement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeGenerationController.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeGenerationController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppBodyGenerator.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppBodyGenerator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ClassElementTest.java" afterPath="$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ClassElementTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppHeaderGenerator.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppHeaderGenerator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramElement.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramElement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodElement.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodElement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodParameter.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodParameter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProjectElement.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProjectElement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ProjectElementTest.java" afterPath="$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ProjectElementTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/RelationshipElement.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/RelationshipElement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/Visitor.java" afterPath="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/Visitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CSE-5322.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,8 +70,8 @@
       </breakpoint>
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java" line="172" class="RocketUML.visitor.JavaGenerator" package="RocketUML.visitor">
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java" line="130" class="RocketUML.visitor.JavaGenerator" package="RocketUML.visitor">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -112,7 +116,22 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java" line="98" class="RocketUML.visitor.JavaGenerator" package="RocketUML.visitor">
+      <breakpoint url="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java" line="50" class="RocketUML.visitor.JavaGenerator" package="RocketUML.visitor">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AbstractElement.java" line="24" class="RocketUML.model.AbstractElement" package="RocketUML.model">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -137,36 +156,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CppHeaderGenerator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppHeaderGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="0" selection-start="3036" selection-end="3036" vertical-scroll-proportion="0.0" vertical-offset="2048" max-vertical-offset="2670">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#407#424#0" expanded="true" />
-                <element signature="e#493#510#0" expanded="true" />
-                <element signature="e#578#595#0" expanded="true" />
-                <element signature="e#698#742#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JavaGenerator.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="30" selection-start="2682" selection-end="2682" vertical-scroll-proportion="1.184" vertical-offset="818" max-vertical-offset="2850">
-              <folding>
-                <element signature="e#531#547#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="DiagramElement.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="5" selection-start="1409" selection-end="1409" vertical-scroll-proportion="0.0" vertical-offset="188" max-vertical-offset="840">
+            <state line="33" column="50" selection-start="862" selection-end="862" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="825">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#404#418#0" expanded="true" />
@@ -176,21 +169,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProjectElement.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProjectElement.java">
+      <file leaf-file-name="AbstractElement.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AbstractElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="0" selection-start="1323" selection-end="1323" vertical-scroll-proportion="0.0" vertical-offset="324" max-vertical-offset="915">
+            <state line="25" column="0" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="42" max-vertical-offset="570">
               <folding>
-                <element signature="e#363#379#0" expanded="true" />
+                <element signature="method#setName#0;class#AbstractElement#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CodeGenerationController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeGenerationController.java">
+      <file leaf-file-name="MethodParameter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodParameter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="0" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.0" vertical-offset="564" max-vertical-offset="1155">
+            <state line="23" column="20" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -198,31 +191,80 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassElement.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ClassElement.java">
+      <file leaf-file-name="ProjectElement.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProjectElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="8" selection-start="1332" selection-end="1332" vertical-scroll-proportion="0.0" vertical-offset="693" max-vertical-offset="1680">
+            <state line="19" column="30" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0" vertical-offset="329" max-vertical-offset="885">
               <folding>
-                <element signature="e#389#407#0" expanded="true" />
-                <element signature="e#483#498#0" expanded="true" />
+                <element signature="e#363#379#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RelationshipElement.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ProtectionEnum.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProtectionEnum.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="12" selection-start="79" selection-end="79" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RelationshipElement.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/RelationshipElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="51" selection-start="1956" selection-end="1956" vertical-scroll-proportion="0.0" vertical-offset="698" max-vertical-offset="1320">
+            <state line="24" column="34" selection-start="577" selection-end="577" vertical-scroll-proportion="0.53977275" vertical-offset="30" max-vertical-offset="1470">
               <folding>
-                <element signature="e#935#936#0" expanded="true" />
-                <element signature="e#974#975#0" expanded="true" />
+                <element signature="method#setType#0;class#RelationshipElement#0" expanded="true" />
+                <element signature="method#getType#0;class#RelationshipElement#0" expanded="true" />
+                <element signature="e#1055#1056#0" expanded="true" />
+                <element signature="e#1094#1095#0" expanded="true" />
                 <element signature="method#setSrceMultiplicity#0;class#RelationshipElement#0" expanded="true" />
+                <element signature="e#1293#1294#0" expanded="true" />
+                <element signature="e#1332#1333#0" expanded="true" />
                 <element signature="method#setDestMultiplicity#0;class#RelationshipElement#0" expanded="true" />
+                <element signature="e#1525#1526#0" expanded="true" />
+                <element signature="e#1552#1553#0" expanded="true" />
                 <element signature="method#setAssc#0;class#RelationshipElement#0" expanded="true" />
+                <element signature="e#1703#1704#0" expanded="true" />
+                <element signature="e#1730#1731#0" expanded="true" />
                 <element signature="method#setDest#0;class#RelationshipElement#0" expanded="true" />
+                <element signature="e#1881#1882#0" expanded="true" />
+                <element signature="e#1908#1909#0" expanded="true" />
                 <element signature="method#setSrce#0;class#RelationshipElement#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProjectElementTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ProjectElementTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="51" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.0" vertical-offset="377" max-vertical-offset="900">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassElementTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ClassElementTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="53" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1125">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiagramType.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="1" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -232,31 +274,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="5" column="15" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MethodElement.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodElement.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="31" selection-start="323" selection-end="323" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="855">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#406#423#0" expanded="true" />
-                <element signature="e#1376#1377#0" expanded="true" />
-                <element signature="e#1409#1410#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProjectElementTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ProjectElementTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="29" selection-start="1290" selection-end="1290" vertical-scroll-proportion="0.0" vertical-offset="294" max-vertical-offset="885">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -280,32 +297,32 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppCodeGenerator.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ClassElementTest.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProjectElement.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AttributeElement.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramType.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AbstractElement.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProtectionEnum.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodElement.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodParameter.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeTypeEnum.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeGenerator.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppHeaderGenerator.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/Visitor.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppBodyGenerator.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeGenerationController.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/RelationshipType.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ProjectElementTest.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/RelationshipElement.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ClassElement.java" />
-        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramElement.java" />
         <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppHeaderGenerator.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AttributeElement.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ClassElement.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodElement.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProjectElement.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodParameter.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramElement.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ProjectElementTest.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ClassElementTest.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AbstractElement.java" />
+        <option value="$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/RelationshipElement.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="447" />
-    <option name="y" value="22" />
+    <option name="x" value="104" />
+    <option name="y" value="86" />
     <option name="width" value="1275" />
     <option name="height" value="973" />
   </component>
@@ -335,6 +352,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -410,10 +428,6 @@
               <option name="myItemId" value="RocketUML" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -440,7 +454,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -530,6 +543,22 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="RocketUML.ui.Main" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Rocket-UML" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -564,19 +593,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -602,6 +618,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -658,14 +687,16 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="JUnit.ClassElementTest" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.ProjectElementTest" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Main" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="3">
         <item index="0" class="java.lang.String" itemvalue="JUnit.ProjectElementTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ClassElementTest" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Main" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.ClassElementTest" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -713,32 +744,32 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="447" y="22" width="1275" height="973" extended-state="0" />
+    <frame x="104" y="86" width="1275" height="973" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32964602" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35992023" sideWeight="0.614881" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36504424" sideWeight="0.50039214" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36504424" sideWeight="0.49882352" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35951328" sideWeight="0.6141176" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35951328" sideWeight="0.38509804" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36504424" sideWeight="0.49882352" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3207843" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901296" sideWeight="0.49940476" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32853982" sideWeight="0.49882352" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32964602" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -766,40 +797,27 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AbstractElement.java">
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/ui/Flyweight.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="630">
+        <state line="4" column="13" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="465">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProtectionEnum.java">
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/ui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+        <state line="9" column="13" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1515">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AttributeElement.java">
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ClassElement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="4" selection-start="467" selection-end="568" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="705">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ClassElementTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="33" selection-start="1282" selection-end="1282" vertical-scroll-proportion="1.1937716" vertical-offset="0" max-vertical-offset="1125">
+        <state line="32" column="0" selection-start="678" selection-end="678" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1680">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#362#380#0" expanded="true" />
+            <element signature="e#456#471#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="1" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -835,28 +853,154 @@
     </entry>
     <entry file="jar:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar!/java/util/ArrayList.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="16" selection-start="1670" selection-end="1670" vertical-scroll-proportion="0.0" vertical-offset="444" max-vertical-offset="1035">
+        <state line="51" column="16" selection-start="1670" selection-end="1670" vertical-scroll-proportion="0.0" vertical-offset="444" max-vertical-offset="1035" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/ui/Flyweight.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="13" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodParameter.java">
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/ui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="710" selection-end="710" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+        <state line="9" column="13" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="0" selection-start="1382" selection-end="1560" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="2205">
+          <folding>
+            <element signature="e#552#568#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeGenerationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="0" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.0" vertical-offset="564" max-vertical-offset="1155">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodElement.java">
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppHeaderGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="31" selection-start="323" selection-end="323" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="855">
+        <state line="136" column="29" selection-start="4097" selection-end="4097" vertical-scroll-proportion="0.0" vertical-offset="734" max-vertical-offset="2475">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#406#423#0" expanded="true" />
-            <element signature="e#1376#1377#0" expanded="true" />
-            <element signature="e#1409#1410#0" expanded="true" />
+            <element signature="e#409#426#0" expanded="true" />
+            <element signature="e#495#512#0" expanded="true" />
+            <element signature="e#580#597#0" expanded="true" />
+            <element signature="e#700#744#0" expanded="true" />
+            <element signature="e#813#829#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AttributeElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0" vertical-offset="239" max-vertical-offset="810">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setType#0;class#AttributeElement#0" expanded="true" />
+            <element signature="method#setProtection#0;class#AttributeElement#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ClassElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="32" selection-start="965" selection-end="965" vertical-scroll-proportion="0.0" vertical-offset="569" max-vertical-offset="1125">
+          <folding>
+            <element signature="e#362#380#0" expanded="true" />
+            <element signature="e#456#471#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="53" selection-start="609" selection-end="609" vertical-scroll-proportion="0.0" vertical-offset="359" max-vertical-offset="915">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#366#383#0" expanded="true" />
+            <element signature="method#setProtection#0;class#MethodElement#0" expanded="true" />
+            <element signature="method#setReturnType#0;class#MethodElement#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProjectElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="30" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0" vertical-offset="329" max-vertical-offset="885">
+          <folding>
+            <element signature="e#363#379#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProtectionEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="12" selection-start="79" selection-end="79" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/MethodParameter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="20" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="1" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="50" selection-start="862" selection-end="862" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="825">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#404#418#0" expanded="true" />
+            <element signature="e#494#515#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ProjectElementTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="51" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.0" vertical-offset="377" max-vertical-offset="900">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ClassElementTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="53" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1125">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/AbstractElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="42" max-vertical-offset="570">
+          <folding>
+            <element signature="method#setName#0;class#AbstractElement#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -870,99 +1014,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/RelationshipElement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="51" selection-start="1956" selection-end="1956" vertical-scroll-proportion="0.0" vertical-offset="698" max-vertical-offset="1320">
+        <state line="24" column="34" selection-start="577" selection-end="577" vertical-scroll-proportion="0.53977275" vertical-offset="30" max-vertical-offset="1470">
           <folding>
-            <element signature="e#935#936#0" expanded="true" />
-            <element signature="e#974#975#0" expanded="true" />
+            <element signature="method#setType#0;class#RelationshipElement#0" expanded="true" />
+            <element signature="method#getType#0;class#RelationshipElement#0" expanded="true" />
+            <element signature="e#1055#1056#0" expanded="true" />
+            <element signature="e#1094#1095#0" expanded="true" />
             <element signature="method#setSrceMultiplicity#0;class#RelationshipElement#0" expanded="true" />
+            <element signature="e#1293#1294#0" expanded="true" />
+            <element signature="e#1332#1333#0" expanded="true" />
             <element signature="method#setDestMultiplicity#0;class#RelationshipElement#0" expanded="true" />
+            <element signature="e#1525#1526#0" expanded="true" />
+            <element signature="e#1552#1553#0" expanded="true" />
             <element signature="method#setAssc#0;class#RelationshipElement#0" expanded="true" />
+            <element signature="e#1703#1704#0" expanded="true" />
+            <element signature="e#1730#1731#0" expanded="true" />
             <element signature="method#setDest#0;class#RelationshipElement#0" expanded="true" />
+            <element signature="e#1881#1882#0" expanded="true" />
+            <element signature="e#1908#1909#0" expanded="true" />
             <element signature="method#setSrce#0;class#RelationshipElement#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CppHeaderGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="0" selection-start="3036" selection-end="3036" vertical-scroll-proportion="0.0" vertical-offset="1138" max-vertical-offset="2670">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#407#424#0" expanded="true" />
-            <element signature="e#493#510#0" expanded="true" />
-            <element signature="e#578#595#0" expanded="true" />
-            <element signature="e#698#742#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Class2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="622">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="622">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/CodeGenerationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.0" vertical-offset="564" max-vertical-offset="1155">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ProjectElement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="1323" selection-end="1323" vertical-scroll-proportion="0.0" vertical-offset="324" max-vertical-offset="915">
-          <folding>
-            <element signature="e#363#379#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/tests/RocketUML/model/ProjectElementTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="29" selection-start="1290" selection-end="1290" vertical-scroll-proportion="0.0" vertical-offset="294" max-vertical-offset="885">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/DiagramElement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="5" selection-start="1409" selection-end="1409" vertical-scroll-proportion="0.0" vertical-offset="188" max-vertical-offset="840">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#404#418#0" expanded="true" />
-            <element signature="e#494#515#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/model/ClassElement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="8" selection-start="1332" selection-end="1332" vertical-scroll-proportion="0.0" vertical-offset="693" max-vertical-offset="1680">
-          <folding>
-            <element signature="e#389#407#0" expanded="true" />
-            <element signature="e#483#498#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rocket-UML/src/RocketUML/visitor/JavaGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="30" selection-start="2682" selection-end="2682" vertical-scroll-proportion="1.184" vertical-offset="818" max-vertical-offset="2850">
-          <folding>
-            <element signature="e#531#547#0" expanded="true" />
           </folding>
         </state>
       </provider>

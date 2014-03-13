@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class ClassElementTest {
     @Test
     public void testCreate() throws Exception {
-        ClassElement ce = new ClassElement("foo");
+        ClassElement ce = new ClassElement().setName("foo");
         assertNotNull(ce);
     }
 

@@ -8,30 +8,26 @@ import RocketUML.visitor.Visitor;
  */
 public class MethodParameter extends AbstractElement {
     private String type;
-    private String name;
 
-    private MethodParameter(String n){
-        name = n;
+    private MethodParameter(){
     }
 
-    public static MethodParameter create(String n){
-        return new MethodParameter(n);
+    public static MethodParameter create(){
+        return new MethodParameter();
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public MethodParameter setType(String type) {
+        type = type;
+        return this;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public MethodParameter setName(String n) {
+        super.setName(n);
+        return this;
     }
 
     @Override
