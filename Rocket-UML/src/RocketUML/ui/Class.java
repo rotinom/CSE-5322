@@ -1,25 +1,22 @@
 package RocketUML.ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
-public class Class implements Element {
+public class Class extends Element {
 
-	private String name;
-	
-	@Override
-	public void Draw(Graphics graphics, int x, int y, int width, int height, String className) 
-	{
-		this.name = className;
+    @Override
+    public boolean contains(Point p){
+        return (x < p.getX() && y < p.getY() &&
+                x+width > p.getX() && y+height > p.getY());
+    }
 
-		graphics.setColor(Color.GRAY);
-		graphics.fillRect(x, y, width+(width/2), height-10);
-		graphics.setColor(Color.DARK_GRAY);
-		graphics.fillRect(x, y-25, width+(width/2),height/3);
-
-		graphics.setColor(Color.WHITE);
-		graphics.drawString(name,x+65,y+0);
-		
-	}
-
+    public void draw(Graphics g)
+    {
+        g.setColor(Color.GRAY);
+        g.fillRect(x, y, width, height);
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(x, y, width,height/3);
+        g.setColor(Color.WHITE);
+        g.drawString(name,x+60,y+25);
+    }
 }

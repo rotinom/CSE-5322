@@ -2,94 +2,143 @@ package RocketUML.ui;
 
 import java.awt.*;
 import java.awt.event.*;
-
+import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
+
 
 public class Main extends JFrame {
-	
-	protected JFrame frame = new JFrame("Rocket UML");
-	protected JPanel theContentPane = new JPanel();
+    int counter = 0;
+    private JPanel workSpace;
     protected JPopupMenu popup;
+    public ArrayList<Element> elements = new ArrayList<Element>();
+    private int mouseX=0;
+    private int mouseY=0;
+    private int xOffset = 0;
+    private int yOffset = 0;
 
-	private Main()
-	{
-		init();
-	}
-
-	private void init() {
-
-		Menu gMenu = new Menu(this);
+    public Main() {
+   		Menu gMenu = new Menu(this);
 		Toolbar Tool = new Toolbar();
-
-        //Add mouse listener
-        final MouseListener mouseHandler = new MouseListener();
-        frame.addMouseListener(mouseHandler);
 
         //Create and set up the window.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int) (screenSize.getWidth()/2);
         int height = (int) (screenSize.getHeight()/2);
-        frame.setSize(width, height);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-               
-        Tool.setSize(360,250);
-        frame.add(Tool.panel);
-        frame.setJMenuBar(gMenu.menuBar);
-        frame.setLocation(width/2, height/2);
-        //  frame.pack();
-        frame.setVisible(true);
 
-        popup = new JPopupMenu();
-        // add menu items to popup
-        JMenuItem menuItem = new JMenuItem("Add Class");
-        popup.add(menuItem);
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Element classElement = Flyweight.getElement("Class");
-                classElement.Draw(frame.getGraphics(), mouseHandler.getX(), mouseHandler.getY(),100,100,"New Class");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        getContentPane().add(Tool.panel, BorderLayout.WEST);
+        setJMenuBar(gMenu.menuBar);
+        setLocation(width/2, height/2);
+        setPreferredSize(new Dimension(width, height));
+        setVisible(true);
+
+        workSpace = new  WorkSpace();
+        getContentPane().add(workSpace, BorderLayout.CENTER);
+        pack();
+    }
+
+    class WorkSpace extends JPanel implements MouseMotionListener,MouseListener {
+
+        private Element selectedElement=null;
+
+        public WorkSpace(){
+            super();
+            addMouseListener(this);
+            addMouseMotionListener(this);
+
+            popup = new JPopupMenu();
+            // add menu items to popup
+            JMenuItem menuItem = new JMenuItem("Add Class");
+            popup.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Element classElement = Flyweight.getElement("Class");
+                    //Class classElement = new Class();
+                    classElement.init(mouseX, mouseY,200,100,"New Class "+counter++);
+                    elements.add(classElement);
+                    repaint();
+                }
+            });
+            popup.add(new JMenuItem("Add Relationship"));
+            popup.addSeparator();
+            popup.add(new JMenuItem("Clear All"));
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            for (Element s : elements){
+                s.draw(g);
+            }
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            if (selectedElement!=null){
+                if(selectedElement instanceof Element){
+                    // Move the shape center to the mouse location
+                    int width = selectedElement.getWidth();
+                    int height = selectedElement.getHeight();
+
+                    //move object to new location minus the previously recorded offset
+                    selectedElement.setLocation((int)(e.getX()-xOffset), (int)(e.getY()-yOffset));
+                }
+                repaint();
+            }
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {}
+
+        private Element getSelectedShape(Point p){
+            System.out.println("hitTest");
+            Element selectedElement = null;
+            for (Element testShape : elements){
+                if (testShape.contains(p)){
+                    selectedElement = testShape;
+
+                    //save off offset between shape and mouse
+                    xOffset = mouseX - selectedElement.getX();
+                    yOffset = mouseY - selectedElement.getY();
+                    break;
+                }
+            }
+            return selectedElement;
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            mouseX = e.getX();
+            mouseY = e.getY();
+            selectedElement = getSelectedShape(e.getPoint());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                mouseX = e.getX();
+                mouseY = e.getY();
+                popup.show(e.getComponent(),mouseX,mouseY);
+            }
+
+            selectedElement = null;
+            repaint();
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {}
+        @Override
+        public void mouseEntered(MouseEvent e) {}
+        @Override
+        public void mouseExited(MouseEvent e) {}
+
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Main().setVisible(true);
             }
         });
-
-        popup.add(new JMenuItem("Add Relationship"));
-        popup.addSeparator();
-        popup.add(new JMenuItem("Clear All"));
     }
-	
-	public static void main(String[] args) {
-	      Main window = new Main();
-	}
-
-
-    class MouseListener extends MouseAdapter {
-        int x;
-        int y;
-
-        public int getX(){return x;}
-        public int getY(){return y;}
-
-        public void mousePressed(MouseEvent e) {
-            handleMousePress(e);
-        }
-
-        public void mouseReleased(MouseEvent e) {
-            handleMousePress(e);
-        }
-
-        public void mouseDragged(MouseEvent e) {
-            System.out.println("mouseDragged");
-        }
-
-        private void handleMousePress(MouseEvent e) {
-
-            if (e.isPopupTrigger()) {
-                x = e.getX();
-                y = e.getY();
-                popup.show(e.getComponent(),x,y);
-            }
-        }
-
-    }
-
 }
