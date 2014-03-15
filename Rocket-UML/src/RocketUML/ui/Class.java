@@ -6,25 +6,48 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Class extends Element {
 
     public static final int TITLE_HEIGHT = 30;
     public static final int LINE_HEIGHT = 20;
     public static final String EMPTY_STRING = "<empty>";
+    public static final int CONNECT_SIZE = 6;
+    public static final int CONNECT_HALF_SIZE = CONNECT_SIZE/2;
+    public static final int CLOSE_DIST = 50;
+    public static final int CONNECT_CLOSE_DIST = 10;
 
+    public enum ConnectLocationType {
+        TOP, BOTTOM, LEFT, RIGHT;
+    }
+
+    public Map<ConnectLocationType, Point> connectPoints = new HashMap<ConnectLocationType, Point>();
+    public Map<ConnectLocationType, ArrayList<Point>> attachedPoints = new HashMap<ConnectLocationType, ArrayList<Point>>();
     public ArrayList<String> attributes = new ArrayList<String>();
     public ArrayList<String> methods = new ArrayList<String>();
+    private boolean drawConnectPoints = false;
+    private Point relationshipDragPoint = null;
 
-    @Override
     public void init(int xLoc, int yLoc, String n){
-        x = xLoc;
-        y = yLoc;
         width = 200;
         height = 30;
-        name = n;
         attributes.add(EMPTY_STRING);
         methods.add(EMPTY_STRING);
+
+        //initialize connection point data
+        connectPoints.put(ConnectLocationType.TOP, new Point(0, 0));
+        attachedPoints.put(ConnectLocationType.TOP, new ArrayList<Point>());
+        connectPoints.put(ConnectLocationType.BOTTOM, new Point(0, 0));
+        attachedPoints.put(ConnectLocationType.BOTTOM, new ArrayList<Point>());
+        connectPoints.put(ConnectLocationType.LEFT, new Point(0, 0));
+        attachedPoints.put(ConnectLocationType.LEFT, new ArrayList<Point>());
+        connectPoints.put(ConnectLocationType.RIGHT, new Point(0, 0));
+        attachedPoints.put(ConnectLocationType.RIGHT, new ArrayList<Point>());
+
+        super.init(xLoc, yLoc, n);
     }
 
     @Override
@@ -33,18 +56,31 @@ public class Class extends Element {
                 x+width > p.getX() && y+height > p.getY());
     }
 
+    public boolean closeTo(Point p){
+        return (x-CLOSE_DIST < p.getX() && y-CLOSE_DIST < p.getY() &&
+                x+width+CLOSE_DIST > p.getX() && y+height+CLOSE_DIST > p.getY());
+    }
+
     public void draw(Graphics g)
     {
-
         //compute width and height
         int attributeHeight = attributes.size()*LINE_HEIGHT;
         int methodHeight = methods.size()*LINE_HEIGHT;
         height = TITLE_HEIGHT + attributeHeight + methodHeight;
 
+        //move connect points
+        connectPoints.get(ConnectLocationType.TOP).setLocation(x + width / 2, y-CONNECT_SIZE);
+        connectPoints.get(ConnectLocationType.BOTTOM).setLocation(x + width / 2, y + height + CONNECT_HALF_SIZE);
+        connectPoints.get(ConnectLocationType.LEFT).setLocation(x-CONNECT_SIZE, y+height/2);
+        connectPoints.get(ConnectLocationType.RIGHT).setLocation(x + width + CONNECT_HALF_SIZE, y + height / 2);
+
         // draw a shadow
         BufferedImage img = new BufferedImage(width+20, height+20, BufferedImage.TYPE_INT_ARGB);
         Graphics g2 = img.getGraphics();
-        g2.setColor(Color.BLACK);
+        if(isSelected)
+           g2.setColor(new Color(0, 0, 255));
+        else
+            g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, width, height);
         // blur the shadow
         BufferedImageOp op = getBlurredOp();
@@ -59,6 +95,8 @@ public class Class extends Element {
         g.drawString(name, x + 60, y + 20);
         g.setColor(Color.BLACK);
         g.drawRect(x, y, width, height);
+
+        //draw attributes and methods
         int count = 0;
         g.setColor(Color.GRAY);
         for (String s : attributes){
@@ -69,6 +107,38 @@ public class Class extends Element {
             g.drawString(s, x + 20, 5 + y + LINE_HEIGHT/2 + TITLE_HEIGHT + LINE_HEIGHT*count++);
         }
         g.drawLine(x, y+TITLE_HEIGHT+attributeHeight, x+width, y+TITLE_HEIGHT+attributeHeight);
+
+        //draw connect points
+        if(drawConnectPoints)
+        {
+            //for (Point point : connectPoints){
+            for (Map.Entry<ConnectLocationType, Point> entry : connectPoints.entrySet()) {
+                Point point = entry.getValue();
+                g.setColor(Color.BLACK);
+                g.drawRect(point.x, point.y, CONNECT_SIZE, CONNECT_SIZE);
+                //highlight if close enough to connect
+                if(relationshipDragPoint.distance(point) < CONNECT_CLOSE_DIST)
+                {
+                    g.setColor(Color.GREEN);
+                    relationshipDragPoint.setLocation(point.x+CONNECT_HALF_SIZE, point.y+CONNECT_HALF_SIZE);
+                    ArrayList<Point> points = attachedPoints.get(entry.getKey());
+                    points.add(relationshipDragPoint);
+                    System.out.println("attaching point to " + entry.getKey());
+                }
+                else
+                    g.setColor(Color.WHITE);
+                g.fillRect(point.x, point.y, CONNECT_SIZE, CONNECT_SIZE);
+            }
+        }
+
+        //move any attached points
+        for (Map.Entry<ConnectLocationType, ArrayList<Point>> entry : attachedPoints.entrySet()) {
+            for(Point point : entry.getValue()) {
+                //System.out.println("update location of attached point");
+                Point centerPoint = connectPoints.get(entry.getKey());
+                point.setLocation(centerPoint.x+CONNECT_HALF_SIZE, centerPoint.y+CONNECT_HALF_SIZE);
+            }
+        }
     }
 
     private static BufferedImageOp getBlurredOp() {
@@ -91,6 +161,14 @@ public class Class extends Element {
         if(methods.contains(EMPTY_STRING))
             methods.remove(EMPTY_STRING);
         methods.add(method);
+    }
+
+    public void drawConnectPoints(boolean draw) {
+        drawConnectPoints = draw;
+    }
+
+    public void setRelationshipDragPoint(Point point){
+        relationshipDragPoint = point;
     }
 
 }

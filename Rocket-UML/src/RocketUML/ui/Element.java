@@ -5,17 +5,16 @@ import java.awt.*;
 
 public class Element extends JPanel {
 
-    protected String name;
-    protected int x;
-    protected int y;
-    protected int width;
-    protected int height;
+    protected String name = "";
+    protected int x = 0;
+    protected int y = 0;
+    protected int width = 0;
+    protected int height = 0;
+    protected boolean isSelected = false;
 
     public void init(int xLoc, int yLoc, String n){
         x = xLoc;
         y = yLoc;
-        width = 200;
-        height = 100;
         name = n;
     }
 
@@ -53,6 +52,14 @@ public class Element extends JPanel {
 
     public int getY() {
         return y;
+    }
+
+    public boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected){
+        isSelected = selected;
     }
 
 }

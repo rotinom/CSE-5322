@@ -47,8 +47,14 @@ public class Main extends JFrame {
             super();
             addMouseListener(this);
             addMouseMotionListener(this);
+            createPopup();
+            createClassPopup();
+        }
 
+        public void createPopup()
+        {
             popup = new JPopupMenu();
+
             // add menu items to popup
             JMenuItem menuItem = new JMenuItem("Add Class");
             popup.add(menuItem);
@@ -60,15 +66,26 @@ public class Main extends JFrame {
                     repaint();
                 }
             });
-            popup.add(new JMenuItem("Add Relationship"));
+            menuItem = new JMenuItem("Add Relationship");
+            popup.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Element relationshipElement = Flyweight.getElement("Relationship");
+                relationshipElement.init(mouseX, mouseY,"New Relationship "+counter++);
+                elements.add(relationshipElement);
+                repaint();
+            }
+        });
             popup.addSeparator();
             popup.add(new JMenuItem("Clear All"));
+        }
 
+        public void createClassPopup()
+        {
             classPopup = new JPopupMenu();
+
             // add menu items to popup
-
-
-            menuItem = new JMenuItem("Add Attribute");
+            JMenuItem menuItem = new JMenuItem("Add Attribute");
             classPopup.add(menuItem);
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -109,13 +126,22 @@ public class Main extends JFrame {
         @Override
         public void mouseDragged(MouseEvent e) {
             if (selectedElement!=null){
-                if(selectedElement instanceof Element){
-                    // Move the shape center to the mouse location
-                    int width = selectedElement.getWidth();
-                    int height = selectedElement.getHeight();
+                // Move the shape center to the mouse location
+                int width = selectedElement.getWidth();
+                int height = selectedElement.getHeight();
 
-                    //move object to new location minus the previously recorded offset
+                //move object to new location minus the previously recorded offset
+                if(selectedElement.getClass() == Class.class)
                     selectedElement.setLocation((int)(e.getX()-xOffset), (int)(e.getY()-yOffset));
+                else //relationship
+                {
+                    for (Element element : elements){
+                        if(element.getClass() == Class.class){
+                            ((Class)element).drawConnectPoints(((Class)element).closeTo(e.getPoint()));
+                            ((Class)element).setRelationshipDragPoint(((Relationship)selectedElement).getDragPoint());
+                        }
+                    }
+                    selectedElement.setLocation((int)(e.getX()), (int)(e.getY()));
                 }
                 repaint();
             }
@@ -125,14 +151,17 @@ public class Main extends JFrame {
         public void mouseMoved(MouseEvent e) {}
 
         private Element getSelectedElement(Point p){
+            if(selectedElement != null)
+                selectedElement.setSelected(false);
             Element selectedElement = null;
-            for (Element testShape : elements){
-                if (testShape.contains(p)){
-                    selectedElement = testShape;
-
+            for (Element testElement : elements){
+                if (testElement.contains(p)){
+                    selectedElement = testElement;
                     //save off offset between shape and mouse
                     xOffset = mouseX - selectedElement.getX();
                     yOffset = mouseY - selectedElement.getY();
+                    selectedElement.setSelected(true);
+                    repaint();
                     break;
                 }
             }
