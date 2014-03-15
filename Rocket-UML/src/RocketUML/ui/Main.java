@@ -91,7 +91,6 @@ public class Main extends JFrame {
         public void mouseMoved(MouseEvent e) {}
 
         private Element getSelectedShape(Point p){
-            System.out.println("hitTest");
             Element selectedElement = null;
             for (Element testShape : elements){
                 if (testShape.contains(p)){
@@ -110,14 +109,22 @@ public class Main extends JFrame {
         public void mousePressed(MouseEvent e) {
             mouseX = e.getX();
             mouseY = e.getY();
+
+            //for mac isPopupTrigger works on mouse pressed
+            if (e.isPopupTrigger()) {
+                popup.show(e.getComponent(), mouseX, mouseY);
+            }
+
             selectedElement = getSelectedShape(e.getPoint());
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            mouseX = e.getX();
+            mouseY = e.getY();
+
+            //for windows isPopupTrigger works on mouse pressed
             if (e.isPopupTrigger()) {
-                mouseX = e.getX();
-                mouseY = e.getY();
                 popup.show(e.getComponent(),mouseX,mouseY);
             }
 
