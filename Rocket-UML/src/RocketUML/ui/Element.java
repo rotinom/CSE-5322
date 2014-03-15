@@ -11,11 +11,11 @@ public class Element extends JPanel {
     protected int width;
     protected int height;
 
-    public void init(int xLoc, int yLoc, int w, int h, String n){
+    public void init(int xLoc, int yLoc, String n){
         x = xLoc;
         y = yLoc;
-        width = w;
-        height = h;
+        width = 200;
+        height = 100;
         name = n;
     }
 
@@ -54,4 +54,5 @@ public class Element extends JPanel {
     public int getY() {
         return y;
     }
+
 }

@@ -109,7 +109,7 @@ public class Menu extends JFrame implements ActionListener {
 				int y = Integer.parseInt(class_y_coord);
 	
 				Element classElement = Flyweight.getElement("Class");
-				classElement.init(x,y,200,100,className);
+				classElement.init(x,y,className);
 			}
 		}
 		else if (e.getSource() == addRelationshipItem)
@@ -125,7 +125,7 @@ public class Menu extends JFrame implements ActionListener {
 				int y = Integer.parseInt(relationship_y_coord);
 	
 				Element relationshipElement = Flyweight.getElement("Relationship");
-				relationshipElement.init(x, y, 100, 2, null);
+				relationshipElement.init(x, y, null);
 			}
 		}
 		else if (e.getSource() == aboutMenuItem)

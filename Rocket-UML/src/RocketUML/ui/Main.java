@@ -10,6 +10,8 @@ public class Main extends JFrame {
     int counter = 0;
     private JPanel workSpace;
     protected JPopupMenu popup;
+    protected JPopupMenu classPopup;
+
     public ArrayList<Element> elements = new ArrayList<Element>();
     private int mouseX=0;
     private int mouseY=0;
@@ -53,8 +55,7 @@ public class Main extends JFrame {
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Element classElement = Flyweight.getElement("Class");
-                    //Class classElement = new Class();
-                    classElement.init(mouseX, mouseY,200,100,"New Class "+counter++);
+                    classElement.init(mouseX, mouseY,"New Class "+counter++);
                     elements.add(classElement);
                     repaint();
                 }
@@ -62,6 +63,39 @@ public class Main extends JFrame {
             popup.add(new JMenuItem("Add Relationship"));
             popup.addSeparator();
             popup.add(new JMenuItem("Clear All"));
+
+            classPopup = new JPopupMenu();
+            // add menu items to popup
+
+
+            menuItem = new JMenuItem("Add Attribute");
+            classPopup.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ((Class)selectedElement).addAttribute("void newAttribute");
+                    repaint();
+                }
+            });
+
+            menuItem = new JMenuItem("Add Method");
+            classPopup.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ((Class)selectedElement).addMethod("void newMethod()");
+                    repaint();
+                }
+            });
+
+            classPopup.addSeparator();
+            menuItem = new JMenuItem("Remove Class");
+            classPopup.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    remove(selectedElement);
+                    elements.remove(selectedElement);
+                    repaint();
+                }
+            });
         }
 
         @Override
@@ -90,7 +124,7 @@ public class Main extends JFrame {
         @Override
         public void mouseMoved(MouseEvent e) {}
 
-        private Element getSelectedShape(Point p){
+        private Element getSelectedElement(Point p){
             Element selectedElement = null;
             for (Element testShape : elements){
                 if (testShape.contains(p)){
@@ -109,13 +143,15 @@ public class Main extends JFrame {
         public void mousePressed(MouseEvent e) {
             mouseX = e.getX();
             mouseY = e.getY();
+            selectedElement = getSelectedElement(e.getPoint());
 
             //for mac isPopupTrigger works on mouse pressed
             if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(), mouseX, mouseY);
+                if(selectedElement == null)
+                    popup.show(e.getComponent(), mouseX, mouseY);
+                else
+                    classPopup.show(e.getComponent(), mouseX, mouseY);
             }
-
-            selectedElement = getSelectedShape(e.getPoint());
         }
 
         @Override
@@ -125,11 +161,11 @@ public class Main extends JFrame {
 
             //for windows isPopupTrigger works on mouse pressed
             if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(),mouseX,mouseY);
+                if(selectedElement == null)
+                    popup.show(e.getComponent(), mouseX, mouseY);
+                else
+                    classPopup.show(e.getComponent(), mouseX, mouseY);
             }
-
-            selectedElement = null;
-            repaint();
         }
 
         @Override
