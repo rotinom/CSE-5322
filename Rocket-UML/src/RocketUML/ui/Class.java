@@ -7,7 +7,6 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Class extends Element {
@@ -78,7 +77,7 @@ public class Class extends Element {
         BufferedImage img = new BufferedImage(width+20, height+20, BufferedImage.TYPE_INT_ARGB);
         Graphics g2 = img.getGraphics();
         if(isSelected)
-           g2.setColor(new Color(0, 0, 255));
+           g2.setColor(Color.BLUE);
         else
             g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, width, height);
@@ -119,10 +118,13 @@ public class Class extends Element {
                 //highlight if close enough to connect
                 if(relationshipDragPoint.distance(point) < CONNECT_CLOSE_DIST)
                 {
-                    g.setColor(Color.GREEN);
-                    relationshipDragPoint.setLocation(point.x+CONNECT_HALF_SIZE, point.y+CONNECT_HALF_SIZE);
                     ArrayList<Point> points = attachedPoints.get(entry.getKey());
-                    points.add(relationshipDragPoint);
+                    g.setColor(new Color(60, 60, 150));
+                    if(!points.contains(relationshipDragPoint))
+                    {
+                        relationshipDragPoint.setLocation(point.x+CONNECT_HALF_SIZE, point.y+CONNECT_HALF_SIZE);
+                        points.add(relationshipDragPoint);
+                    }
                 }
                 else
                     g.setColor(Color.WHITE);
