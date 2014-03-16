@@ -11,7 +11,7 @@ public class Relationship extends Element {
     public static final int HALF_GRAB = GRAB_SIZE/2;
     public static final int SYMBOL_SIZE = 12;
     public static final double SYMBOL_ANGLE = Math.PI/6; //30 degree angle
-    public static final int SNAP_TO_DIST = 5;
+    public static final int SNAP_TO_DIST = 10;
 
     public enum Type {
         ASSOCIATION, AGGREGATION, INHERITANCE;
@@ -148,9 +148,10 @@ public class Relationship extends Element {
                 point3 = movePoints.get(MovePointType.INTERIM1);
             }
 
+            //run through both axis
             if(Math.abs(xLoc - point2.x) < SNAP_TO_DIST){xLoc = point2.x;}
-            else if(Math.abs(yLoc - point2.y) < SNAP_TO_DIST){yLoc = point2.y;}
             else if(Math.abs(xLoc - point3.x) < SNAP_TO_DIST){xLoc = point3.x;}
+            if(Math.abs(yLoc - point2.y) < SNAP_TO_DIST){yLoc = point2.y;}
             else if(Math.abs(yLoc - point3.y) < SNAP_TO_DIST){yLoc = point3.y;}
         }
 
