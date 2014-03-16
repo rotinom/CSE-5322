@@ -2,11 +2,12 @@ package RocketUML.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Relationship extends Element {
-
     public static final int GRAB_SIZE = 6;
     public static final int END_SIZE = 4;
     public static final int HALF_END = END_SIZE/2;
@@ -15,7 +16,6 @@ public class Relationship extends Element {
     public enum Type {
         ASSOCIATION, AGGREGATION, INHERITANCE;
     }
-
     public enum MovePointType {
         NONE, SOURCE, INTERIM1, INTERIM2, DESTINATION;
     }
@@ -24,7 +24,6 @@ public class Relationship extends Element {
     Type type = Type.ASSOCIATION;
     MovePointType moveType = MovePointType.NONE;
     Point dragPoint = null;
-
 
     public void init(int xLoc, int yLoc, String n){
         movePoints.put(MovePointType.SOURCE, new Point(xLoc-45, yLoc));
@@ -43,30 +42,35 @@ public class Relationship extends Element {
                    movePoints.get(MovePointType.INTERIM1).x, movePoints.get(MovePointType.INTERIM1).y);
         g.drawLine(movePoints.get(MovePointType.INTERIM1).x, movePoints.get(MovePointType.INTERIM1).y,
                    movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y);
-        g.drawLine(movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
-                   movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y);
 
         //draw src/dest points
-        g.fillOval(movePoints.get(MovePointType.SOURCE).x - HALF_END, movePoints.get(MovePointType.SOURCE).y - HALF_END, END_SIZE, END_SIZE);
+        g.fillOval(movePoints.get(MovePointType.SOURCE).x - HALF_END,
+                   movePoints.get(MovePointType.SOURCE).y - HALF_END, END_SIZE, END_SIZE);
         Point destPoint = movePoints.get(MovePointType.DESTINATION);
         //draw end type
         switch(type){
             case ASSOCIATION:
-                g.fillOval(destPoint.x - HALF_END, destPoint.y - HALF_END, END_SIZE, END_SIZE);
+                g.drawLine(movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
+                        movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y);
                 break;
 
             case AGGREGATION:
-                g.fillOval(destPoint.x - HALF_END, destPoint.y - HALF_END, END_SIZE, END_SIZE);
+                drawAggregation(g, movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
+                        movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y);
                 break;
 
             case INHERITANCE:
-                g.fillOval(destPoint.x - HALF_END, destPoint.y - HALF_END, END_SIZE, END_SIZE);
+                drawInheritance(g, movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
+                                   movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y);
                 break;
 
             default:
-                g.fillOval(destPoint.x - HALF_END, destPoint.y - HALF_END, END_SIZE, END_SIZE);
+                g.drawLine(movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
+                        movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y);
                 break;
         }
+
+        g.fillOval(destPoint.x - HALF_END, destPoint.y - HALF_END, END_SIZE, END_SIZE);
 
         //draw interim points
         g.setColor(new Color(60, 60, 150));
@@ -96,9 +100,8 @@ public class Relationship extends Element {
                 dragPoint = entry.getValue();
                 break;
             }
-
         }
-        System.out.println("contains=" + contains + " type="+moveType);
+        //System.out.println("contains=" + contains + " type="+moveType);
         return contains;
     }
 
@@ -109,6 +112,65 @@ public class Relationship extends Element {
 
     public Point getDragPoint(){
         return dragPoint;
+    }
+
+    public void setType(Type relationshipType){
+        type = relationshipType;
+    }
+
+    private void drawInheritance( Graphics g, int x1, int y1, int x2, int y2 )
+    {
+        double phi;
+        int length = 15; //side lengths
+        phi = Math.PI/6; //30 degree angle
+        double theta = Math.atan2(y1 - y2, x1 - x2);
+
+        int endX1 = (int)(x2 + length * Math.cos(theta + phi));
+        int endY1 = (int)(y2 + length * Math.sin(theta + phi));
+        int endX2 = (int)(x2 + length * Math.cos(theta - phi));
+        int endY2 = (int)(y2 + length * Math.sin(theta - phi));
+
+        g.setColor(Color.BLACK);
+        g.drawLine(x1, y1, x2, y2);
+
+        int[] xPoints = {endX1, endX2, x2};
+        int[] yPoints = {endY1, endY2, y2};
+        g.setColor(Color.WHITE);
+        g.fillPolygon(xPoints, yPoints, xPoints.length);
+
+        g.setColor(Color.BLACK);
+        g.drawLine(x2, y2, endX1, endY1);
+        g.drawLine(x2, y2, endX2, endY2);
+        g.drawLine(endX1, endY1, endX2, endY2);
+    }
+
+    private void drawAggregation( Graphics g, int x1, int y1, int x2, int y2 )
+    {
+        double phi;
+        int length = 15; //side lengths
+        phi = Math.PI/6; //30 degree angle
+        double theta = Math.atan2(y1 - y2, x1 - x2);
+
+        int endX1 = (int)(x2 + length * Math.cos(theta + phi));
+        int endY1 = (int)(y2 + length * Math.sin(theta + phi));
+        int endX2 = (int)(x2 + length * Math.cos(theta - phi));
+        int endY2 = (int)(y2 + length * Math.sin(theta - phi));
+        int endX3 = (int)(endX2 + length * Math.cos(theta + phi));
+        int endY3 = (int)(endY2 + length * Math.sin(theta + phi));
+
+        g.setColor(Color.BLACK);
+        g.drawLine(x1, y1, x2, y2);
+
+        int[] xPoints = {endX1, endX3, endX2, x2};
+        int[] yPoints = {endY1, endY3, endY2, y2};
+        g.setColor(Color.WHITE);
+        g.fillPolygon(xPoints, yPoints, xPoints.length);
+
+        g.setColor(Color.BLACK);
+        g.drawLine(x2, y2, endX1, endY1);
+        g.drawLine(x2, y2, endX2, endY2);
+        g.drawLine(endX3, endY3, endX1, endY1);
+        g.drawLine(endX3, endY3, endX2, endY2);
     }
 
 }

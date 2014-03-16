@@ -66,16 +66,43 @@ public class Main extends JFrame {
                     repaint();
                 }
             });
-            menuItem = new JMenuItem("Add Relationship");
-            popup.add(menuItem);
-            menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Element relationshipElement = Flyweight.getElement("Relationship");
-                relationshipElement.init(mouseX, mouseY,"New Relationship "+counter++);
-                elements.add(relationshipElement);
-                repaint();
-            }
-        });
+
+            JMenu submenu = new JMenu("Add Relationship");
+            JMenuItem menuAssc = new JMenuItem("Association");
+            JMenuItem menuAggr = new JMenuItem("Aggregation");
+            JMenuItem menuInhr = new JMenuItem("Inheritance");
+            submenu.add(menuAssc);
+            submenu.add(menuAggr);
+            submenu.add(menuInhr);
+            popup.add(submenu);
+
+            menuAssc.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Element relationshipElement = Flyweight.getElement("Relationship");
+                    relationshipElement.init(mouseX, mouseY, "New Relationship " + counter++);
+                    ((Relationship) relationshipElement).setType(Relationship.Type.ASSOCIATION);
+                    elements.add(relationshipElement);
+                    repaint();
+                }
+            });
+            menuAggr.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Element relationshipElement = Flyweight.getElement("Relationship");
+                    relationshipElement.init(mouseX, mouseY, "New Relationship " + counter++);
+                    ((Relationship) relationshipElement).setType(Relationship.Type.AGGREGATION);
+                    elements.add(relationshipElement);
+                    repaint();
+                }
+            });
+            menuInhr.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Element relationshipElement = Flyweight.getElement("Relationship");
+                    relationshipElement.init(mouseX, mouseY, "New Relationship " + counter++);
+                    ((Relationship) relationshipElement).setType(Relationship.Type.INHERITANCE);
+                    elements.add(relationshipElement);
+                    repaint();
+                }
+            });
             popup.addSeparator();
             popup.add(new JMenuItem("Clear All"));
         }
@@ -141,7 +168,7 @@ public class Main extends JFrame {
                             ((Class)element).setRelationshipDragPoint(((Relationship)selectedElement).getDragPoint());
                         }
                     }
-                    selectedElement.setLocation((int)(e.getX()), (int)(e.getY()));
+                    selectedElement.setLocation((int) (e.getX()), (int) (e.getY()));
                 }
                 repaint();
             }
