@@ -78,9 +78,9 @@ public class Menu extends JFrame implements ActionListener {
 	{
 		if(e.getSource() == newMenuItem)
 		{
-			gui.frame.getContentPane().removeAll();
+			gui.getContentPane().removeAll();
 			//gui.frame.revalidate();
-			gui.frame.repaint();
+			gui.repaint();
 		}
 		else if(e.getSource() == openMenuItem)
 		{
@@ -98,7 +98,7 @@ public class Menu extends JFrame implements ActionListener {
 		}
 		else if (e.getSource() == addClassItem)
 		{
-			Graphics g = gui.frame.getGraphics();
+			Graphics g = gui.getGraphics();
 			String class_x_coord = JOptionPane.showInputDialog("Please Enter X coordinate for class");
 			if(class_x_coord != null)
 			{
@@ -109,12 +109,12 @@ public class Menu extends JFrame implements ActionListener {
 				int y = Integer.parseInt(class_y_coord);
 	
 				Element classElement = Flyweight.getElement("Class");
-				classElement.Draw(g, x,y,100,100,className);
+				classElement.init(x,y,className);
 			}
 		}
 		else if (e.getSource() == addRelationshipItem)
 		{
-			Graphics g = gui.frame.getGraphics();
+			Graphics g = gui.getGraphics();
 			String relationship_x_coord = JOptionPane.showInputDialog("Please Enter X coordinate for class");
 			if(relationship_x_coord != null)
 			{
@@ -125,7 +125,7 @@ public class Menu extends JFrame implements ActionListener {
 				int y = Integer.parseInt(relationship_y_coord);
 	
 				Element relationshipElement = Flyweight.getElement("Relationship");
-				relationshipElement.Draw(g, x, y, 100, 2, null);
+				relationshipElement.init(x, y, null);
 			}
 		}
 		else if (e.getSource() == aboutMenuItem)
@@ -137,9 +137,9 @@ public class Menu extends JFrame implements ActionListener {
 		}
 		else if (e.getSource() == clearScreenItem)
 		{
-			gui.frame.getContentPane().removeAll();
+			gui.getContentPane().removeAll();
 		//	gui.frame.revalidate();
-			gui.frame.repaint();
+			gui.repaint();
 		}
 	}
 }
