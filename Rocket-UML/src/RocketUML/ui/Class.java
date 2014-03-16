@@ -123,11 +123,26 @@ public class Class extends Element {
                     relationshipDragPoint.setLocation(point.x+CONNECT_HALF_SIZE, point.y+CONNECT_HALF_SIZE);
                     ArrayList<Point> points = attachedPoints.get(entry.getKey());
                     points.add(relationshipDragPoint);
-                    System.out.println("attaching point to " + entry.getKey());
                 }
                 else
                     g.setColor(Color.WHITE);
                 g.fillRect(point.x, point.y, CONNECT_SIZE, CONNECT_SIZE);
+
+                if(!isSelected){ //only look for moved points if we aren't moving this class
+                    //look for points that have been moved away
+                    ArrayList<Point> removePoints = new ArrayList<Point>();
+                    ArrayList<Point> points = attachedPoints.get(entry.getKey());
+                    for(Point attachPoint : points){
+                        if(Math.abs(attachPoint.x - point.x) > CONNECT_CLOSE_DIST*2 ||
+                           Math.abs(attachPoint.y - point.y) > CONNECT_CLOSE_DIST*2){
+                            removePoints.add(attachPoint); //cant remove from list while iterating through same list
+                        }
+                    }
+                    for(Point removePoint : removePoints){
+                        points.remove(removePoint);
+                    }
+                }
+
             }
         }
 

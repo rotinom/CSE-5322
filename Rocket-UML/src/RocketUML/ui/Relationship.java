@@ -12,6 +12,7 @@ public class Relationship extends Element {
     public static final int END_SIZE = 4;
     public static final int HALF_END = END_SIZE/2;
     public static final int HALF_GRAB = GRAB_SIZE/2;
+    public static final int SYMBOL_SIZE = 12;
 
     public enum Type {
         ASSOCIATION, AGGREGATION, INHERITANCE;
@@ -21,9 +22,9 @@ public class Relationship extends Element {
     }
 
     public Map<MovePointType, Point> movePoints = new HashMap<MovePointType, Point>();
-    Type type = Type.ASSOCIATION;
-    MovePointType moveType = MovePointType.NONE;
-    Point dragPoint = null;
+    private Type type = Type.ASSOCIATION;
+    private MovePointType moveType = MovePointType.NONE;
+    private Point dragPoint = null;
 
     public void init(int xLoc, int yLoc, String n){
         movePoints.put(MovePointType.SOURCE, new Point(xLoc-45, yLoc));
@@ -121,14 +122,13 @@ public class Relationship extends Element {
     private void drawInheritance( Graphics g, int x1, int y1, int x2, int y2 )
     {
         double phi;
-        int length = 15; //side lengths
         phi = Math.PI/6; //30 degree angle
         double theta = Math.atan2(y1 - y2, x1 - x2);
 
-        int endX1 = (int)(x2 + length * Math.cos(theta + phi));
-        int endY1 = (int)(y2 + length * Math.sin(theta + phi));
-        int endX2 = (int)(x2 + length * Math.cos(theta - phi));
-        int endY2 = (int)(y2 + length * Math.sin(theta - phi));
+        int endX1 = (int)(x2 + SYMBOL_SIZE * Math.cos(theta + phi));
+        int endY1 = (int)(y2 + SYMBOL_SIZE * Math.sin(theta + phi));
+        int endX2 = (int)(x2 + SYMBOL_SIZE * Math.cos(theta - phi));
+        int endY2 = (int)(y2 + SYMBOL_SIZE * Math.sin(theta - phi));
 
         g.setColor(Color.BLACK);
         g.drawLine(x1, y1, x2, y2);
@@ -147,16 +147,15 @@ public class Relationship extends Element {
     private void drawAggregation( Graphics g, int x1, int y1, int x2, int y2 )
     {
         double phi;
-        int length = 15; //side lengths
         phi = Math.PI/6; //30 degree angle
         double theta = Math.atan2(y1 - y2, x1 - x2);
 
-        int endX1 = (int)(x2 + length * Math.cos(theta + phi));
-        int endY1 = (int)(y2 + length * Math.sin(theta + phi));
-        int endX2 = (int)(x2 + length * Math.cos(theta - phi));
-        int endY2 = (int)(y2 + length * Math.sin(theta - phi));
-        int endX3 = (int)(endX2 + length * Math.cos(theta + phi));
-        int endY3 = (int)(endY2 + length * Math.sin(theta + phi));
+        int endX1 = (int)(x2 + SYMBOL_SIZE * Math.cos(theta + phi));
+        int endY1 = (int)(y2 + SYMBOL_SIZE * Math.sin(theta + phi));
+        int endX2 = (int)(x2 + SYMBOL_SIZE * Math.cos(theta - phi));
+        int endY2 = (int)(y2 + SYMBOL_SIZE * Math.sin(theta - phi));
+        int endX3 = (int)(endX2 + SYMBOL_SIZE * Math.cos(theta + phi));
+        int endY3 = (int)(endY2 + SYMBOL_SIZE * Math.sin(theta + phi));
 
         g.setColor(Color.BLACK);
         g.drawLine(x1, y1, x2, y2);
