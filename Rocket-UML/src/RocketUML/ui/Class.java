@@ -178,13 +178,6 @@ public class Class extends Element {
             if(index >= 0 && index < methods.size()) //make sure in range
                 methods.set(index,s);
         }
-        //draw(getGraphics());
-        //update(getGraphics());
-        this.revalidate();
-        //validate();
-        this.repaint();
-        //this.paint(this.getGraphics());
-
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Element extends JPanel {
     }
 
     public void draw(Graphics graphics){
-        System.out.println("base draw");
+        //meant to be overridden
     }
 
     public void setLocation(int xLoc, int yLoc){
@@ -34,7 +34,7 @@ public class Element extends JPanel {
     }
 
     public boolean contains(Point p){
-        System.out.println("base contains");
+        //meant to be overridden
         return false;
     }
 
@@ -64,15 +64,16 @@ public class Element extends JPanel {
 
     public void editString(int xLoc, int yLoc){
         String string = JOptionPane.showInputDialog("Please enter new text for: "+getStringAtLocation(xLoc,yLoc));
-        if(string == null)
-            string = "";
+        if(string == null){string = "";}
         setEditedString(xLoc, yLoc, string);
     }
 
     public void setEditedString(int xLoc, int yLoc, String s){
+        //meant to be overridden
     }
 
     public String getStringAtLocation(int xLoc, int yLoc){
+        //meant to be overridden
         return "";
     }
 
