@@ -21,7 +21,9 @@ public class Main extends JFrame {
 
     public Main() {
    		Menu gMenu = new Menu(this);
-		Toolbar Tool = new Toolbar();
+        //hide toolbar for now
+		//Toolbar Tool = new Toolbar();
+        //getContentPane().add(Tool.panel, BorderLayout.WEST);
 
         //Create and set up the window.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -29,7 +31,6 @@ public class Main extends JFrame {
         int height = (int) (screenSize.getHeight()/2);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        getContentPane().add(Tool.panel, BorderLayout.WEST);
         setJMenuBar(gMenu.menuBar);
         setLocation(width/2, height/2);
         setPreferredSize(new Dimension(width, height));
@@ -40,14 +41,14 @@ public class Main extends JFrame {
         pack();
     }
 
-    class WorkSpace extends JPanel implements MouseMotionListener,MouseListener {
-
+    class WorkSpace extends JPanel implements MouseMotionListener,MouseListener,KeyListener {
         private Element selectedElement=null;
 
         public WorkSpace(){
             super();
             addMouseListener(this);
             addMouseMotionListener(this);
+            addKeyListener(this);
             createPopup();
             createClassPopup();
             createRelationPopup();
@@ -133,6 +134,20 @@ public class Main extends JFrame {
             });
 
             classPopup.addSeparator();
+
+            menuItem = new JMenuItem("Remove Selected Attribute/Method");
+            classPopup.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (((Class) selectedElement).isPointInAttributeArea(mouseX, mouseY)) {
+                        ((Class) selectedElement).removeAttribute(selectedElement.getStringAtLocation(mouseX, mouseY));
+                    } else if (((Class) selectedElement).isPointInMethodArea(mouseX, mouseY)) {
+                        ((Class) selectedElement).removeMethod(selectedElement.getStringAtLocation(mouseX, mouseY));
+                    }
+                   repaint();
+                }
+            });
+
             menuItem = new JMenuItem("Remove Class");
             classPopup.add(menuItem);
             menuItem.addActionListener(new ActionListener() {
@@ -148,18 +163,39 @@ public class Main extends JFrame {
         {
             relationPopup = new JPopupMenu();
 
-            // add menu items to popup
-            JMenuItem menuItem = new JMenuItem("Edit Name...");
-            relationPopup.add(menuItem);
-            menuItem.addActionListener(new ActionListener() {
+            JMenu submenu = new JMenu("Change Relationship");
+            JMenuItem menuAssc = new JMenuItem("Association");
+            JMenuItem menuAggr = new JMenuItem("Aggregation");
+            JMenuItem menuInhr = new JMenuItem("Inheritance");
+            submenu.add(menuAssc);
+            submenu.add(menuAggr);
+            submenu.add(menuInhr);
+            relationPopup.add(submenu);
+
+            menuAssc.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    //((Class)selectedElement).addAttribute("void newAttribute");
-                    //repaint();
+                    Relationship relationship = (Relationship)selectedElement;
+                    relationship.setType(Relationship.Type.ASSOCIATION);
+                    repaint();
+                }
+            });
+            menuAggr.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Relationship relationship = (Relationship) selectedElement;
+                    relationship.setType(Relationship.Type.AGGREGATION);
+                    repaint();
+                }
+            });
+            menuInhr.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Relationship relationship = (Relationship)selectedElement;
+                    relationship.setType(Relationship.Type.INHERITANCE);
+                    repaint();
                 }
             });
 
             relationPopup.addSeparator();
-            menuItem = new JMenuItem("Remove Relationship");
+            JMenuItem menuItem = new JMenuItem("Remove Relationship");
             relationPopup.add(menuItem);
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -178,6 +214,9 @@ public class Main extends JFrame {
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////// INPUT HANDLERS //////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////
         @Override
         public void mouseDragged(MouseEvent e) {
             if (selectedElement!=null){
@@ -265,6 +304,33 @@ public class Main extends JFrame {
         @Override
         public void mouseExited(MouseEvent e) {}
 
+        public void addNotify() {
+            super.addNotify();
+            requestFocus();
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            handleKeyEvent(e);
+        }
+        @Override
+        public void keyTyped(KeyEvent e) {}
+        @Override
+        public void keyPressed(KeyEvent e) {}
+
+        public void handleKeyEvent(KeyEvent e){
+            int c = e.getKeyCode ();
+            if (c==KeyEvent.VK_UP) {
+                selectedElement.setLocation(selectedElement.getX(), selectedElement.getY()-1);
+            } else if(c==KeyEvent.VK_DOWN) {
+                selectedElement.setLocation(selectedElement.getX(), selectedElement.getY()+1);
+            } else if(c==KeyEvent.VK_LEFT) {
+                selectedElement.setLocation(selectedElement.getX()-1, selectedElement.getY());
+            } else if(c==KeyEvent.VK_RIGHT) {
+                selectedElement.setLocation(selectedElement.getX()+1, selectedElement.getY());
+            }
+            repaint();
+        }
     }
 
     public static void main(String args[]) {

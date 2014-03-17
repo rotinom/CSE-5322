@@ -20,7 +20,7 @@ public class Class extends Element {
     public static final int CONNECT_CLOSE_DIST = 10;
 
     public enum ConnectLocationType {
-        TOP, BOTTOM, LEFT, RIGHT;
+        TOP, BOTTOM, LEFT, RIGHT
     }
 
     public Map<ConnectLocationType, Point> connectPoints = new HashMap<ConnectLocationType, Point>();
@@ -29,6 +29,7 @@ public class Class extends Element {
     public ArrayList<String> methods = new ArrayList<String>();
     private boolean drawConnectPoints = false;
     private Point relationshipDragPoint = null;
+    private Color colorScheme = new Color(60, 60, 150);
 
     public void init(int xLoc, int yLoc, String n){
         width = 200;
@@ -76,10 +77,9 @@ public class Class extends Element {
         // draw a shadow
         BufferedImage img = new BufferedImage(width+20, height+20, BufferedImage.TYPE_INT_ARGB);
         Graphics g2 = img.getGraphics();
-        if(isSelected)
-           g2.setColor(Color.BLUE);
-        else
-            g2.setColor(Color.BLACK);
+        if(isSelected){g2.setColor(Color.BLUE);}
+        else{g2.setColor(Color.BLACK);}
+
         g2.fillRect(0, 0, width, height);
         // blur the shadow
         BufferedImageOp op = getBlurredOp();
@@ -88,7 +88,7 @@ public class Class extends Element {
 
         g.setColor(Color.WHITE);
         g.fillRect(x, y, width, height);
-        g.setColor(new Color(60, 60, 150));
+        g.setColor(colorScheme);
         g.fillRect(x, y, width, TITLE_HEIGHT);
         g.setColor(Color.WHITE);
         g.drawString(name, x + 60, y + 20);
@@ -119,7 +119,7 @@ public class Class extends Element {
                 if(relationshipDragPoint.distance(point) < CONNECT_CLOSE_DIST)
                 {
                     ArrayList<Point> points = attachedPoints.get(entry.getKey());
-                    g.setColor(new Color(60, 60, 150));
+                    g.setColor(colorScheme);
                     if(!points.contains(relationshipDragPoint))
                     {
                         relationshipDragPoint.setLocation(point.x+CONNECT_HALF_SIZE, point.y+CONNECT_HALF_SIZE);
@@ -163,28 +163,30 @@ public class Class extends Element {
             return;
 
         int attributeHeight = attributes.size()*LINE_HEIGHT;
-        int methodHeight = methods.size()*LINE_HEIGHT;
         int index = 0;
         if(yLoc < y+TITLE_HEIGHT){ //title
             name = s;
         }
         else if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
             index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
-            if(index >= 0 && index < attributes.size()) //make sure in range
+            if(index >= 0 && index < attributes.size()){ //make sure in range
                 attributes.set(index,s);
+            }
         }
         else { //methods
             index = (yLoc-y-TITLE_HEIGHT-attributeHeight)/LINE_HEIGHT;
-            if(index >= 0 && index < methods.size()) //make sure in range
+            if(index >= 0 && index < methods.size()){ //make sure in range
                 methods.set(index,s);
+            }
         }
     }
 
     @Override
     public String getStringAtLocation(int xLoc, int yLoc){
         String string = "";
-        if(!contains(new Point(xLoc, yLoc)))
+        if(!contains(new Point(xLoc, yLoc))){
             return string;
+        }
 
         int attributeHeight = attributes.size()*LINE_HEIGHT;
         int methodHeight = methods.size()*LINE_HEIGHT;
@@ -194,34 +196,59 @@ public class Class extends Element {
         }
         else if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
             index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
-            if(index >= 0 && index < attributes.size()) //make sure in range
+            if(index >= 0 && index < attributes.size()){ //make sure in range
                 string = attributes.get(index);
+            }
         }
         else { //methods
             index = (yLoc-y-TITLE_HEIGHT-attributeHeight)/LINE_HEIGHT;
-            if(index >= 0 && index < methods.size()) //make sure in range
+            if(index >= 0 && index < methods.size()){ //make sure in range
                 string = methods.get(index);
+            }
         }
         return string;
     }
 
+    public boolean isPointInTitleArea(int xLoc, int yLoc){
+        return contains(new Point(xLoc, yLoc)) && yLoc < y+TITLE_HEIGHT;
+    }
+
+    public boolean isPointInAttributeArea(int xLoc, int yLoc){
+        int attributeHeight = attributes.size()*LINE_HEIGHT;
+        return contains(new Point(xLoc, yLoc)) && yLoc > y+TITLE_HEIGHT && yLoc < y+TITLE_HEIGHT+attributeHeight;
+    }
+
+    public boolean isPointInMethodArea(int xLoc, int yLoc){
+        int attributeHeight = attributes.size()*LINE_HEIGHT;
+        return contains(new Point(xLoc, yLoc)) && yLoc > y+TITLE_HEIGHT+attributeHeight;
+    }
+
     private static BufferedImageOp getBlurredOp() {
         float[] matrix = new float[400];
-        for (int i = 0; i < 400; i++)
+        for (int i = 0; i < 400; i++){
             matrix[i] = 1.0f/400.0f;
+        }
         return new ConvolveOp(new Kernel(20, 20, matrix), ConvolveOp.EDGE_NO_OP, null);
     }
 
     public void addAttribute(String attribute){
-        if(attributes.contains(EMPTY_STRING))
+        if(attributes.contains(EMPTY_STRING)){
             attributes.remove(EMPTY_STRING);
+        }
         attributes.add(attribute);
+    }
+    public void removeAttribute(String attribute){
+        attributes.remove(attribute);
     }
 
     public void addMethod(String method){
-        if(methods.contains(EMPTY_STRING))
+        if(methods.contains(EMPTY_STRING)){
             methods.remove(EMPTY_STRING);
+        }
         methods.add(method);
+    }
+    public void removeMethod(String method){
+        methods.remove(method);
     }
 
     public void drawConnectPoints(boolean draw) {

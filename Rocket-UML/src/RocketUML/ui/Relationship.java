@@ -14,10 +14,10 @@ public class Relationship extends Element {
     public static final int SNAP_TO_DIST = 10;
 
     public enum Type {
-        ASSOCIATION, AGGREGATION, INHERITANCE;
+        ASSOCIATION, AGGREGATION, INHERITANCE
     }
     public enum MovePointType {
-        NONE, SOURCE, INTERIM1, INTERIM2, DESTINATION;
+        NONE, SOURCE, INTERIM1, INTERIM2, DESTINATION
     }
 
     public Map<MovePointType, Point> movePoints = new HashMap<MovePointType, Point>();
@@ -50,6 +50,7 @@ public class Relationship extends Element {
         g.fillOval(movePoints.get(MovePointType.SOURCE).x - HALF_END,
                    movePoints.get(MovePointType.SOURCE).y - HALF_END, END_SIZE, END_SIZE);
         Point destPoint = movePoints.get(MovePointType.DESTINATION);
+
         //draw end type
         switch(type){
             case ASSOCIATION:
@@ -87,8 +88,9 @@ public class Relationship extends Element {
         g.drawString(name, x, y);
 
         //save metrics for later
-        if(metrics == null)
+        if(metrics == null){
             metrics = g.getFontMetrics(getFont());
+        }
     }
     
     @Override
@@ -114,8 +116,8 @@ public class Relationship extends Element {
         //check to see if they selected the text
         boolean inLabel = inTextLabel((int)p.getX(), (int)p.getY());
         if(inLabel){
-            isDragText = inLabel;
-            contains = inLabel;
+            isDragText = true;
+            contains = true;
         }
 
         return contains;
