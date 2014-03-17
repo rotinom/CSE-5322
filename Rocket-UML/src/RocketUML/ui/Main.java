@@ -11,6 +11,7 @@ public class Main extends JFrame {
     private JPanel workSpace;
     protected JPopupMenu popup;
     protected JPopupMenu classPopup;
+    protected JPopupMenu relationPopup;
 
     public ArrayList<Element> elements = new ArrayList<Element>();
     private int mouseX=0;
@@ -49,6 +50,7 @@ public class Main extends JFrame {
             addMouseMotionListener(this);
             createPopup();
             createClassPopup();
+            createRelationPopup();
         }
 
         public void createPopup()
@@ -142,6 +144,32 @@ public class Main extends JFrame {
             });
         }
 
+        public void createRelationPopup()
+        {
+            relationPopup = new JPopupMenu();
+
+            // add menu items to popup
+            JMenuItem menuItem = new JMenuItem("Edit Name...");
+            relationPopup.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    //((Class)selectedElement).addAttribute("void newAttribute");
+                    //repaint();
+                }
+            });
+
+            relationPopup.addSeparator();
+            menuItem = new JMenuItem("Remove Relationship");
+            relationPopup.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    remove(selectedElement);
+                    elements.remove(selectedElement);
+                    repaint();
+                }
+            });
+        }
+
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -162,10 +190,12 @@ public class Main extends JFrame {
                     selectedElement.setLocation((int)(e.getX()-xOffset), (int)(e.getY()-yOffset));
                 else //relationship
                 {
-                    for (Element element : elements){
-                        if(element.getClass() == Class.class){
-                            ((Class)element).drawConnectPoints(((Class)element).closeTo(e.getPoint()));
-                            ((Class)element).setRelationshipDragPoint(((Relationship)selectedElement).getDragPoint());
+                    if(!((Relationship)selectedElement).getIsDragText()) {
+                        for (Element element : elements){
+                            if(element.getClass() == Class.class){
+                                ((Class)element).drawConnectPoints(((Class)element).closeTo(e.getPoint()));
+                                ((Class)element).setRelationshipDragPoint(((Relationship)selectedElement).getDragPoint());
+                            }
                         }
                     }
                     selectedElement.setLocation((int) (e.getX()), (int) (e.getY()));
@@ -197,30 +227,34 @@ public class Main extends JFrame {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            mouseX = e.getX();
-            mouseY = e.getY();
-            selectedElement = getSelectedElement(e.getPoint());
-
-            //for mac isPopupTrigger works on mouse pressed
-            if (e.isPopupTrigger()) {
-                if(selectedElement == null)
-                    popup.show(e.getComponent(), mouseX, mouseY);
-                else
-                    classPopup.show(e.getComponent(), mouseX, mouseY);
-            }
+            handleMouseClick(e); //for mac isPopupTrigger works on mouse pressed
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            handleMouseClick(e); //for win isPopupTrigger works on mouse released
+        }
+
+        //handle mouse click for both Mac/Windows
+        public void handleMouseClick(MouseEvent e ){
             mouseX = e.getX();
             mouseY = e.getY();
+            selectedElement = getSelectedElement(e.getPoint());
 
-            //for windows isPopupTrigger works on mouse pressed
-            if (e.isPopupTrigger()) {
-                if(selectedElement == null)
+            if (e.getClickCount() == 2 && selectedElement != null){
+                selectedElement.editString(mouseX, mouseY);
+                repaint();
+            }
+            else if (e.isPopupTrigger()) {
+                if(selectedElement == null){
                     popup.show(e.getComponent(), mouseX, mouseY);
-                else
+                }
+                else if(selectedElement.getClass() == Class.class){
                     classPopup.show(e.getComponent(), mouseX, mouseY);
+                }
+                else if(selectedElement.getClass() == Relationship.class){
+                    relationPopup.show(e.getComponent(), mouseX, mouseY);
+                }
             }
         }
 

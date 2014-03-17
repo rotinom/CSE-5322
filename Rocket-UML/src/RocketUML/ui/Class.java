@@ -144,7 +144,6 @@ public class Class extends Element {
                         points.remove(removePoint);
                     }
                 }
-
             }
         }
 
@@ -158,14 +157,66 @@ public class Class extends Element {
         }
     }
 
-    private static BufferedImageOp getBlurredOp() {
+    @Override
+    public void setEditedString(int xLoc, int yLoc, String s){
+        if(!contains(new Point(xLoc, yLoc)))
+            return;
 
+        int attributeHeight = attributes.size()*LINE_HEIGHT;
+        int methodHeight = methods.size()*LINE_HEIGHT;
+        int index = 0;
+        if(yLoc < y+TITLE_HEIGHT){ //title
+            name = s;
+        }
+        else if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
+            index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
+            if(index >= 0 && index < attributes.size()) //make sure in range
+                attributes.set(index,s);
+        }
+        else { //methods
+            index = (yLoc-y-TITLE_HEIGHT-attributeHeight)/LINE_HEIGHT;
+            if(index >= 0 && index < methods.size()) //make sure in range
+                methods.set(index,s);
+        }
+        //draw(getGraphics());
+        //update(getGraphics());
+        this.revalidate();
+        //validate();
+        this.repaint();
+        //this.paint(this.getGraphics());
+
+    }
+
+    @Override
+    public String getStringAtLocation(int xLoc, int yLoc){
+        String string = "";
+        if(!contains(new Point(xLoc, yLoc)))
+            return string;
+
+        int attributeHeight = attributes.size()*LINE_HEIGHT;
+        int methodHeight = methods.size()*LINE_HEIGHT;
+        int index = 0;
+        if(yLoc < y+TITLE_HEIGHT){ //title
+            string = name;
+        }
+        else if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
+            index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
+            if(index >= 0 && index < attributes.size()) //make sure in range
+                string = attributes.get(index);
+        }
+        else { //methods
+            index = (yLoc-y-TITLE_HEIGHT-attributeHeight)/LINE_HEIGHT;
+            if(index >= 0 && index < methods.size()) //make sure in range
+                string = methods.get(index);
+        }
+        return string;
+    }
+
+    private static BufferedImageOp getBlurredOp() {
         float[] matrix = new float[400];
         for (int i = 0; i < 400; i++)
             matrix[i] = 1.0f/400.0f;
-
-        return new ConvolveOp(new Kernel(20, 20, matrix),
-                ConvolveOp.EDGE_NO_OP, null);
+        return new ConvolveOp(new Kernel(20, 20, matrix), ConvolveOp.EDGE_NO_OP, null);
     }
 
     public void addAttribute(String attribute){

@@ -25,7 +25,7 @@ public class Relationship extends Element {
     private MovePointType moveType = MovePointType.NONE;
     private Point dragPoint = null;
     private FontMetrics metrics = null;
-    private boolean dragText = false;
+    private boolean isDragText = false;
 
     public void init(int xLoc, int yLoc, String n){
         movePoints.put(MovePointType.SOURCE, new Point(xLoc-45, yLoc));
@@ -96,7 +96,7 @@ public class Relationship extends Element {
         //determine is user is selecting a grab point, go ahead and give them a little
         //more area to grab (x2)
         boolean contains = false;
-        dragText = false;
+        isDragText = false;
         moveType = MovePointType.NONE;
         dragPoint = null;
 
@@ -112,13 +112,10 @@ public class Relationship extends Element {
         }
 
         //check to see if they selected the text
-        int textWidth = metrics.stringWidth(name);
-        int textHeight = metrics.getHeight();
-        if(p.getX() >= x && p.getX() <= x+textWidth &&
-           p.getY() >= y-textHeight && p.getY() <= y)
-        {
-            dragText = true;
-            contains = true;
+        boolean inLabel = inTextLabel((int)p.getX(), (int)p.getY());
+        if(inLabel){
+            isDragText = inLabel;
+            contains = inLabel;
         }
 
         return contains;
@@ -126,9 +123,8 @@ public class Relationship extends Element {
 
     @Override
     public void setLocation(int xLoc, int yLoc){
-
         //if we are dragging text, set local x/y
-        if(dragText){
+        if(isDragText){
             x = xLoc;
             y = yLoc;
             return;
@@ -166,6 +162,35 @@ public class Relationship extends Element {
         type = relationshipType;
     }
 
+    @Override
+    public void setEditedString(int xLoc, int yLoc, String s){
+        if(inTextLabel(xLoc, yLoc)) {
+            name = s;
+            repaint();
+        }
+    }
+
+    @Override
+    public String getStringAtLocation(int xLoc, int yLoc){
+        String string = "";
+        if(inTextLabel(xLoc, yLoc)) {
+            string = name;
+        }
+        return string;
+    }
+
+    public boolean inTextLabel(int xLoc, int yLoc){
+        boolean in = false;
+        int textWidth = metrics.stringWidth(name);
+        int textHeight = metrics.getHeight();
+        if(xLoc >= x && xLoc <= x+textWidth &&
+           yLoc >= y-textHeight && yLoc <= y)
+        {
+            in = true;
+        }
+        return in;
+    }
+
     private void drawInheritance( Graphics g, int x1, int y1, int x2, int y2 )
     {
         double arcTangent = Math.atan2(y1 - y2, x1 - x2);
@@ -176,12 +201,10 @@ public class Relationship extends Element {
 
         g.setColor(Color.BLACK);
         g.drawLine(x1, y1, x2, y2);
-
         int[] xPoints = {endX1, endX2, x2};
         int[] yPoints = {endY1, endY2, y2};
         g.setColor(Color.WHITE);
         g.fillPolygon(xPoints, yPoints, xPoints.length);
-
         g.setColor(Color.BLACK);
         g.drawLine(x2, y2, endX1, endY1);
         g.drawLine(x2, y2, endX2, endY2);
@@ -200,16 +223,16 @@ public class Relationship extends Element {
 
         g.setColor(Color.BLACK);
         g.drawLine(x1, y1, x2, y2);
-
         int[] xPoints = {endX1, endX3, endX2, x2};
         int[] yPoints = {endY1, endY3, endY2, y2};
         g.setColor(Color.WHITE);
         g.fillPolygon(xPoints, yPoints, xPoints.length);
-
         g.setColor(Color.BLACK);
         g.drawLine(x2, y2, endX1, endY1);
         g.drawLine(x2, y2, endX2, endY2);
         g.drawLine(endX3, endY3, endX1, endY1);
         g.drawLine(endX3, endY3, endX2, endY2);
     }
+
+    public boolean getIsDragText(){ return isDragText;}
 }

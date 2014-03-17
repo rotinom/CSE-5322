@@ -62,4 +62,18 @@ public class Element extends JPanel {
         isSelected = selected;
     }
 
+    public void editString(int xLoc, int yLoc){
+        String string = JOptionPane.showInputDialog("Please enter new text for: "+getStringAtLocation(xLoc,yLoc));
+        if(string == null)
+            string = "";
+        setEditedString(xLoc, yLoc, string);
+    }
+
+    public void setEditedString(int xLoc, int yLoc, String s){
+    }
+
+    public String getStringAtLocation(int xLoc, int yLoc){
+        return "";
+    }
+
 }
