@@ -271,7 +271,8 @@ public class Main extends JFrame {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            handleMouseClick(e); //for win isPopupTrigger works on mouse released
+            if (e.getClickCount() != 2) //don't handle double click
+                handleMouseClick(e); //for win isPopupTrigger works on mouse released
         }
 
         //handle mouse click for both Mac/Windows
