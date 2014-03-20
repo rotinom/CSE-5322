@@ -22,7 +22,9 @@ public class Menu extends JFrame implements ActionListener {
   				clearScreenItem;
   
   	private Main gui;
-    
+	private string fileName;
+    private string pathName; 
+	
   	public Menu(Main in)
 	{
 		gui = in; 
@@ -95,6 +97,11 @@ public class Menu extends JFrame implements ActionListener {
 		{
 			JFileChooser openChooser = new JFileChooser();
 			int val = openChooser.showSaveDialog(Menu.this);	
+			if(val == JFileChooser.APPROVE_OPTION)
+			{
+				fileName = openChooser.getSelectedFile().getName(); 
+				pathName = openChooser.getSelectedFile().getPath();
+			}
 		}
 		else if (e.getSource() == addClassItem)
 		{
