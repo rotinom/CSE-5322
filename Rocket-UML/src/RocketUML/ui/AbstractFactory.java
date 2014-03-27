@@ -2,7 +2,7 @@ package RocketUML.ui;
 
 import java.util.HashMap;
 
-public class Flyweight {
+public class AbstractFactory {
 	private static final HashMap elements = new HashMap();
 	
 	public static Element getElement(String objName)

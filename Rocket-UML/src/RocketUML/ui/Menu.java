@@ -22,8 +22,8 @@ public class Menu extends JFrame implements ActionListener {
   				clearScreenItem;
   
   	private Main gui;
-	private string fileName;
-    private string pathName; 
+	private String fileName;
+    private String pathName;
 	
   	public Menu(Main in)
 	{
@@ -115,7 +115,7 @@ public class Menu extends JFrame implements ActionListener {
 				int x = Integer.parseInt(class_x_coord);
 				int y = Integer.parseInt(class_y_coord);
 	
-				Element classElement = Flyweight.getElement("Class");
+				Element classElement = AbstractFactory.getElement("Class");
 				classElement.init(x,y,className);
 			}
 		}
@@ -131,7 +131,7 @@ public class Menu extends JFrame implements ActionListener {
 				int x = Integer.parseInt(relationship_x_coord);
 				int y = Integer.parseInt(relationship_y_coord);
 	
-				Element relationshipElement = Flyweight.getElement("Relationship");
+				Element relationshipElement = AbstractFactory.getElement("Relationship");
 				relationshipElement.init(x, y, null);
 			}
 		}
