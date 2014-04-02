@@ -21,7 +21,7 @@ public class MethodParameter extends AbstractElement {
     }
 
     public MethodParameter setType(String type) {
-        type = type;
+        this.type = type;
         return this;
     }
 

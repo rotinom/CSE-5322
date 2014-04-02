@@ -58,4 +58,45 @@ public class MethodElement extends AbstractElement{
     public ArrayList<MethodParameter> getParameters() {
         return parameters;
     }
+
+    public String getString() {
+        String methodString = returnType + " " + getName() + "(";
+        boolean first = true;
+        for (MethodParameter parameter : parameters){
+            if(!first) {
+                methodString = methodString + ", ";
+            }
+            else {
+                first = false;
+            }
+            methodString = methodString + parameter.getType() + " " + parameter.getName();
+        }
+        methodString = methodString + ")";
+        return methodString;
+    }
+
+    public void setString(String str) {
+        parameters.clear();
+        String cleanStr = str.replaceAll("\\(|\\)|;|,", " ");
+        String delims = " +";
+        String[] tokens = cleanStr.split(delims);
+
+        //System.out.println("method string = " + str);
+        //System.out.println("method string = " + cleanStr);
+        //System.out.println("delims = " + delims + " tokens.length="+tokens.length);
+
+        if(tokens.length > 1) {
+            returnType = tokens[0];
+            setName(tokens[1]);
+            //System.out.println("returnType="+returnType+" name="+getName());
+        }
+        int i = 2;
+        while (i+1 < tokens.length) {
+            MethodParameter param = createParameter();
+            param.setType(tokens[i]).setName(tokens[i + 1]);
+            //System.out.println("type=" + param.getType() + " name=" + param.getName());
+            i += 2;
+        }
+    }
 }
+

@@ -1,5 +1,9 @@
 package RocketUML.ui;
 
+import RocketUML.model.AttributeElement;
+import RocketUML.model.ClassElement;
+import RocketUML.model.MethodElement;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
@@ -25,17 +29,14 @@ public class Class extends Element {
 
     public Map<ConnectLocationType, Point> connectPoints = new HashMap<ConnectLocationType, Point>();
     public Map<ConnectLocationType, ArrayList<Point>> attachedPoints = new HashMap<ConnectLocationType, ArrayList<Point>>();
-    public ArrayList<String> attributes = new ArrayList<String>();
-    public ArrayList<String> methods = new ArrayList<String>();
     private boolean drawConnectPoints = false;
     private Point relationshipDragPoint = null;
     private Color colorScheme = new Color(60, 60, 150);
+    private ClassElement model;
 
     public void init(int xLoc, int yLoc, String n){
         width = 200;
         height = 30;
-        attributes.add(EMPTY_STRING);
-        methods.add(EMPTY_STRING);
 
         //initialize connection point data
         connectPoints.put(ConnectLocationType.TOP, new Point(0, 0));
@@ -46,6 +47,9 @@ public class Class extends Element {
         attachedPoints.put(ConnectLocationType.LEFT, new ArrayList<Point>());
         connectPoints.put(ConnectLocationType.RIGHT, new Point(0, 0));
         attachedPoints.put(ConnectLocationType.RIGHT, new ArrayList<Point>());
+
+        //create new class model for data storage
+        model = new ClassElement();
 
         super.init(xLoc, yLoc, n);
     }
@@ -64,8 +68,8 @@ public class Class extends Element {
     public void draw(Graphics g)
     {
         //compute width and height
-        int attributeHeight = attributes.size()*LINE_HEIGHT;
-        int methodHeight = methods.size()*LINE_HEIGHT;
+        int attributeHeight = model.getAttributes().size()*LINE_HEIGHT;
+        int methodHeight = model.getMethods().size()*LINE_HEIGHT;
         height = TITLE_HEIGHT + attributeHeight + methodHeight;
 
         //move connect points
@@ -98,19 +102,21 @@ public class Class extends Element {
         //draw attributes and methods
         int count = 0;
         g.setColor(Color.GRAY);
-        for (String s : attributes){
-            g.drawString(s, x + 20, 5 + y + LINE_HEIGHT/2 + TITLE_HEIGHT + LINE_HEIGHT*count++);
+        ArrayList<AttributeElement> attributes = model.getAttributes();
+        for (AttributeElement attr : attributes){ //todo add attribute protection (public, private, etc...)?
+            g.drawString(attr.getType() + " " + attr.getName(), x + 20, 5 + y + LINE_HEIGHT/2 + TITLE_HEIGHT + LINE_HEIGHT*count++);
         }
+
         g.setColor(Color.DARK_GRAY);
-        for (String s : methods){
-            g.drawString(s, x + 20, 5 + y + LINE_HEIGHT/2 + TITLE_HEIGHT + LINE_HEIGHT*count++);
+        ArrayList<MethodElement> methods = model.getMethods();
+        for (MethodElement method : methods){
+            g.drawString(method.getString(), x + 20, 5 + y + LINE_HEIGHT/2 + TITLE_HEIGHT + LINE_HEIGHT*count++);
         }
         g.drawLine(x, y+TITLE_HEIGHT+attributeHeight, x+width, y+TITLE_HEIGHT+attributeHeight);
 
         //draw connect points
         if(drawConnectPoints)
         {
-            //for (Point point : connectPoints){
             for (Map.Entry<ConnectLocationType, Point> entry : connectPoints.entrySet()) {
                 Point point = entry.getValue();
                 g.setColor(Color.BLACK);
@@ -150,7 +156,6 @@ public class Class extends Element {
         //move any attached points
         for (Map.Entry<ConnectLocationType, ArrayList<Point>> entry : attachedPoints.entrySet()) {
             for(Point point : entry.getValue()) {
-                //System.out.println("update location of attached point");
                 Point centerPoint = connectPoints.get(entry.getKey());
                 point.setLocation(centerPoint.x+CONNECT_HALF_SIZE, centerPoint.y+CONNECT_HALF_SIZE);
             }
@@ -162,21 +167,21 @@ public class Class extends Element {
         if(!contains(new Point(xLoc, yLoc)))
             return;
 
-        int attributeHeight = attributes.size()*LINE_HEIGHT;
+        int attributeHeight = model.getAttributes().size()*LINE_HEIGHT;
         int index = 0;
         if(yLoc < y+TITLE_HEIGHT){ //title
             name = s;
         }
         else if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
             index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
-            if(index >= 0 && index < attributes.size()){ //make sure in range
-                attributes.set(index,s);
+            if(index >= 0 && index < model.getAttributes().size()){ //make sure in range
+                model.getAttributes().get(index).setString(s);
             }
         }
         else { //methods
             index = (yLoc-y-TITLE_HEIGHT-attributeHeight)/LINE_HEIGHT;
-            if(index >= 0 && index < methods.size()){ //make sure in range
-                methods.set(index,s);
+            if(index >= 0 && index < model.getMethods().size()){ //make sure in range
+                model.getMethods().get(index).setString(s);
             }
         }
     }
@@ -188,22 +193,22 @@ public class Class extends Element {
             return string;
         }
 
-        int attributeHeight = attributes.size()*LINE_HEIGHT;
-        int methodHeight = methods.size()*LINE_HEIGHT;
+        int attributeHeight = model.getAttributes().size()*LINE_HEIGHT;
+        int methodHeight = model.getMethods().size()*LINE_HEIGHT;
         int index = 0;
         if(yLoc < y+TITLE_HEIGHT){ //title
             string = name;
         }
         else if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
             index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
-            if(index >= 0 && index < attributes.size()){ //make sure in range
-                string = attributes.get(index);
+            if(index >= 0 && index < model.getAttributes().size()){ //make sure in range
+                string = model.getAttributes().get(index).getString();
             }
         }
         else { //methods
             index = (yLoc-y-TITLE_HEIGHT-attributeHeight)/LINE_HEIGHT;
-            if(index >= 0 && index < methods.size()){ //make sure in range
-                string = methods.get(index);
+            if(index >= 0 && index < model.getMethods().size()){ //make sure in range
+                string = model.getMethods().get(index).getString();
             }
         }
         return string;
@@ -214,12 +219,12 @@ public class Class extends Element {
     }
 
     public boolean isPointInAttributeArea(int xLoc, int yLoc){
-        int attributeHeight = attributes.size()*LINE_HEIGHT;
+        int attributeHeight = model.getAttributes().size()*LINE_HEIGHT;
         return contains(new Point(xLoc, yLoc)) && yLoc > y+TITLE_HEIGHT && yLoc < y+TITLE_HEIGHT+attributeHeight;
     }
 
     public boolean isPointInMethodArea(int xLoc, int yLoc){
-        int attributeHeight = attributes.size()*LINE_HEIGHT;
+        int attributeHeight = model.getMethods().size()*LINE_HEIGHT;
         return contains(new Point(xLoc, yLoc)) && yLoc > y+TITLE_HEIGHT+attributeHeight;
     }
 
@@ -231,24 +236,20 @@ public class Class extends Element {
         return new ConvolveOp(new Kernel(20, 20, matrix), ConvolveOp.EDGE_NO_OP, null);
     }
 
-    public void addAttribute(String attribute){
-        if(attributes.contains(EMPTY_STRING)){
-            attributes.remove(EMPTY_STRING);
-        }
-        attributes.add(attribute);
+    public void addAttribute(String s){
+        model.createAttribute().setString(s);
     }
-    public void removeAttribute(String attribute){
-        attributes.remove(attribute);
+    public void removeAttribute(String s){
+        //todo add remove attribute based on string
+        //attributes.removeMethod(s);
     }
 
-    public void addMethod(String method){
-        if(methods.contains(EMPTY_STRING)){
-            methods.remove(EMPTY_STRING);
-        }
-        methods.add(method);
+    public void addMethod(String s){
+        model.createMethod().setString(s);
     }
-    public void removeMethod(String method){
-        methods.remove(method);
+    public void removeMethod(String s){
+        //todo add remove method based on string
+        //model.removeMethod(s);
     }
 
     public void drawConnectPoints(boolean draw) {

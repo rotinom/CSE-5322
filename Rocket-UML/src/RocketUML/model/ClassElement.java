@@ -75,4 +75,5 @@ public class ClassElement extends AbstractElement implements Drawable {
     public ArrayList<MethodElement> getMethods() {
         return methods;
     }
+
 }

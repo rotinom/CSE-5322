@@ -49,4 +49,19 @@ public class AttributeElement extends AbstractElement {
         protection = p;
         return this;
     }
+
+    public String getString() {
+        return type + " " + getName();
+    }
+
+    public void setString(String str) {
+        String cleanStr = str.replaceAll(";", "");
+        String delims = " +";
+        String[] tokens = cleanStr.split(delims);
+
+        if(tokens.length > 1) {
+            type = tokens[0];
+            setName(tokens[1]);
+        }
+    }
 }
