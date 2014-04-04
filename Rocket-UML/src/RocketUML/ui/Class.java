@@ -34,7 +34,7 @@ public class Class extends Element {
     private Color colorScheme = new Color(60, 60, 150);
     private ClassElement model;
 
-    public void init(int xLoc, int yLoc, String n){
+    public void init(int xLoc, int yLoc, String n, String type){
         width = 200;
         height = 30;
 
@@ -51,7 +51,7 @@ public class Class extends Element {
         //create new class model for data storage
         model = new ClassElement();
 
-        super.init(xLoc, yLoc, n);
+        super.init(xLoc, yLoc, n, "Class");
     }
 
     @Override
