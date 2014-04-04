@@ -11,7 +11,7 @@ public class ModelViewController {
     private int xOffset = 0;
     private int yOffset = 0;
 
-    private Element selectedElement=null; //keep current element to facilitate modifications
+    private Element selectedElement = null; //keep current element to facilitate modifications
 
     public ArrayList<Element> elements = new ArrayList<Element>();
 
@@ -224,4 +224,13 @@ public class ModelViewController {
         deser.Deserialize(fileName);
     }
 
+    public void resetDiagramForOpen()
+    {
+        elements.clear();
+        classCounter = 0;
+        relationshipCounter = 0;
+        xOffset = 0;
+        yOffset = 0;
+        selectedElement = null;
+    }
 }
