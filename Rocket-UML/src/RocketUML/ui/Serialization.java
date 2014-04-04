@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Serialization
 {
     ModelView view = new ModelView();
+    ModelViewController controller = ModelViewController.getInstance();
     public ArrayList<Element> elementsIn = new ArrayList<Element>();
 
     public void Serialize (String fileName, ArrayList<Element> elementsOut)
@@ -29,33 +30,37 @@ public class Serialization
 
     public void Deserialize (String fileName)
     {
-        Element element = new Element();
+        File checkFile = new File(fileName);
+        if (checkFile.exists())
+        {
+            controller.resetDiagramForOpen();
 
-        try
-        {
-            FileInputStream fileIn = new FileInputStream(fileName);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            elementsIn = (ArrayList<Element>) in.readObject();
-            System.out.printf("File opened from " + fileName + "%n");
-            in.close();
-            fileIn.close();
-        }
-        catch(IOException i)
-        {
-            i.printStackTrace();
-            return;
-        }
-        catch(ClassNotFoundException c)
-        {
-            System.out.println("Element class not found");
-            c.printStackTrace();
-            return;
-        }
+            try
+            {
+                FileInputStream fileIn = new FileInputStream(fileName);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                elementsIn = (ArrayList<Element>) in.readObject();
+                System.out.printf("File opened from " + fileName + "%n");
+                in.close();
+                fileIn.close();
+            }
+            catch(IOException i)
+            {
+                i.printStackTrace();
+                return;
+            }
+            catch(ClassNotFoundException c)
+            {
+                System.out.println("Element class not found");
+                c.printStackTrace();
+                return;
+            }
 
-        for (int i = 0; i < elementsIn.size(); i++)
+            view.drawElementsAfterOpen(elementsIn);
+        }
+        else
         {
-            element = elementsIn.get(i);
-            view.drawElementsAfterOpen(element.name, element.elementType, element.x, element.y);
+            System.out.printf("File " + fileName + " does not exist. Verify your path and file name. %n");
         }
     }
 }
