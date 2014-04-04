@@ -3,6 +3,7 @@ package RocketUML.model;
 import RocketUML.ui.Drawable;
 import RocketUML.visitor.Visitor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by rotinom on 2/19/14.
  */
-public class ClassElement extends AbstractElement implements Drawable {
+public class ClassElement extends AbstractElement implements Drawable,Serializable {
 
     private ArrayList<AttributeElement> attributes =
             new ArrayList<AttributeElement>();
