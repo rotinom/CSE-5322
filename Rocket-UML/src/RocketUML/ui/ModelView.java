@@ -256,18 +256,9 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         repaint();
     }
 
-    public void drawElementsAfterOpen(KeyEvent e)
+    public void drawElementsAfterOpen(String name, String type, int x, int y)
     {
-        int c = e.getKeyCode ();
-        if (c==KeyEvent.VK_UP) {
-            controller.setLocation(controller.getElementX(), controller.getElementY()-1);
-        } else if(c==KeyEvent.VK_DOWN) {
-            controller.setLocation(controller.getElementX(), controller.getElementY()+1);
-        } else if(c==KeyEvent.VK_LEFT) {
-            controller.setLocation(controller.getElementX()-1, controller.getElementY());
-        } else if(c==KeyEvent.VK_RIGHT) {
-            controller.setLocation(controller.getElementX()+1, controller.getElementY());
-        }
+        controller.createElement(name, type, x, y);
         repaint();
     }
 }
