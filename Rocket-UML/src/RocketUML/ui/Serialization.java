@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Serialization
 {
-    ModelViewController controller = ModelViewController.getInstance();
+    ModelView view = new ModelView();
     public ArrayList<Element> elementsIn = new ArrayList<Element>();
 
     public void Serialize (String fileName, ArrayList<Element> elementsOut)
@@ -20,7 +20,6 @@ public class Serialization
             out.close();
             fileOut.close();
             System.out.printf("File saved to " + fileName + "%n");
-            System.out.printf("Number of elements saved =  " + elementsOut.size() + "%n");
         }
         catch(IOException i)
         {
@@ -38,7 +37,6 @@ public class Serialization
             ObjectInputStream in = new ObjectInputStream(fileIn);
             elementsIn = (ArrayList<Element>) in.readObject();
             System.out.printf("File opened from " + fileName + "%n");
-            System.out.printf("Number of elements recovered =  " + elementsIn.size() + "%n");
             in.close();
             fileIn.close();
         }
@@ -57,11 +55,7 @@ public class Serialization
         for (int i = 0; i < elementsIn.size(); i++)
         {
             element = elementsIn.get(i);
-            System.out.printf("Element name loaded =   " + element.name + "%n");
-            System.out.printf("Element type =   " + element.elementType + "%n");
-            System.out.printf("X coordinate =   " + element.x + "%n");
-            System.out.printf("Y coordinate =   " + element.y + "%n");
-            controller.createElement(element.name, element.elementType, element.x, element.y);
+            view.drawElementsAfterOpen(element.name, element.elementType, element.x, element.y);
         }
     }
 }
