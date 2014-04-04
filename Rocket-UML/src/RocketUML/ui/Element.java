@@ -6,16 +6,18 @@ import java.awt.*;
 public class Element extends JPanel {
 
     protected String name = "";
+    protected String elementType = "";
     protected int x = 0;
     protected int y = 0;
     protected int width = 0;
     protected int height = 0;
     protected boolean isSelected = false;
 
-    public void init(int xLoc, int yLoc, String n){
+    public void init(int xLoc, int yLoc, String n, String type){
         x = xLoc;
         y = yLoc;
         name = n;
+        elementType = type;
     }
 
     @Override
@@ -52,6 +54,10 @@ public class Element extends JPanel {
 
     public int getY() {
         return y;
+    }
+
+    public String getType() {
+        return elementType;
     }
 
     public boolean getSelected() {
