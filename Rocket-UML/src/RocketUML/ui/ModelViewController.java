@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 
 public class ModelViewController {
-    int counter = 0;
+    int classCounter = 0;
+    int relationshipCounter = 0;
     private int xOffset = 0;
     private int yOffset = 0;
 
@@ -30,7 +31,14 @@ public class ModelViewController {
         Element element = AbstractFactory.getElement(type);
         if (name == "")
         {
-            element.init(x, y, "New Class " + counter++, type);
+            if (type == "Class")
+            {
+                element.init(x, y, "New Class " + classCounter++, type);
+            }
+            else
+            {
+                element.init(x, y, "New Relationship " + relationshipCounter++, type);
+            }
         }
         else
         {
