@@ -3,6 +3,7 @@ package RocketUML.ui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyListener {
     protected JPopupMenu popup;
@@ -256,10 +257,23 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         repaint();
     }
 
-    public void drawElementsAfterOpen(String name, String type, int x, int y)
+    public void drawElementsAfterOpen(ArrayList<Element> loadElements)
     {
-        controller.createElement(name, type, x, y);
+        Element element = new Element();
+
+        for (int i = 0; i < loadElements.size(); i++)
+        {
+            element = loadElements.get(i);
+            controller.createElement(element.name, element.elementType, element.x, element.y);
+        }
+
+        validate();
+        revalidate();
         repaint();
+
+        this.validate();
+        this.revalidate();
+        this.repaint();
     }
 }
 
