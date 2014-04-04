@@ -1,6 +1,7 @@
 package RocketUML.ui;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -24,9 +25,17 @@ public class ModelViewController {
         return instance_;
     }
 
-    public void createElement(String type, int x, int y){
+    public void createElement(String name, String type, int x, int y)
+    {
         Element element = AbstractFactory.getElement(type);
-        element.init(x, y,"New Class "+counter++);
+        if (name == "")
+        {
+            element.init(x, y, "New Class " + counter++, type);
+        }
+        else
+        {
+            element.init(x, y, name, type);
+        }
         elements.add(element);
         selectedElement = element;
     }
@@ -193,6 +202,18 @@ public class ModelViewController {
 
     public boolean isElementSelected() {
         return (selectedElement != null);
+    }
+
+    public void serializeElements(String fileName)
+    {
+        Serialization ser = new Serialization();
+        ser.Serialize(fileName, elements);
+    }
+
+    public void deserializeElements(String fileName)
+    {
+        Serialization deser = new Serialization();
+        deser.Deserialize(fileName);
     }
 
 }
