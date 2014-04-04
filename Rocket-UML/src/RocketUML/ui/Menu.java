@@ -22,8 +22,9 @@ public class Menu extends JFrame implements ActionListener {
   				clearScreenItem;
   
   	private Main gui;
-	private String fileName;
     private String pathName;
+
+    ModelViewController controller = ModelViewController.getInstance();
 	
   	public Menu(Main in)
 	{
@@ -90,8 +91,10 @@ public class Menu extends JFrame implements ActionListener {
 			int val = openChooser.showOpenDialog(Menu.this);
 			if(val == JFileChooser.APPROVE_OPTION)
 			{
-				File file = openChooser.getSelectedFile();
-			}	
+				pathName = openChooser.getSelectedFile().getPath();
+			}
+
+            controller.deserializeElements(pathName);
 		}
 		else if (e.getSource() == saveMenuItem)
 		{
@@ -99,9 +102,10 @@ public class Menu extends JFrame implements ActionListener {
 			int val = openChooser.showSaveDialog(Menu.this);	
 			if(val == JFileChooser.APPROVE_OPTION)
 			{
-				fileName = openChooser.getSelectedFile().getName(); 
 				pathName = openChooser.getSelectedFile().getPath();
 			}
+
+            controller.serializeElements(pathName);
 		}
 		else if (e.getSource() == addClassItem)
 		{
@@ -116,7 +120,7 @@ public class Menu extends JFrame implements ActionListener {
 				int y = Integer.parseInt(class_y_coord);
 	
 				Element classElement = AbstractFactory.getElement("Class");
-				classElement.init(x,y,className);
+				classElement.init(x,y,className, "Class");
 			}
 		}
 		else if (e.getSource() == addRelationshipItem)
@@ -132,7 +136,7 @@ public class Menu extends JFrame implements ActionListener {
 				int y = Integer.parseInt(relationship_y_coord);
 	
 				Element relationshipElement = AbstractFactory.getElement("Relationship");
-				relationshipElement.init(x, y, null);
+				relationshipElement.init(x, y, null, "Relationship");
 			}
 		}
 		else if (e.getSource() == aboutMenuItem)
