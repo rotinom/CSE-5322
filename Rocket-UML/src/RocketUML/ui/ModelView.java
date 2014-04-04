@@ -34,7 +34,7 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         popup.add(menuItem);
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.createElement("Class", mouseX, mouseY);
+                controller.createElement("", "Class", mouseX, mouseY);
                 repaint();
             }
         });
@@ -50,21 +50,21 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
 
         menuAssc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.createElement("Relationship", mouseX, mouseY);
+                controller.createElement("", "Relationship", mouseX, mouseY);
                 controller.changeRelationshipType(Relationship.Type.ASSOCIATION);
                 repaint();
             }
         });
         menuAggr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.createElement("Relationship", mouseX, mouseY);
+                controller.createElement("", "Relationship", mouseX, mouseY);
                 controller.changeRelationshipType(Relationship.Type.AGGREGATION);
                 repaint();
             }
         });
         menuInhr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.createElement("Relationship", mouseX, mouseY);
+                controller.createElement("", "Relationship", mouseX, mouseY);
                 controller.changeRelationshipType(Relationship.Type.INHERITANCE);
                 repaint();
             }
@@ -243,6 +243,21 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
     public void keyPressed(KeyEvent e) {}
 
     public void handleKeyEvent(KeyEvent e){
+        int c = e.getKeyCode ();
+        if (c==KeyEvent.VK_UP) {
+            controller.setLocation(controller.getElementX(), controller.getElementY()-1);
+        } else if(c==KeyEvent.VK_DOWN) {
+            controller.setLocation(controller.getElementX(), controller.getElementY()+1);
+        } else if(c==KeyEvent.VK_LEFT) {
+            controller.setLocation(controller.getElementX()-1, controller.getElementY());
+        } else if(c==KeyEvent.VK_RIGHT) {
+            controller.setLocation(controller.getElementX()+1, controller.getElementY());
+        }
+        repaint();
+    }
+
+    public void drawElementsAfterOpen(KeyEvent e)
+    {
         int c = e.getKeyCode ();
         if (c==KeyEvent.VK_UP) {
             controller.setLocation(controller.getElementX(), controller.getElementY()-1);
