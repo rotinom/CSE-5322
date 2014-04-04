@@ -27,14 +27,14 @@ public class Relationship extends Element {
     private FontMetrics metrics = null;
     private boolean isDragText = false;
 
-    public void init(int xLoc, int yLoc, String n){
+    public void init(int xLoc, int yLoc, String n, String type){
         movePoints.put(MovePointType.SOURCE, new Point(xLoc-45, yLoc));
         movePoints.put(MovePointType.INTERIM1, new Point(xLoc-15, yLoc));
         movePoints.put(MovePointType.INTERIM2, new Point(xLoc+15, yLoc));
         movePoints.put(MovePointType.DESTINATION, new Point(xLoc+45, yLoc));
 
         //go ahead and offset for text
-        super.init(xLoc-45, yLoc-15, n);
+        super.init(xLoc-45, yLoc-15, n, "Relationship");
     }
 
 	@Override
