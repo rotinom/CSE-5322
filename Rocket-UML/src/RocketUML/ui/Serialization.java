@@ -1,28 +1,26 @@
 package RocketUML.ui;
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Created by Luke on 3/17/14.
  */
 public class Serialization
 {
-    public void Serialize (String fileName)
-    {
-        Element e = new Element();
-        e.height = 2;
-        e.name = "bob";
-        e.width = 2;
-        e.x = 2;
-        e.y = 2;
+    ModelViewController controller = ModelViewController.getInstance();
+    public ArrayList<Element> elementsIn = new ArrayList<Element>();
 
+    public void Serialize (String fileName, ArrayList<Element> elementsOut)
+    {
         try
         {
             FileOutputStream fileOut = new FileOutputStream(fileName);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(e);
+            out.writeObject(elementsOut);
             out.close();
             fileOut.close();
-            System.out.printf("File saved to " + fileName);
+            System.out.printf("File saved to " + fileName + "%n");
+            System.out.printf("Number of elements saved =  " + elementsOut.size() + "%n");
         }
         catch(IOException i)
         {
@@ -32,13 +30,15 @@ public class Serialization
 
     public void Deserialize (String fileName)
     {
-        Element e = null;
+        Element element = new Element();
 
         try
         {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            e = (Element) in.readObject();
+            elementsIn = (ArrayList<Element>) in.readObject();
+            System.out.printf("File opened from " + fileName + "%n");
+            System.out.printf("Number of elements recovered =  " + elementsIn.size() + "%n");
             in.close();
             fileIn.close();
         }
@@ -49,11 +49,19 @@ public class Serialization
         }
         catch(ClassNotFoundException c)
         {
-            System.out.println("Employee class not found");
+            System.out.println("Element class not found");
             c.printStackTrace();
             return;
         }
 
-        System.out.printf("File opened from " + fileName);
+        for (int i = 0; i < elementsIn.size(); i++)
+        {
+            element = elementsIn.get(i);
+            System.out.printf("Element name loaded =   " + element.name + "%n");
+            System.out.printf("Element type =   " + element.elementType + "%n");
+            System.out.printf("X coordinate =   " + element.x + "%n");
+            System.out.printf("Y coordinate =   " + element.y + "%n");
+            controller.createElement(element.name, element.elementType, element.x, element.y);
+        }
     }
 }
