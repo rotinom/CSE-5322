@@ -267,8 +267,11 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
     {
         for (Element elementIterator : loadElements)
         {
-            attributes = ((Class)elementIterator).getAttributes();
-            methods = ((Class)elementIterator).getMethods();
+            if (elementIterator.elementType == "Class")
+            {
+                attributes = ((Class)elementIterator).getAttributes();
+                methods = ((Class)elementIterator).getMethods();
+            }
 
             controller.createElement(elementIterator.name, elementIterator.elementType, elementIterator.x, elementIterator.y);
 
