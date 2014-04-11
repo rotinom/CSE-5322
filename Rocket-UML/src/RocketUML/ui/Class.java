@@ -239,6 +239,11 @@ public class Class extends Element {
     public void addAttribute(String s){
         model.createAttribute().setString(s);
     }
+
+    public ArrayList<AttributeElement> getAttributes(){
+        return model.getAttributes();
+    }
+
     public void removeAttribute(String s){
         //todo add remove attribute based on string
         //attributes.removeMethod(s);
@@ -247,6 +252,11 @@ public class Class extends Element {
     public void addMethod(String s){
         model.createMethod().setString(s);
     }
+
+    public ArrayList<MethodElement> getMethods(){
+        return model.getMethods();
+    }
+
     public void removeMethod(String s){
         //todo add remove method based on string
         //model.removeMethod(s);
