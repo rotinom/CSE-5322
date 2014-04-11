@@ -265,26 +265,23 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
 
     public void drawElementsAfterOpen(ArrayList<Element> loadElements)
     {
-        Element element = new Element();
-
-        for (int i = 0; i < loadElements.size(); i++)
+        for (Element elementIterator : loadElements)
         {
-            element = loadElements.get(i);
-            attributes = ((Class)element).getAttributes();
-            methods = ((Class)element).getMethods();
+            attributes = ((Class)elementIterator).getAttributes();
+            methods = ((Class)elementIterator).getMethods();
 
-            controller.createElement(element.name, element.elementType, element.x, element.y);            
+            controller.createElement(elementIterator.name, elementIterator.elementType, elementIterator.x, elementIterator.y);
 
-            for (int j = 0; j < attributes.size(); j++)
+            for (AttributeElement attributeIterator : attributes)
             {
-                System.out.printf("Attribute Name = " + attributes.get(j).getString() + "%n");
-                controller.addClassAttribute(attributes.get(j).getString());
+                System.out.printf("Attribute Name = " + attributeIterator.getString() + "%n");
+                controller.addClassAttribute(attributeIterator.getString());
             }
 
-            for (int j = 0; j < methods.size(); j++)
+            for (MethodElement methodIterator : methods)
             {
-                System.out.printf("Method Name = " + methods.get(j).getString() + "%n");
-                controller.addClassMethod(methods.get(j).getString());
+                System.out.printf("Method Name = " + methodIterator.getString() + "%n");
+                controller.addClassMethod(methodIterator.getString());
             }
         }
 
