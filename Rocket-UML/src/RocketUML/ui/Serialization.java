@@ -9,7 +9,6 @@ public class Serialization
 {
     ModelView view = new ModelView();
     ModelViewController controller = ModelViewController.getInstance();
-    public ArrayList<Element> elementsIn = new ArrayList<Element>();
 
     public void Serialize (String fileName, ArrayList<Element> elementsOut)
     {
@@ -30,7 +29,9 @@ public class Serialization
 
     public void Deserialize (String fileName)
     {
+        ArrayList<Element> elementsIn = null;
         File checkFile = new File(fileName);
+
         if (checkFile.exists())
         {
             controller.resetDiagramForOpen();
