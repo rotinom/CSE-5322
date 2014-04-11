@@ -1,5 +1,8 @@
 package RocketUML.ui;
 
+import RocketUML.model.AttributeElement;
+import RocketUML.model.MethodElement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,6 +15,9 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
 
     private int mouseX=0;
     private int mouseY=0;
+
+    public ArrayList<MethodElement> methods = new ArrayList<MethodElement>();
+    public ArrayList<AttributeElement> attributes = new ArrayList<AttributeElement>();
 
     ModelViewController controller;
 
@@ -264,7 +270,22 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         for (int i = 0; i < loadElements.size(); i++)
         {
             element = loadElements.get(i);
-            controller.createElement(element.name, element.elementType, element.x, element.y);
+            attributes = ((Class)element).getAttributes();
+            methods = ((Class)element).getMethods();
+
+            controller.createElement(element.name, element.elementType, element.x, element.y);            
+
+            for (int j = 0; j < attributes.size(); j++)
+            {
+                System.out.printf("Attribute Name = " + attributes.get(j).getString() + "%n");
+                controller.addClassAttribute(attributes.get(j).getString());
+            }
+
+            for (int j = 0; j < methods.size(); j++)
+            {
+                System.out.printf("Method Name = " + methods.get(j).getString() + "%n");
+                controller.addClassMethod(methods.get(j).getString());
+            }
         }
 
         validate();
