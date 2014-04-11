@@ -2,14 +2,16 @@ package RocketUML.model;
 
 import RocketUML.visitor.Visitor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by rotinom on 2/26/14.
  */
-public class MethodElement extends AbstractElement{
+public class MethodElement extends AbstractElement implements Serializable {
     private ProtectionEnum protection; /// public/protected/private
     private String returnType; /// return value
+    private String name;
 
     private ArrayList<MethodParameter> parameters = new ArrayList<MethodParameter>();
 
@@ -60,7 +62,8 @@ public class MethodElement extends AbstractElement{
     }
 
     public String getString() {
-        String methodString = returnType + " " + getName() + "(";
+        //String methodString = returnType + " " + getName() + "(";
+        String methodString = returnType + " " + name + "(";
         boolean first = true;
         for (MethodParameter parameter : parameters){
             if(!first) {
@@ -87,6 +90,7 @@ public class MethodElement extends AbstractElement{
 
         if(tokens.length > 1) {
             returnType = tokens[0];
+            name = tokens[1];
             setName(tokens[1]);
             //System.out.println("returnType="+returnType+" name="+getName());
         }
