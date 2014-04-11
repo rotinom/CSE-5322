@@ -3,14 +3,16 @@ package RocketUML.model;
 import RocketUML.visitor.Visitor;
 
 import javax.management.Attribute;
+import java.io.Serializable;
 
 /**
  * Created by rotinom on 2/26/14.
  */
-public class AttributeElement extends AbstractElement {
+public class AttributeElement extends AbstractElement implements Serializable {
 
     private String type;
     private ProtectionEnum protection;
+    private String name;
 
 
     private AttributeElement() {
@@ -51,7 +53,8 @@ public class AttributeElement extends AbstractElement {
     }
 
     public String getString() {
-        return type + " " + getName();
+        //return type + " " + getName();
+        return type + " " + name;
     }
 
     public void setString(String str) {
@@ -61,6 +64,7 @@ public class AttributeElement extends AbstractElement {
 
         if(tokens.length > 1) {
             type = tokens[0];
+            name = tokens[1];
             setName(tokens[1]);
         }
     }
