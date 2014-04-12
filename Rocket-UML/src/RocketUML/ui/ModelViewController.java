@@ -233,4 +233,12 @@ public class ModelViewController {
         yOffset = 0;
         selectedElement = null;
     }
+
+    public void rebuildElementsArray(ArrayList<Element> loadElements)
+    {
+        for (Element elementsIterator : loadElements)
+        {
+            elements.add(elementsIterator);
+        }
+    }
 }
