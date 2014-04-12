@@ -1,7 +1,7 @@
 package RocketUML.ui;
 
+import javax.swing.*;
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -29,9 +29,9 @@ public class ModelViewController {
     public void createElement(String name, String type, int x, int y)
     {
         Element element = AbstractFactory.getElement(type);
-        if (name == "")
+        if (name.equals(""))
         {
-            if (type == "Class")
+            if (type.equals("Class"))
             {
                 element.init(x, y, "New Class " + classCounter++, type);
             }
@@ -64,7 +64,7 @@ public class ModelViewController {
                 selectedElement.setLocation(x, y);
             }
             else { //Class element
-                selectedElement.setLocation((int) (x - xOffset), (int) (y - yOffset));
+                selectedElement.setLocation(x - xOffset, y - yOffset);
             }
         }
     }
@@ -240,5 +240,13 @@ public class ModelViewController {
         {
             elements.add(elementsIterator);
         }
+
+        ModelView view = new ModelView();
+        view.repaint();
+        view.validate();
+        view.revalidate();
+        view.requestFocusInWindow();
+        view.revalidate();
+        view.validate();
     }
 }
