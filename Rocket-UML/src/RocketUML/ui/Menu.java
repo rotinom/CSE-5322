@@ -93,6 +93,7 @@ public class Menu extends JFrame implements ActionListener {
 			{
 				pathName = openChooser.getSelectedFile().getPath();
                 controller.deserializeElements(pathName);
+                gui.repaint();
 			}
 		}
 		else if (e.getSource() == saveMenuItem)

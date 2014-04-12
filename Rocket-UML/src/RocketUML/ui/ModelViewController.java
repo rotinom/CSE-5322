@@ -240,13 +240,5 @@ public class ModelViewController {
         {
             elements.add(elementsIterator);
         }
-
-        ModelView view = new ModelView();
-        view.repaint();
-        view.validate();
-        view.revalidate();
-        view.requestFocusInWindow();
-        view.revalidate();
-        view.validate();
     }
 }
