@@ -2,12 +2,8 @@ package RocketUML.ui;
 import java.io.*;
 import java.util.ArrayList;
 
-/**
- * Created by Luke on 3/17/14.
- */
 public class Serialization
 {
-    ModelView view = new ModelView();
     ModelViewController controller = ModelViewController.getInstance();
 
     public void Serialize (String fileName, ArrayList<Element> elementsOut)
@@ -29,7 +25,7 @@ public class Serialization
 
     public void Deserialize (String fileName)
     {
-        ArrayList<Element> elementsIn = null;
+        ArrayList<Element> elementsIn;
         File checkFile = new File(fileName);
 
         if (checkFile.exists())
