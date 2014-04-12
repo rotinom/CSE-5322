@@ -13,23 +13,11 @@ public class Element extends JPanel {
     protected int height = 0;
     protected boolean isSelected = false;
 
-    public void init(int xLoc, int yLoc, String n, String type){
-
-        if (type == "Class")
-        {
-            x = xLoc;
-            y = yLoc;
-            name = n;
-            elementType = type;
-        }
-        else
-        {
-            x = xLoc;
-            y = yLoc;
-            name = n;
-            elementType = type;
-        }
-
+    public void init(int xLoc, int yLoc, String n, String type) {
+        x = xLoc;
+        y = yLoc;
+        name = n;
+        elementType = type;
     }
 
     @Override
