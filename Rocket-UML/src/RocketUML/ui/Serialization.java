@@ -57,7 +57,7 @@ public class Serialization
                 return;
             }
 
-            view.drawElementsAfterOpen(elementsIn);
+            controller.rebuildElementsArray(elementsIn);
         }
         else
         {
