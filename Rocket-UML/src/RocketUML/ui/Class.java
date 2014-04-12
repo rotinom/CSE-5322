@@ -104,7 +104,7 @@ public class Class extends Element {
         g.setColor(Color.GRAY);
         ArrayList<AttributeElement> attributes = model.getAttributes();
         for (AttributeElement attr : attributes){ //todo add attribute protection (public, private, etc...)?
-            g.drawString(attr.getType() + " " + attr.getName(), x + 20, 5 + y + LINE_HEIGHT/2 + TITLE_HEIGHT + LINE_HEIGHT*count++);
+            g.drawString(attr.getString(), x + 20, 5 + y + LINE_HEIGHT/2 + TITLE_HEIGHT + LINE_HEIGHT*count++);
         }
 
         g.setColor(Color.DARK_GRAY);
