@@ -18,7 +18,7 @@ public class Main extends JFrame {
    		Menu gMenu = new Menu(this);
         //hide toolbar for now
 		Toolbar Tool = new Toolbar();
-        getContentPane().add(Tool.panel, BorderLayout.WEST);
+        getContentPane().add(Tool.panel, BorderLayout.NORTH);
 
         //Create and set up the window.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
