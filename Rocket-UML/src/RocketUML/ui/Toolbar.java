@@ -1,37 +1,100 @@
 package RocketUML.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.LayoutManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JToolBar;
-
-public class Toolbar extends JFrame
+public class Toolbar extends JPanel implements ActionListener
 {
-	ImageIcon image1 = new ImageIcon("add.png");
-	ImageIcon image2 = new ImageIcon("delete.png");
+	ImageIcon undoImage = new ImageIcon("resources/undo.png");
+	ImageIcon redoImage = new ImageIcon("resources/redo.png");
+    ImageIcon addClassImage = new ImageIcon("resources/add_class.png");
+    ImageIcon removeClassImage = new ImageIcon("resources/remove_class.png");
+    ImageIcon exportCppImage = new ImageIcon("resources/export_cplusplus.png");
+    ImageIcon exportJavaImage = new ImageIcon("resources/export_java.png");
 	JPanel panel = new JPanel();
 	JToolBar toolbar = new JToolBar();
+    ModelViewController controller;
+
+    JButton  addClass, removeClass, undo, redo, exportCpp, exportJava;
 	
 	public Toolbar()
 	{
-		toolbar.setFloatable(true);
-		JButton add = new JButton(image1);
-		JButton delete = new JButton(image2);
-		toolbar.add(add);
-		toolbar.add(delete);
+		toolbar.setFloatable(false);
+
+        addClass = new JButton(addClassImage);
+        addClass.setToolTipText("Add Class");
+        addClass.addActionListener(this);
+        toolbar.add(addClass);
+
+        removeClass = new JButton(removeClassImage);
+        removeClass.setToolTipText("Remove Class");
+        removeClass.addActionListener(this);
+        toolbar.add(removeClass);
+
+		undo = new JButton(undoImage);
+        undo.setToolTipText("Undo");
+        undo.addActionListener(this);
+        toolbar.add(undo);
+
+		redo = new JButton(redoImage);
+        redo.setToolTipText("Redo");
+        redo.addActionListener(this);
+		toolbar.add(redo);
+
+        exportCpp = new JButton(exportCppImage);
+        exportCpp.setToolTipText("Export C++ Code");
+        exportCpp.addActionListener(this);
+        toolbar.add(exportCpp);
+
+        exportJava = new JButton(exportJavaImage);
+        exportJava.setToolTipText("Export Java Code");
+        exportJava.addActionListener(this);
+        toolbar.add(exportJava);
+
 		toolbar.setAlignmentX(0);
 		panel.setLayout((LayoutManager) new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(toolbar);
 
+        controller = ModelViewController.getInstance();
 	}
+
+
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == addClass)
+        {
+            controller.createElement("","Class",250,250);
+            repaint();
+        }
+        else if(e.getSource() == removeClass)
+        {
+
+        }
+        else if(e.getSource() == undo)
+        {
+
+        }
+        else if(e.getSource() == redo)
+        {
+
+        }
+        else if(e.getSource() == exportCpp)
+        {
+
+        }
+        else if(e.getSource() == exportJava)
+        {
+
+        }
+
+    }
+
+
+
+
+
+
+
 }
