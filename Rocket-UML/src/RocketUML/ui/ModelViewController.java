@@ -268,4 +268,11 @@ public class ModelViewController {
     public void removeDiagram(String name) {
         elements.remove(name);
     }
+
+    public void changeDiagramName(String oldName, String newName) {
+        if(elements.containsKey(oldName)) {
+            ArrayList<Element> obj = elements.remove(oldName);
+            elements.put(newName, obj);
+        }
+    }
 }

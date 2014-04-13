@@ -12,6 +12,7 @@ import javax.swing.event.ChangeListener;
 public class Main extends JFrame {
     private JTabbedPane tabs;
     private int diagramNum = 1;
+    private ArrayList<JLabel> tabLabels = new ArrayList<JLabel>();
 
 
     public Main() {
@@ -43,7 +44,32 @@ public class Main extends JFrame {
                     catch (Exception ex) {
                         System.out.println("Exception on tab index " + tabs.getSelectedIndex());
                     }
+                }
+            }
+        });
 
+        JPopupMenu tabPopup = new JPopupMenu();
+        JMenuItem item = new JMenuItem("Rename");
+        tabPopup.add(item);
+        tabs.setComponentPopupMenu(tabPopup);
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (tabs.getSelectedIndex() >= 0 && tabs.getSelectedIndex() != tabs.getTabCount() - 1) {
+                    try {
+                        String oldName = ((ModelView) tabs.getSelectedComponent()).getName();
+                        String newName = JOptionPane.showInputDialog("Please enter new text for: " + oldName);
+                        //update the tabs model view, the label of the tab, and the controller
+                        ((ModelView) tabs.getSelectedComponent()).setName(newName);
+                        for(JLabel title : tabLabels) {
+                            if(title.getText().equals(oldName)) {
+                                title.setText(newName);
+                            }
+                        }
+                        ModelViewController.getInstance().changeDiagramName(oldName, newName);
+                        ModelViewController.getInstance().setCurrentDiagram(newName);
+                    } catch (Exception ex) {
+                        System.out.println("Exception on tab index " + tabs.getSelectedIndex());
+                    }
                 }
             }
         });
@@ -76,6 +102,7 @@ public class Main extends JFrame {
         closeButton.setBorder(null);
         closeButton.setFocusable(false);
 
+        tabLabels.add(title);
         tabPanel.add(title);
         tabPanel.add(closeButton);
         tabPanel.setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
@@ -119,7 +146,7 @@ public class Main extends JFrame {
         ActionListener listener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addDiagramTab("Diagram " + ++diagramNum);
+                addDiagramTab("Diagram" + ++diagramNum);
             }
         };
         closeButton.addActionListener(listener);
