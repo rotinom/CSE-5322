@@ -125,6 +125,7 @@ public class Main extends JFrame {
         JPanel blankPanel = new JPanel();
         tabs.insertTab(null, null, blankPanel, "", 0);
         int pos = tabs.indexOfComponent(blankPanel);
+        tabs.setEnabledAt(pos, false);
         FlowLayout f = new FlowLayout(FlowLayout.CENTER, 5, 0);
         JPanel tabPanel = new JPanel(f);
         tabPanel.setOpaque(false);
