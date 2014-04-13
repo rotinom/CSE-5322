@@ -50,7 +50,6 @@ public class ModelViewController {
             elements.get(currentDiagram).add(element);
         }
 
-        //elements.add(element);
         selectedElement = element;
     }
 
@@ -133,8 +132,9 @@ public class ModelViewController {
     }
 
     public void removeElement() {
-        if(selectedElement != null) {
-            elements.remove(selectedElement);
+        if(elements.containsKey(currentDiagram) && selectedElement != null) {
+            ArrayList<Element> elem = elements.get(currentDiagram);
+            elem.remove(selectedElement);
             selectedElement = null;
         }
     }
