@@ -1,13 +1,12 @@
 package RocketUML.ui;
 
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 
 public class Main extends JFrame {
     private JTabbedPane tabs;
@@ -18,8 +17,8 @@ public class Main extends JFrame {
     public Main() {
    		Menu gMenu = new Menu(this);
         //hide toolbar for now
-		//Toolbar Tool = new Toolbar();
-        //getContentPane().add(Tool.panel, BorderLayout.WEST);
+		Toolbar Tool = new Toolbar();
+        getContentPane().add(Tool.panel, BorderLayout.WEST);
 
         //Create and set up the window.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -125,6 +124,7 @@ public class Main extends JFrame {
         JPanel blankPanel = new JPanel();
         tabs.insertTab(null, null, blankPanel, "", 0);
         int pos = tabs.indexOfComponent(blankPanel);
+        tabs.setEnabledAt(pos,false);
         FlowLayout f = new FlowLayout(FlowLayout.CENTER, 5, 0);
         JPanel tabPanel = new JPanel(f);
         tabPanel.setOpaque(false);
