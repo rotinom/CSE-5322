@@ -15,6 +15,7 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
 
     private int mouseX=0;
     private int mouseY=0;
+    private String name;
 
     public ArrayList<MethodElement> methods = new ArrayList<MethodElement>();
     public ArrayList<AttributeElement> attributes = new ArrayList<AttributeElement>();
@@ -177,6 +178,9 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         super.paintComponent(g);
         controller.drawElement(g);
     }
+
+    public String getName(){ return name;}
+    public void setName(String name){this.name = name;}
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////// INPUT HANDLERS //////////////////////////////

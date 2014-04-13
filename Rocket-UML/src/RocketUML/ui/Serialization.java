@@ -1,12 +1,13 @@
 package RocketUML.ui;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Serialization
 {
     ModelViewController controller = ModelViewController.getInstance();
 
-    public void Serialize (String fileName, ArrayList<Element> elementsOut)
+    public void Serialize (String fileName, HashMap<String, ArrayList<Element>> elementsOut)
     {
         try
         {
@@ -25,7 +26,7 @@ public class Serialization
 
     public void Deserialize (String fileName)
     {
-        ArrayList<Element> elementsIn;
+        HashMap<String, ArrayList<Element>> elementsIn;
         File checkFile = new File(fileName);
 
         if (checkFile.exists())
@@ -36,7 +37,7 @@ public class Serialization
             {
                 FileInputStream fileIn = new FileInputStream(fileName);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                elementsIn = (ArrayList<Element>) in.readObject();
+                elementsIn = (HashMap<String, ArrayList<Element>>) in.readObject();
                 System.out.printf("File opened from " + fileName + "%n");
                 in.close();
                 fileIn.close();

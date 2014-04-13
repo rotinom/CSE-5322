@@ -1,8 +1,8 @@
 package RocketUML.ui;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class ModelViewController {
@@ -12,8 +12,9 @@ public class ModelViewController {
     private int yOffset = 0;
 
     private Element selectedElement = null; //keep current element to facilitate modifications
+    private String currentDiagram;
 
-    public ArrayList<Element> elements = new ArrayList<Element>();
+    private HashMap<String, ArrayList<Element>> elements = new HashMap<String, ArrayList<Element>>();
 
     private static ModelViewController instance_ = null;
 
@@ -44,7 +45,12 @@ public class ModelViewController {
         {
             element.init(x, y, name, type);
         }
-        elements.add(element);
+
+        if(elements.containsKey(currentDiagram)) {
+            elements.get(currentDiagram).add(element);
+        }
+
+        //elements.add(element);
         selectedElement = element;
     }
 
@@ -54,7 +60,8 @@ public class ModelViewController {
             if(selectedElement.getClass() == Relationship.class) {
 
                 if(!((Relationship)selectedElement).getIsDragText()) {
-                    for (Element element : elements){
+                    ArrayList<Element> elem = elements.get(currentDiagram);
+                    for (Element element : elem){
                         if(element.getClass() == Class.class){
                             ((Class)element).drawConnectPoints(((Class)element).closeTo(new Point(x,y)));
                             ((Class)element).setRelationshipDragPoint(((Relationship)selectedElement).getDragPoint());
@@ -74,14 +81,17 @@ public class ModelViewController {
             selectedElement.setSelected(false);
 
         selectedElement = null;
-        for (Element testElement : elements){
-            if (testElement.contains(new Point(mouseX, mouseY))){
-                selectedElement = testElement;
-                //save off offset between shape and mouse
-                xOffset = mouseX - selectedElement.getX();
-                yOffset = mouseY - selectedElement.getY();
-                selectedElement.setSelected(true);
-                break;
+        if(elements.containsKey(currentDiagram)) {
+            ArrayList<Element> elem = elements.get(currentDiagram);
+            for (Element testElement : elem){
+                if (testElement.contains(new Point(mouseX, mouseY))){
+                    selectedElement = testElement;
+                    //save off offset between shape and mouse
+                    xOffset = mouseX - selectedElement.getX();
+                    yOffset = mouseY - selectedElement.getY();
+                    selectedElement.setSelected(true);
+                    break;
+                }
             }
         }
     }
@@ -130,8 +140,11 @@ public class ModelViewController {
     }
 
     public void drawElement(Graphics g) {
-        for (Element s : elements){
-            s.draw(g);
+        if(elements.containsKey(currentDiagram)) {
+            ArrayList<Element> elem = elements.get(currentDiagram);
+            for (Element s : elem){
+                s.draw(g);
+            }
         }
     }
 
@@ -151,22 +164,6 @@ public class ModelViewController {
         return retVal;
     }
 
-    public int getElementWidth() {
-        int retVal = 0;
-        if(selectedElement != null) {
-            retVal = selectedElement.getWidth();
-        }
-        return retVal;
-    }
-
-    public int getElementHeight() {
-        int retVal = 0;
-        if(selectedElement != null) {
-            retVal = selectedElement.getHeight();
-        }
-        return retVal;
-    }
-
     public int getElementX() {
         int retVal = 0;
         if(selectedElement != null) {
@@ -182,7 +179,6 @@ public class ModelViewController {
         }
         return retVal;
     }
-
 
     public boolean isPointInAttributeArea(int mouseX, int mouseY) {
         boolean retVal = false;
@@ -212,6 +208,18 @@ public class ModelViewController {
         return (selectedElement != null);
     }
 
+    public int getNumDiagrams() {
+        return elements.size();
+    }
+
+    public ArrayList<String> getDiagramNames() {
+        ArrayList<String> names = new ArrayList<String>();
+        for (String key : elements.keySet()) {
+            names.add(key);
+        }
+        return names;
+    }
+
     public void serializeElements(String fileName)
     {
         Serialization ser = new Serialization();
@@ -234,11 +242,30 @@ public class ModelViewController {
         selectedElement = null;
     }
 
-    public void rebuildElementsArray(ArrayList<Element> loadElements)
+    public void rebuildElementsArray(HashMap<String, ArrayList<Element>> loadElements)
     {
-        for (Element elementsIterator : loadElements)
-        {
-            elements.add(elementsIterator);
+        elements.clear();
+        for (String key : loadElements.keySet()) {
+            elements.put(key, new ArrayList<Element>());
+            ArrayList<Element> elementList = loadElements.get(key);
+            for (Element element : elementList) {
+                elements.get(key).add(element);
+            }
         }
+    }
+
+    public String getCurrentDiagram(){
+        return currentDiagram;
+    }
+
+    public void setCurrentDiagram(String currentDiagram){
+        this.currentDiagram = currentDiagram;
+        if(!elements.containsKey(currentDiagram)) {
+            elements.put(currentDiagram, new ArrayList<Element>());
+        }
+    }
+
+    public void removeDiagram(String name) {
+        elements.remove(name);
     }
 }

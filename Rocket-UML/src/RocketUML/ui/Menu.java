@@ -3,9 +3,7 @@ package RocketUML.ui;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -82,7 +80,6 @@ public class Menu extends JFrame implements ActionListener {
 		if(e.getSource() == newMenuItem)
 		{
 			gui.getContentPane().removeAll();
-			//gui.frame.revalidate();
 			gui.repaint();
 		}
 		else if(e.getSource() == openMenuItem)
@@ -93,6 +90,7 @@ public class Menu extends JFrame implements ActionListener {
 			{
 				pathName = openChooser.getSelectedFile().getPath();
                 controller.deserializeElements(pathName);
+                gui.loadDiagrams();
                 gui.repaint();
 			}
 		}
@@ -148,7 +146,6 @@ public class Menu extends JFrame implements ActionListener {
 		else if (e.getSource() == clearScreenItem)
 		{
 			gui.getContentPane().removeAll();
-		//	gui.frame.revalidate();
 			gui.repaint();
 		}
 	}
