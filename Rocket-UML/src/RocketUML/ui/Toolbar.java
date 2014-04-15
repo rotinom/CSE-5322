@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Toolbar extends JPanel implements ActionListener
 {
@@ -82,12 +80,8 @@ public class Toolbar extends JPanel implements ActionListener
         }
         else if(e.getSource() == undo)
         {
-            HashMap<String, ArrayList<Element>> test;
-            test = controller.undoMemento();
-            controller.resetDiagramForOpen();
-            controller.rebuildElementsArray(test);
-            gui.loadDiagrams();
-            gui.repaint();
+           controller.undoMemento();
+           gui.repaint();
         }
         else if(e.getSource() == redo)
         {

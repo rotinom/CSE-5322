@@ -3,7 +3,6 @@ package RocketUML.ui;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
 
 public class ModelViewController {
@@ -17,9 +16,8 @@ public class ModelViewController {
     private Element selectedElement = null; //keep current element to facilitate modifications
     private String currentDiagram;
 
-    protected HashMap<String, ArrayList<Element>> elements = new HashMap<String, ArrayList<Element>>();
-    private Stack<HashMap<String, ArrayList<Element>>> savedStates
-            = new Stack<HashMap<String, ArrayList<Element>>>();
+    protected  HashMap<String, ArrayList<Element>> elements = new HashMap<String, ArrayList<Element>>();
+    protected  ArrayList<ArrayList<Element>> savedStates = new ArrayList();
 
 
     private static ModelViewController instance_ = null;
@@ -54,9 +52,8 @@ public class ModelViewController {
 
         if(elements.containsKey(currentDiagram)) {
             elements.get(currentDiagram).add(element);
-            saveToMemento();
         }
-
+        saveToMemento();
         selectedElement = element;
     }
 
@@ -285,11 +282,24 @@ public class ModelViewController {
 
     public void saveToMemento()
     {
-         savedStates.push(this.elements);
+        int size = elements.get(currentDiagram).size();
+        savedStates.add(undoCounter,new ArrayList<Element>());
+        for(int i = 0; i < size; i++)
+        {
+            savedStates.get(undoCounter).add(i, elements.get(currentDiagram).get(i));
+        }
+        undoCounter++;
     }
 
-    public HashMap<String, ArrayList<Element>> undoMemento()
+    public void undoMemento()
     {
-        return savedStates.firstElement();
+       // if(undoCounter < savedStates.size()) {
+        elements.clear();
+        elements.put(currentDiagram,new ArrayList<Element>());
+        int size = savedStates.get(2).size();
+        for(int i = 0; i < size; i++)
+        {
+            elements.get(currentDiagram).add(i,savedStates.get(2).get(i));
+        }
     }
 }
