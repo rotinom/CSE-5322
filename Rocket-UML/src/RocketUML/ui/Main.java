@@ -17,7 +17,7 @@ public class Main extends JFrame {
     public Main() {
    		Menu gMenu = new Menu(this);
         //hide toolbar for now
-		Toolbar Tool = new Toolbar();
+		Toolbar Tool = new Toolbar(this);
         getContentPane().add(Tool.panel, BorderLayout.NORTH);
 
         //Create and set up the window.

@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Toolbar extends JPanel implements ActionListener
 {
@@ -15,12 +17,17 @@ public class Toolbar extends JPanel implements ActionListener
     ImageIcon exportJavaImage = new ImageIcon("resources/export_java.png");
 	JPanel panel = new JPanel();
 	JToolBar toolbar = new JToolBar();
-    ModelViewController controller;
+
+    private Main gui;
 
     JButton  addClass, removeClass, undo, redo, exportCpp, exportJava;
-	
-	public Toolbar()
+
+    ModelViewController controller = ModelViewController.getInstance();
+
+	public Toolbar(Main in)
 	{
+
+        gui = in;
 		toolbar.setFloatable(false);
 
         addClass = new JButton(addClassImage);
@@ -58,15 +65,16 @@ public class Toolbar extends JPanel implements ActionListener
 		panel.add(toolbar);
 
         controller = ModelViewController.getInstance();
-	}
+
+    }
 
 
     public void actionPerformed(ActionEvent e)
     {
         if(e.getSource() == addClass)
         {
-            controller.createElement("","Class",250,250);
-            repaint();
+            controller.createElement("","Class",gui.getWidth()/3, gui.getHeight()/3);
+            gui.repaint();
         }
         else if(e.getSource() == removeClass)
         {
@@ -74,7 +82,12 @@ public class Toolbar extends JPanel implements ActionListener
         }
         else if(e.getSource() == undo)
         {
-
+            HashMap<String, ArrayList<Element>> test;
+            test = controller.undoMemento();
+            controller.resetDiagramForOpen();
+            controller.rebuildElementsArray(test);
+            gui.loadDiagrams();
+            gui.repaint();
         }
         else if(e.getSource() == redo)
         {
@@ -88,13 +101,5 @@ public class Toolbar extends JPanel implements ActionListener
         {
 
         }
-
     }
-
-
-
-
-
-
-
 }

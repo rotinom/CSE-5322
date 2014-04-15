@@ -1,15 +1,9 @@
 package RocketUML.ui;
 
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 public class Menu extends JFrame implements ActionListener {
 		
@@ -17,7 +11,7 @@ public class Menu extends JFrame implements ActionListener {
 	
   	JMenuItem   newMenuItem, openMenuItem, saveMenuItem, undoMenuItem,
   				redoMenuItem, aboutMenuItem, addClassItem, addRelationshipItem,
-  				clearScreenItem;
+  				clearScreenItem, exitProgramItem;
   
   	private Main gui;
     private String pathName;
@@ -48,6 +42,10 @@ public class Menu extends JFrame implements ActionListener {
         saveMenuItem = new JMenuItem("Save");
         saveMenuItem.addActionListener(this);
         fileMenu.add(saveMenuItem);
+
+        exitProgramItem = new JMenuItem("Exit");
+        exitProgramItem.addActionListener(this);
+        fileMenu.add(exitProgramItem);
         
         undoMenuItem = new JMenuItem("Undo");
         //menuItem.addActionListener(new clearScreen());
@@ -120,6 +118,10 @@ public class Menu extends JFrame implements ActionListener {
 				classElement.init(x,y,className, "Class");
 			}
 		}
+        else if (e.getSource() == exitProgramItem)
+        {
+            System.exit(0);
+        }
 		else if (e.getSource() == addRelationshipItem)
 		{
 			Graphics g = gui.getGraphics();

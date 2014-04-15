@@ -3,6 +3,7 @@ package RocketUML.ui;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 
 public class ModelViewController {
@@ -11,10 +12,15 @@ public class ModelViewController {
     private int xOffset = 0;
     private int yOffset = 0;
 
+    private int undoCounter = 0;
+
     private Element selectedElement = null; //keep current element to facilitate modifications
     private String currentDiagram;
 
-    private HashMap<String, ArrayList<Element>> elements = new HashMap<String, ArrayList<Element>>();
+    protected HashMap<String, ArrayList<Element>> elements = new HashMap<String, ArrayList<Element>>();
+    private Stack<HashMap<String, ArrayList<Element>>> savedStates
+            = new Stack<HashMap<String, ArrayList<Element>>>();
+
 
     private static ModelViewController instance_ = null;
 
@@ -48,6 +54,7 @@ public class ModelViewController {
 
         if(elements.containsKey(currentDiagram)) {
             elements.get(currentDiagram).add(element);
+            saveToMemento();
         }
 
         selectedElement = element;
@@ -274,5 +281,15 @@ public class ModelViewController {
             ArrayList<Element> obj = elements.remove(oldName);
             elements.put(newName, obj);
         }
+    }
+
+    public void saveToMemento()
+    {
+         savedStates.push(this.elements);
+    }
+
+    public HashMap<String, ArrayList<Element>> undoMemento()
+    {
+        return savedStates.firstElement();
     }
 }
