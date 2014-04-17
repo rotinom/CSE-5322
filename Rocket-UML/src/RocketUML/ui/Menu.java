@@ -1,5 +1,7 @@
 package RocketUML.ui;
 
+import RocketUML.visitor.CodeGenerationController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +13,7 @@ public class Menu extends JFrame implements ActionListener {
 	
   	JMenuItem   newMenuItem, openMenuItem, saveMenuItem, undoMenuItem,
   				redoMenuItem, aboutMenuItem, addClassItem, addRelationshipItem,
-  				clearScreenItem, exitProgramItem;
+  				clearScreenItem, exitProgramItem, generateCodeItem, generateCppItem, generateJavaItem;
   
   	private Main gui;
     private String pathName;
@@ -26,10 +28,16 @@ public class Menu extends JFrame implements ActionListener {
         menuBar.add(fileMenu);
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
-        JMenu helpMenu = new JMenu("Help");
-        menuBar.add(helpMenu);
         JMenu optionMenu = new JMenu("Option");
         menuBar.add(optionMenu);
+
+        // Right-align help
+        menuBar.add(Box.createHorizontalGlue());
+        JMenu helpMenu = new JMenu("Help");
+        menuBar.add(helpMenu);
+
+
+        JMenu generateMenu = new JMenu("Generate");
 
         newMenuItem = new JMenuItem("New");
         newMenuItem.addActionListener(this);
@@ -57,7 +65,7 @@ public class Menu extends JFrame implements ActionListener {
 
         aboutMenuItem = new JMenuItem("About GED");
         aboutMenuItem.addActionListener(this);
-        editMenu.add(aboutMenuItem);
+        helpMenu.add(aboutMenuItem);
         
         addClassItem = new JMenuItem("Add Class");
         addClassItem.addActionListener(this);
@@ -70,6 +78,18 @@ public class Menu extends JFrame implements ActionListener {
         clearScreenItem = new JMenuItem("Clear");
         clearScreenItem.addActionListener(this);
         optionMenu.add(clearScreenItem);
+
+        //generateCodeItem = new JMenuItem("Generate Code");
+        //generateCodeItem.addActionListener(this);
+        optionMenu.add(generateMenu);
+
+        generateCppItem = new JMenuItem("C++");
+        generateCppItem.addActionListener(this);
+        generateMenu.add(generateCppItem);
+
+        generateJavaItem = new JMenuItem("Java");
+        generateJavaItem.addActionListener(this);
+        generateMenu.add(generateJavaItem);
         
 	}
 	
@@ -150,5 +170,29 @@ public class Menu extends JFrame implements ActionListener {
 			gui.getContentPane().removeAll();
 			gui.repaint();
 		}
+        else if (e.getSource() == generateCppItem)
+        {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int val = chooser.showSaveDialog(Menu.this);
+            if(val == JFileChooser.APPROVE_OPTION)
+            {
+                pathName = chooser.getSelectedFile().getPath();
+                CodeGenerationController cgc = CodeGenerationController.create();
+                cgc.generateCppCode(pe, pathName);
+            }
+        }
+        else if (e.getSource() == generateJavaItem)
+        {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int val = chooser.showSaveDialog(Menu.this);
+            if(val == JFileChooser.APPROVE_OPTION)
+            {
+                pathName = chooser.getSelectedFile().getPath();
+                CodeGenerationController cgc = CodeGenerationController.create();
+                cgc.generateJavaCode(pe, pathName);
+            }
+        }
 	}
 }
