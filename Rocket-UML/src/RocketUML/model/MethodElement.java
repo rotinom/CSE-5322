@@ -2,6 +2,7 @@ package RocketUML.model;
 
 import RocketUML.visitor.Visitor;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -62,7 +63,6 @@ public class MethodElement extends AbstractElement implements Serializable {
     }
 
     public String getString() {
-        //String methodString = returnType + " " + getName() + "(";
         String methodString = returnType + " " + name + "(";
         boolean first = true;
         for (MethodParameter parameter : parameters){
@@ -79,10 +79,40 @@ public class MethodElement extends AbstractElement implements Serializable {
     }
 
     public void setString(String str) {
+
+        boolean validString = true;
+        String reason = "";
+
+        //check for ()
+        if(!str.contains("(") || !str.contains(")")) {
+            validString = false;
+            reason = "Missing ()";
+        }
+
+        //check for return type and function name before () no more no less
+        String[] parts = str.split("\\(");
+        String[] parts2 = parts[0].split(" +");
+        if(parts2.length != 2) {
+            validString = false;
+            reason = "Missing return type or method name";
+            System.out.println("missing return type or method name");
+        }
+
         parameters.clear();
         String cleanStr = str.replaceAll("\\(|\\)|;|,", " ");
         String delims = " +";
         String[] tokens = cleanStr.split(delims);
+
+        //should have an even # of things (return type and name, then each parameter as a type name pair)
+        if(tokens.length%2 != 0 && validString){
+            validString = false;
+            reason = "Invalid parameter pairs";
+        }
+
+        if(!validString) {
+            JOptionPane.showMessageDialog(null, "Invalid Method:\n"+reason+"\n\nMust be in the format:\nreturnType methodName(param1Type param1Name, etc...)", "Invalid Method", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
         //System.out.println("method string = " + str);
         //System.out.println("method string = " + cleanStr);
