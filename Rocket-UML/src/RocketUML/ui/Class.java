@@ -224,7 +224,7 @@ public class Class extends Element {
     }
 
     public boolean isPointInMethodArea(int xLoc, int yLoc){
-        int attributeHeight = model.getMethods().size()*LINE_HEIGHT;
+        int attributeHeight = model.getAttributes().size()*LINE_HEIGHT;
         return contains(new Point(xLoc, yLoc)) && yLoc > y+TITLE_HEIGHT+attributeHeight;
     }
 
@@ -241,17 +241,39 @@ public class Class extends Element {
     }
 
     public void removeAttribute(String s){
-        //todo add remove attribute based on string
-        //attributes.removeMethod(s);
+        AttributeElement removeAttribute = null;
+        ArrayList<AttributeElement> attributes = model.getAttributes();
+        for (AttributeElement attribute : attributes){
+            if(attribute.getString().equals(s)) {
+                removeAttribute = attribute;
+                break;
+            }
+        }
+        if(removeAttribute != null) {
+            attributes.remove(removeAttribute);
+        }
     }
 
     public void addMethod(String s){
         model.createMethod().setString(s);
     }
 
+    public ArrayList<MethodElement> getMethods(){
+        return model.getMethods();
+    }
+
     public void removeMethod(String s){
-        //todo add remove method based on string
-        //model.removeMethod(s);
+        MethodElement removeMethod = null;
+        ArrayList<MethodElement> methods = model.getMethods();
+        for (MethodElement method : methods){
+            if(method.getString().equals(s)) {
+                removeMethod = method;
+                break;
+            }
+        }
+        if(removeMethod != null) {
+            methods.remove(removeMethod);
+        }
     }
 
     public void drawConnectPoints(boolean draw) {
