@@ -1,9 +1,6 @@
 package RocketUML.ui;
 
-import RocketUML.model.AbstractElement;
-import RocketUML.model.AbstractFactory;
-import RocketUML.model.ClassElement;
-import RocketUML.model.RelationshipElement;
+import RocketUML.model.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,16 +12,11 @@ public class ModelViewController {
     int relationshipCounter = 0;
     private int xOffset = 0;
     private int yOffset = 0;
-
     private int undoCounter = 0;
-
     private AbstractElement selectedElement = null; //keep current element to facilitate modifications
     private String currentDiagram;
 
-    protected  HashMap<String, ArrayList<AbstractElement>> elements = new HashMap<String, ArrayList<AbstractElement>>();
     protected  ArrayList<ArrayList<AbstractElement>> savedStates = new ArrayList();
-
-
     private static ModelViewController instance_ = null;
 
     private ModelViewController() {	}
@@ -39,14 +31,11 @@ public class ModelViewController {
     public void createElement(String name, String type, int x, int y)
     {
         AbstractElement element = AbstractFactory.getElement(type);
-        if (name.equals(""))
-        {
-            if (type.equals("Class"))
-            {
+        if (name.equals("")){
+            if (type.equals("Class")){
                 element.init(x, y, "New Class " + classCounter++, type);
             }
-            else
-            {
+            else{
                 element.init(x, y, "New Relationship " + relationshipCounter++, type);
             }
         }
@@ -55,8 +44,8 @@ public class ModelViewController {
             element.init(x, y, name, type);
         }
 
-        if(elements.containsKey(currentDiagram)) {
-            elements.get(currentDiagram).add(element);
+        if(ProjectElement.getInstance().getDiagram(currentDiagram) != null) {
+            ProjectElement.getInstance().getDiagram(currentDiagram).addElement(element);
         }
         saveToMemento();
         selectedElement = element;
@@ -68,12 +57,10 @@ public class ModelViewController {
             if(selectedElement.getClass() == RelationshipElement.class) {
 
                 if(!((RelationshipElement)selectedElement).getIsDragText()) {
-                    ArrayList<AbstractElement> elem = elements.get(currentDiagram);
-                    for (AbstractElement element : elem){
-                        if(element.getClass() == ClassElement.class){
-                            ((ClassElement)element).drawConnectPoints(((ClassElement)element).closeTo(new Point(x,y)));
-                            ((ClassElement)element).setRelationshipDragPoint(((RelationshipElement)selectedElement).getDragPoint());
-                        }
+                    ArrayList<ClassElement> classes = ProjectElement.getInstance().getDiagram(currentDiagram).getClasses();
+                    for (ClassElement classElem : classes){
+                        classElem.drawConnectPoints(classElem.closeTo(new Point(x, y)));
+                        classElem.setRelationshipDragPoint(((RelationshipElement) selectedElement).getDragPoint());
                     }
                 }
                 selectedElement.setLocation(x, y);
@@ -89,19 +76,34 @@ public class ModelViewController {
             selectedElement.setSelected(false);
 
         selectedElement = null;
-        if(elements.containsKey(currentDiagram)) {
-            ArrayList<AbstractElement> elem = elements.get(currentDiagram);
-            for (AbstractElement testElement : elem){
+        if(ProjectElement.getInstance().getDiagram(currentDiagram) != null) {
+            for (AbstractElement testElement : ProjectElement.getInstance().getDiagram(currentDiagram).getClasses()){
                 if (testElement.contains(new Point(mouseX, mouseY))){
                     selectedElement = testElement;
-                    //save off offset between shape and mouse
-                    xOffset = mouseX - selectedElement.getX();
-                    yOffset = mouseY - selectedElement.getY();
-                    selectedElement.setSelected(true);
                     break;
                 }
             }
+
+            if(selectedElement == null) {
+                for (AbstractElement testElement : ProjectElement.getInstance().getDiagram(currentDiagram).getRelationships()){
+                    if (testElement.contains(new Point(mouseX, mouseY))){
+                        selectedElement = testElement;
+                        break;
+                    }
+                }
+            }
         }
+          
+        if(selectedElement != null){
+            //save off offset between shape and mouse
+            xOffset = mouseX - selectedElement.getX();
+            yOffset = mouseY - selectedElement.getY();
+            selectedElement.setSelected(true);
+        }
+    }
+
+    public void setSelectedElement(AbstractElement element) {
+
     }
 
     public void changeRelationshipType(RelationshipElement.Type type) {
@@ -141,18 +143,19 @@ public class ModelViewController {
     }
 
     public void removeElement() {
-        if(elements.containsKey(currentDiagram) && selectedElement != null) {
-            ArrayList<AbstractElement> elem = elements.get(currentDiagram);
-            elem.remove(selectedElement);
+        if(ProjectElement.getInstance().getDiagram(currentDiagram) != null && selectedElement != null) {
+            ProjectElement.getInstance().getDiagram(currentDiagram).removeElement(selectedElement);
             selectedElement = null;
         }
     }
 
     public void drawElement(Graphics g) {
-        if(elements.containsKey(currentDiagram)) {
-            ArrayList<AbstractElement> elem = elements.get(currentDiagram);
-            for (AbstractElement s : elem){
-                s.draw(g);
+        if(ProjectElement.getInstance().getDiagram(currentDiagram) != null) {
+            for(ClassElement elem : ProjectElement.getInstance().getDiagram(currentDiagram).getClasses()) {
+                elem.draw(g);
+            }
+            for(RelationshipElement elem : ProjectElement.getInstance().getDiagram(currentDiagram).getRelationships()) {
+                elem.draw(g);
             }
         }
     }
@@ -218,12 +221,12 @@ public class ModelViewController {
     }
 
     public int getNumDiagrams() {
-        return elements.size();
+        return ProjectElement.getInstance().getDiagrams().size();
     }
 
     public ArrayList<String> getDiagramNames() {
         ArrayList<String> names = new ArrayList<String>();
-        for (String key : elements.keySet()) {
+        for (String key : ProjectElement.getInstance().getDiagrams().keySet()) {
             names.add(key);
         }
         return names;
@@ -232,7 +235,7 @@ public class ModelViewController {
     public void serializeElements(String fileName)
     {
         Serialization ser = new Serialization();
-        ser.Serialize(fileName, elements);
+        //ser.Serialize(fileName, elements);
     }
 
     public void deserializeElements(String fileName)
@@ -243,7 +246,7 @@ public class ModelViewController {
 
     public void resetDiagramForOpen()
     {
-        elements.clear();
+        //elements.clear();
         classCounter = 0;
         relationshipCounter = 0;
         xOffset = 0;
@@ -253,12 +256,12 @@ public class ModelViewController {
 
     public void rebuildElementsArray(HashMap<String, ArrayList<AbstractElement>> loadElements)
     {
-        elements.clear();
+        //elements.clear();
         for (String key : loadElements.keySet()) {
-            elements.put(key, new ArrayList<AbstractElement>());
+            //elements.put(key, new ArrayList<AbstractElement>());
             ArrayList<AbstractElement> elementList = loadElements.get(key);
             for (AbstractElement element : elementList) {
-                elements.get(key).add(element);
+                //elements.get(key).add(element);
             }
         }
     }
@@ -269,42 +272,43 @@ public class ModelViewController {
 
     public void setCurrentDiagram(String currentDiagram){
         this.currentDiagram = currentDiagram;
-        if(!elements.containsKey(currentDiagram)) {
-            elements.put(currentDiagram, new ArrayList<AbstractElement>());
+        if(ProjectElement.getInstance().getDiagram(currentDiagram) == null) {
+            ProjectElement.getInstance().createDiagram(currentDiagram);
         }
+        //if(!elements.containsKey(currentDiagram)) {
+        //    elements.put(currentDiagram, new ArrayList<AbstractElement>());
+        //}
     }
 
     public void removeDiagram(String name) {
-        elements.remove(name);
+        //elements.remove(name);
+        ProjectElement.getInstance().removeDiagram(name);
     }
 
     public void changeDiagramName(String oldName, String newName) {
-        if(elements.containsKey(oldName)) {
-            ArrayList<AbstractElement> obj = elements.remove(oldName);
-            elements.put(newName, obj);
-        }
+        ProjectElement.getInstance().changeName(oldName, newName);
     }
 
     public void saveToMemento()
     {
-        int size = elements.get(currentDiagram).size();
-        savedStates.add(undoCounter,new ArrayList<AbstractElement>());
-        for(int i = 0; i < size; i++)
-        {
-            savedStates.get(undoCounter).add(i, elements.get(currentDiagram).get(i));
-        }
-        undoCounter++;
+       // int size = elements.get(currentDiagram).size();
+        //savedStates.add(undoCounter,new ArrayList<AbstractElement>());
+        //for(int i = 0; i < size; i++)
+        //{
+        //    savedStates.get(undoCounter).add(i, elements.get(currentDiagram).get(i));
+       // }
+        //undoCounter++;
     }
 
     public void undoMemento()
     {
        // if(undoCounter < savedStates.size()) {
-        elements.clear();
-        elements.put(currentDiagram,new ArrayList<AbstractElement>());
-        int size = savedStates.get(2).size();
-        for(int i = 0; i < size; i++)
-        {
-            elements.get(currentDiagram).add(i,savedStates.get(2).get(i));
-        }
+        //elements.clear();
+        //elements.put(currentDiagram,new ArrayList<AbstractElement>());
+        //int size = savedStates.get(2).size();
+        //for(int i = 0; i < size; i++)
+        //{
+        //    elements.get(currentDiagram).add(i,savedStates.get(2).get(i));
+       // }
     }
 }

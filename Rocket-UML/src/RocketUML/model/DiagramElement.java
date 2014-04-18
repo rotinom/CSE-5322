@@ -8,9 +8,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-/**
- * Created by rotinom on 3/4/14.
- */
 public class DiagramElement extends AbstractElement{
 
     private ProjectElement parent;
@@ -21,24 +18,29 @@ public class DiagramElement extends AbstractElement{
         parent = p;
     }
 
-    public ClassElement createClass(){
-        ClassElement ret = new ClassElement();
-        classes.add(ret);
-        return ret;
-    }
-
     public ArrayList<ClassElement> getClasses(){
         return classes;
     }
-
-    public RelationshipElement createRelationship(){
-        RelationshipElement ret = new RelationshipElement();
-        relationships.add(ret);
-        return ret;
-    }
-
     public Collection<RelationshipElement> getRelationships(){
         return relationships;
+    }
+
+    public void addElement(AbstractElement element) {
+        if(element.getClass() == ClassElement.class) {
+            classes.add((ClassElement)element);
+        }
+        else if(element.getClass() == RelationshipElement.class) {
+            relationships.add((RelationshipElement)element);
+        }
+    }
+
+    public void removeElement(AbstractElement element) {
+        if(element.getClass() == ClassElement.class) {
+            classes.remove((ClassElement) element);
+        }
+        else if(element.getClass() == RelationshipElement.class) {
+            relationships.remove((RelationshipElement) element);
+        }
     }
 
     @Override

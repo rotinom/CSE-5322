@@ -26,7 +26,7 @@ public class JavaGenerator extends Visitor implements CodeGenerator{
     @Override
     public void visit(ProjectElement data) {
         project = data;
-        for(DiagramElement de : data.getDiagrams()){
+        for(DiagramElement de : data.getDiagrams().values()){
             de.accept(this);
         }
     }

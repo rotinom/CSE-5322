@@ -119,7 +119,7 @@ public class CppHeaderGenerator extends Visitor implements CodeGenerator{
     @Override
     public void visit(ProjectElement data) {
         output.append("namespace " + data.getName() + "{\n");
-        for(DiagramElement de : data.getDiagrams()){
+        for(DiagramElement de : data.getDiagrams().values()){
             de.accept(this);
         }
         output.append("} // namespace " + data.getName() + "\n");
