@@ -1,5 +1,10 @@
 package RocketUML.ui;
 
+import RocketUML.model.AbstractElement;
+import RocketUML.model.AbstractFactory;
+import RocketUML.model.ClassElement;
+import RocketUML.model.RelationshipElement;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,11 +18,11 @@ public class ModelViewController {
 
     private int undoCounter = 0;
 
-    private Element selectedElement = null; //keep current element to facilitate modifications
+    private AbstractElement selectedElement = null; //keep current element to facilitate modifications
     private String currentDiagram;
 
-    protected  HashMap<String, ArrayList<Element>> elements = new HashMap<String, ArrayList<Element>>();
-    protected  ArrayList<ArrayList<Element>> savedStates = new ArrayList();
+    protected  HashMap<String, ArrayList<AbstractElement>> elements = new HashMap<String, ArrayList<AbstractElement>>();
+    protected  ArrayList<ArrayList<AbstractElement>> savedStates = new ArrayList();
 
 
     private static ModelViewController instance_ = null;
@@ -33,7 +38,7 @@ public class ModelViewController {
 
     public void createElement(String name, String type, int x, int y)
     {
-        Element element = AbstractFactory.getElement(type);
+        AbstractElement element = AbstractFactory.getElement(type);
         if (name.equals(""))
         {
             if (type.equals("Class"))
@@ -60,14 +65,14 @@ public class ModelViewController {
     public void setLocation(int x, int y) {
         if(selectedElement != null) {
             //special handling for Relationship
-            if(selectedElement.getClass() == Relationship.class) {
+            if(selectedElement.getClass() == RelationshipElement.class) {
 
-                if(!((Relationship)selectedElement).getIsDragText()) {
-                    ArrayList<Element> elem = elements.get(currentDiagram);
-                    for (Element element : elem){
-                        if(element.getClass() == Class.class){
-                            ((Class)element).drawConnectPoints(((Class)element).closeTo(new Point(x,y)));
-                            ((Class)element).setRelationshipDragPoint(((Relationship)selectedElement).getDragPoint());
+                if(!((RelationshipElement)selectedElement).getIsDragText()) {
+                    ArrayList<AbstractElement> elem = elements.get(currentDiagram);
+                    for (AbstractElement element : elem){
+                        if(element.getClass() == ClassElement.class){
+                            ((ClassElement)element).drawConnectPoints(((ClassElement)element).closeTo(new Point(x,y)));
+                            ((ClassElement)element).setRelationshipDragPoint(((RelationshipElement)selectedElement).getDragPoint());
                         }
                     }
                 }
@@ -85,8 +90,8 @@ public class ModelViewController {
 
         selectedElement = null;
         if(elements.containsKey(currentDiagram)) {
-            ArrayList<Element> elem = elements.get(currentDiagram);
-            for (Element testElement : elem){
+            ArrayList<AbstractElement> elem = elements.get(currentDiagram);
+            for (AbstractElement testElement : elem){
                 if (testElement.contains(new Point(mouseX, mouseY))){
                     selectedElement = testElement;
                     //save off offset between shape and mouse
@@ -99,21 +104,21 @@ public class ModelViewController {
         }
     }
 
-    public void changeRelationshipType(Relationship.Type type) {
-        if(selectedElement != null && selectedElement.getClass() == Relationship.class) {
-            ((Relationship) selectedElement).setType(type);
+    public void changeRelationshipType(RelationshipElement.Type type) {
+        if(selectedElement != null && selectedElement.getClass() == RelationshipElement.class) {
+            ((RelationshipElement) selectedElement).setType(type);
         }
     }
 
     public void addClassAttribute(String attribute) {
-        if(selectedElement != null && selectedElement.getClass() == Class.class) {
-            ((Class)selectedElement).addAttribute(attribute);
+        if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
+            ((ClassElement)selectedElement).addAttribute(attribute);
         }
     }
 
     public void addClassMethod(String method) {
-        if(selectedElement != null && selectedElement.getClass() == Class.class) {
-            ((Class)selectedElement).addMethod(method);
+        if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
+            ((ClassElement)selectedElement).addMethod(method);
         }
     }
 
@@ -124,20 +129,20 @@ public class ModelViewController {
     }
 
     public void removeAttribute(int mouseX, int mouseY){
-        if(selectedElement != null && selectedElement.getClass() == Class.class) {
-            ((Class)selectedElement).removeAttribute(getStringAtLocation(mouseX, mouseY));
+        if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
+            ((ClassElement)selectedElement).removeAttribute(getStringAtLocation(mouseX, mouseY));
         }
     }
 
     public void removeMethod(int mouseX, int mouseY){
-        if(selectedElement != null && selectedElement.getClass() == Class.class) {
-            ((Class)selectedElement).removeMethod(getStringAtLocation(mouseX, mouseY));
+        if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
+            ((ClassElement)selectedElement).removeMethod(getStringAtLocation(mouseX, mouseY));
         }
     }
 
     public void removeElement() {
         if(elements.containsKey(currentDiagram) && selectedElement != null) {
-            ArrayList<Element> elem = elements.get(currentDiagram);
+            ArrayList<AbstractElement> elem = elements.get(currentDiagram);
             elem.remove(selectedElement);
             selectedElement = null;
         }
@@ -145,8 +150,8 @@ public class ModelViewController {
 
     public void drawElement(Graphics g) {
         if(elements.containsKey(currentDiagram)) {
-            ArrayList<Element> elem = elements.get(currentDiagram);
-            for (Element s : elem){
+            ArrayList<AbstractElement> elem = elements.get(currentDiagram);
+            for (AbstractElement s : elem){
                 s.draw(g);
             }
         }
@@ -155,7 +160,7 @@ public class ModelViewController {
     public boolean isClassSelected() {
         boolean retVal = false;
         if(selectedElement != null) {
-            retVal = (selectedElement.getClass() == Class.class);
+            retVal = (selectedElement.getClass() == ClassElement.class);
         }
         return retVal;
     }
@@ -163,7 +168,7 @@ public class ModelViewController {
     public boolean isRelationshipSelected() {
         boolean retVal = false;
         if(selectedElement != null) {
-            retVal = (selectedElement.getClass() == Relationship.class);
+            retVal = (selectedElement.getClass() == RelationshipElement.class);
         }
         return retVal;
     }
@@ -186,16 +191,16 @@ public class ModelViewController {
 
     public boolean isPointInAttributeArea(int mouseX, int mouseY) {
         boolean retVal = false;
-        if(selectedElement != null && selectedElement.getClass() == Class.class) {
-            retVal = ((Class)selectedElement).isPointInAttributeArea(mouseX, mouseY);
+        if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
+            retVal = ((ClassElement)selectedElement).isPointInAttributeArea(mouseX, mouseY);
         }
         return retVal;
     }
 
     public boolean isPointInMethodArea(int mouseX, int mouseY) {
         boolean retVal = false;
-        if(selectedElement != null && selectedElement.getClass() == Class.class) {
-            retVal = ((Class)selectedElement).isPointInMethodArea(mouseX, mouseY);
+        if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
+            retVal = ((ClassElement)selectedElement).isPointInMethodArea(mouseX, mouseY);
         }
         return retVal;
     }
@@ -246,13 +251,13 @@ public class ModelViewController {
         selectedElement = null;
     }
 
-    public void rebuildElementsArray(HashMap<String, ArrayList<Element>> loadElements)
+    public void rebuildElementsArray(HashMap<String, ArrayList<AbstractElement>> loadElements)
     {
         elements.clear();
         for (String key : loadElements.keySet()) {
-            elements.put(key, new ArrayList<Element>());
-            ArrayList<Element> elementList = loadElements.get(key);
-            for (Element element : elementList) {
+            elements.put(key, new ArrayList<AbstractElement>());
+            ArrayList<AbstractElement> elementList = loadElements.get(key);
+            for (AbstractElement element : elementList) {
                 elements.get(key).add(element);
             }
         }
@@ -265,7 +270,7 @@ public class ModelViewController {
     public void setCurrentDiagram(String currentDiagram){
         this.currentDiagram = currentDiagram;
         if(!elements.containsKey(currentDiagram)) {
-            elements.put(currentDiagram, new ArrayList<Element>());
+            elements.put(currentDiagram, new ArrayList<AbstractElement>());
         }
     }
 
@@ -275,7 +280,7 @@ public class ModelViewController {
 
     public void changeDiagramName(String oldName, String newName) {
         if(elements.containsKey(oldName)) {
-            ArrayList<Element> obj = elements.remove(oldName);
+            ArrayList<AbstractElement> obj = elements.remove(oldName);
             elements.put(newName, obj);
         }
     }
@@ -283,7 +288,7 @@ public class ModelViewController {
     public void saveToMemento()
     {
         int size = elements.get(currentDiagram).size();
-        savedStates.add(undoCounter,new ArrayList<Element>());
+        savedStates.add(undoCounter,new ArrayList<AbstractElement>());
         for(int i = 0; i < size; i++)
         {
             savedStates.get(undoCounter).add(i, elements.get(currentDiagram).get(i));
@@ -295,7 +300,7 @@ public class ModelViewController {
     {
        // if(undoCounter < savedStates.size()) {
         elements.clear();
-        elements.put(currentDiagram,new ArrayList<Element>());
+        elements.put(currentDiagram,new ArrayList<AbstractElement>());
         int size = savedStates.get(2).size();
         for(int i = 0; i < size; i++)
         {

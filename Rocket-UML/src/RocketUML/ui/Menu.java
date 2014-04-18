@@ -1,5 +1,7 @@
 package RocketUML.ui;
 
+import RocketUML.model.AbstractElement;
+import RocketUML.model.AbstractFactory;
 import RocketUML.visitor.CodeGenerationController;
 
 import javax.swing.*;
@@ -133,8 +135,8 @@ public class Menu extends JFrame implements ActionListener {
 				
 				int x = Integer.parseInt(class_x_coord);
 				int y = Integer.parseInt(class_y_coord);
-	
-				Element classElement = AbstractFactory.getElement("Class");
+
+                AbstractElement classElement = AbstractFactory.getElement("Class");
 				classElement.init(x,y,className, "Class");
 			}
 		}
@@ -153,8 +155,8 @@ public class Menu extends JFrame implements ActionListener {
 				
 				int x = Integer.parseInt(relationship_x_coord);
 				int y = Integer.parseInt(relationship_y_coord);
-	
-				Element relationshipElement = AbstractFactory.getElement("Relationship");
+
+                AbstractElement relationshipElement = AbstractFactory.getElement("Relationship");
 				relationshipElement.init(x, y, null, "Relationship");
 			}
 		}
@@ -179,7 +181,7 @@ public class Menu extends JFrame implements ActionListener {
             {
                 pathName = chooser.getSelectedFile().getPath();
                 CodeGenerationController cgc = CodeGenerationController.create();
-                cgc.generateCppCode(pe, pathName);
+                //cgc.generateCppCode(pe, pathName);
             }
         }
         else if (e.getSource() == generateJavaItem)
@@ -191,7 +193,7 @@ public class Menu extends JFrame implements ActionListener {
             {
                 pathName = chooser.getSelectedFile().getPath();
                 CodeGenerationController cgc = CodeGenerationController.create();
-                cgc.generateJavaCode(pe, pathName);
+                //cgc.generateJavaCode(pe, pathName);
             }
         }
 	}

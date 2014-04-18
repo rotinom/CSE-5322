@@ -1,6 +1,5 @@
 package RocketUML.model;
 
-import RocketUML.ui.Drawable;
 import RocketUML.visitor.Visitor;
 
 /**

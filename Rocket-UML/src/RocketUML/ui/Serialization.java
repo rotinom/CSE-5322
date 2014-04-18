@@ -1,4 +1,6 @@
 package RocketUML.ui;
+import RocketUML.model.AbstractElement;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +9,7 @@ public class Serialization
 {
     ModelViewController controller = ModelViewController.getInstance();
 
-    public void Serialize (String fileName, HashMap<String, ArrayList<Element>> elementsOut)
+    public void Serialize (String fileName, HashMap<String, ArrayList<AbstractElement>> elementsOut)
     {
         try
         {
@@ -26,7 +28,7 @@ public class Serialization
 
     public void Deserialize (String fileName)
     {
-        HashMap<String, ArrayList<Element>> elementsIn;
+        HashMap<String, ArrayList<AbstractElement>> elementsIn;
         File checkFile = new File(fileName);
 
         if (checkFile.exists())
@@ -37,7 +39,7 @@ public class Serialization
             {
                 FileInputStream fileIn = new FileInputStream(fileName);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                elementsIn = (HashMap<String, ArrayList<Element>>) in.readObject();
+                elementsIn = (HashMap<String, ArrayList<AbstractElement>>) in.readObject();
                 System.out.printf("File opened from " + fileName + "%n");
                 in.close();
                 fileIn.close();
@@ -49,7 +51,7 @@ public class Serialization
             }
             catch(ClassNotFoundException c)
             {
-                System.out.println("Element class not found");
+                System.out.println("AbstractElement class not found");
                 c.printStackTrace();
                 return;
             }

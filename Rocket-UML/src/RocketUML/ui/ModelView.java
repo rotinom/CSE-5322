@@ -2,6 +2,7 @@ package RocketUML.ui;
 
 import RocketUML.model.AttributeElement;
 import RocketUML.model.MethodElement;
+import RocketUML.model.RelationshipElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,21 +60,21 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         menuAssc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.createElement("", "Relationship", mouseX, mouseY);
-                controller.changeRelationshipType(Relationship.Type.ASSOCIATION);
+                controller.changeRelationshipType(RelationshipElement.Type.ASSOCIATION);
                 repaint();
             }
         });
         menuAggr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.createElement("", "Relationship", mouseX, mouseY);
-                controller.changeRelationshipType(Relationship.Type.AGGREGATION);
+                controller.changeRelationshipType(RelationshipElement.Type.AGGREGATION);
                 repaint();
             }
         });
         menuInhr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.createElement("", "Relationship", mouseX, mouseY);
-                controller.changeRelationshipType(Relationship.Type.INHERITANCE);
+                controller.changeRelationshipType(RelationshipElement.Type.INHERITANCE);
                 repaint();
             }
         });
@@ -145,19 +146,19 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
 
         menuAssc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.changeRelationshipType(Relationship.Type.ASSOCIATION);
+                controller.changeRelationshipType(RelationshipElement.Type.ASSOCIATION);
                 repaint();
             }
         });
         menuAggr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.changeRelationshipType(Relationship.Type.AGGREGATION);
+                controller.changeRelationshipType(RelationshipElement.Type.AGGREGATION);
                 repaint();
             }
         });
         menuInhr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.changeRelationshipType(Relationship.Type.INHERITANCE);
+                controller.changeRelationshipType(RelationshipElement.Type.INHERITANCE);
                 repaint();
             }
         });
@@ -179,8 +180,8 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         controller.drawElement(g);
     }
 
-    public String getName(){ return name;}
-    public void setName(String name){this.name = name;}
+    //public String getName(){ return name;}
+   // public void setName(String name){this.name = name;}
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////// INPUT HANDLERS //////////////////////////////
