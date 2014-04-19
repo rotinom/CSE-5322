@@ -54,10 +54,18 @@ public class AttributeElement extends AbstractElement implements Serializable {
 
     public String getString() {
         //return type + " " + getName();
-        return type + " " + name;
+        String string = "";
+        switch (protection) {
+            case PUBLIC: string += "+ "; break;
+            case PRIVATE: string += "- "; break;
+            case PROTECTED: string += "# "; break;
+            default: string += " "; break;
+        }
+        return string + type + " " + name;
     }
 
     public void setString(String str) {
+        protection = ProtectionEnum.PUBLIC;
         String cleanStr = str.replaceAll(";", "");
         String delims = " +";
         String[] tokens = cleanStr.split(delims);

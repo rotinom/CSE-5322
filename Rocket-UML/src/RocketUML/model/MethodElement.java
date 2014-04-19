@@ -63,7 +63,14 @@ public class MethodElement extends AbstractElement implements Serializable {
     }
 
     public String getString() {
-        String methodString = returnType + " " + name + "(";
+        String methodString = "";
+        switch (protection) {
+            case PUBLIC: methodString += "+ "; break;
+            case PRIVATE: methodString += "- "; break;
+            case PROTECTED: methodString += "# "; break;
+            default: methodString += " "; break;
+        }
+        methodString += returnType + " " + name + "(";
         boolean first = true;
         for (MethodParameter parameter : parameters){
             if(!first) {
@@ -82,6 +89,7 @@ public class MethodElement extends AbstractElement implements Serializable {
 
         boolean validString = true;
         String reason = "";
+        protection = ProtectionEnum.PUBLIC;
 
         //check for ()
         if(!str.contains("(") || !str.contains(")")) {

@@ -2,6 +2,7 @@ package RocketUML.ui;
 
 import RocketUML.model.AttributeElement;
 import RocketUML.model.MethodElement;
+import RocketUML.model.ProtectionEnum;
 import RocketUML.model.RelationshipElement;
 
 import javax.swing.*;
@@ -126,6 +127,38 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.removeElement();
+                repaint();
+            }
+        });
+
+        classPopup.addSeparator();
+
+        JMenu subProtMenu = new JMenu("Change Protection");
+        JMenuItem menuPub = new JMenuItem("Public");
+        JMenuItem menuProt = new JMenuItem("Protected");
+        JMenuItem menuPriv = new JMenuItem("Private");
+        subProtMenu.add(menuPub);
+        subProtMenu.add(menuProt);
+        subProtMenu.add(menuPriv);
+        classPopup.add(subProtMenu);
+
+        menuPub.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.changeProtection(mouseX, mouseY, ProtectionEnum.PUBLIC);
+                repaint();
+            }
+        });
+
+        menuProt.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.changeProtection(mouseX, mouseY, ProtectionEnum.PROTECTED);
+                repaint();
+            }
+        });
+
+        menuPriv.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.changeProtection(mouseX, mouseY, ProtectionEnum.PRIVATE);
                 repaint();
             }
         });

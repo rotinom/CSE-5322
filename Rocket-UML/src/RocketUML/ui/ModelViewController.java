@@ -142,6 +142,12 @@ public class ModelViewController {
         }
     }
 
+    public void changeProtection(int mouseX, int mouseY, ProtectionEnum protection){
+        if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
+            ((ClassElement)selectedElement).changeProtection(mouseX, mouseY, protection);
+        }
+    }
+
     public void removeElement() {
         if(ProjectElement.getInstance().getDiagram(currentDiagram) != null && selectedElement != null) {
             ProjectElement.getInstance().getDiagram(currentDiagram).removeElement(selectedElement);
@@ -275,13 +281,9 @@ public class ModelViewController {
         if(ProjectElement.getInstance().getDiagram(currentDiagram) == null) {
             ProjectElement.getInstance().createDiagram(currentDiagram);
         }
-        //if(!elements.containsKey(currentDiagram)) {
-        //    elements.put(currentDiagram, new ArrayList<AbstractElement>());
-        //}
     }
 
     public void removeDiagram(String name) {
-        //elements.remove(name);
         ProjectElement.getInstance().removeDiagram(name);
     }
 

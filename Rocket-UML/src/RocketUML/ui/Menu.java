@@ -2,6 +2,7 @@ package RocketUML.ui;
 
 import RocketUML.model.AbstractElement;
 import RocketUML.model.AbstractFactory;
+import RocketUML.model.ProjectElement;
 import RocketUML.visitor.CodeGenerationController;
 
 import javax.swing.*;
@@ -181,7 +182,7 @@ public class Menu extends JFrame implements ActionListener {
             {
                 pathName = chooser.getSelectedFile().getPath();
                 CodeGenerationController cgc = CodeGenerationController.create();
-                //cgc.generateCppCode(pe, pathName);
+                cgc.generateCppCode(ProjectElement.getInstance(), pathName);
             }
         }
         else if (e.getSource() == generateJavaItem)
@@ -193,7 +194,7 @@ public class Menu extends JFrame implements ActionListener {
             {
                 pathName = chooser.getSelectedFile().getPath();
                 CodeGenerationController cgc = CodeGenerationController.create();
-                //cgc.generateJavaCode(pe, pathName);
+                cgc.generateJavaCode(ProjectElement.getInstance(), pathName);
             }
         }
 	}

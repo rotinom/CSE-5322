@@ -26,9 +26,10 @@ public class ClassElement extends AbstractElement implements Serializable {
     }
 
     public Map<ConnectLocationType, Point> connectPoints = new HashMap<ConnectLocationType, Point>();
-    public Map<ConnectLocationType, ArrayList<Point>> attachedPoints = new HashMap<ConnectLocationType, ArrayList<Point>>();
+    public Map<ConnectLocationType, ArrayList<RelationshipPoint>> attachedPoints =
+            new HashMap<ConnectLocationType, ArrayList<RelationshipPoint>>();
     private boolean drawConnectPoints = false;
-    private Point relationshipDragPoint = null;
+    private RelationshipPoint relationshipDragPoint = null;
     private Color colorScheme = new Color(60, 60, 150);
 
     private ArrayList<AttributeElement> attributes =
@@ -53,13 +54,13 @@ public class ClassElement extends AbstractElement implements Serializable {
 
         //initialize connection point data
         connectPoints.put(ConnectLocationType.TOP, new Point(0, 0));
-        attachedPoints.put(ConnectLocationType.TOP, new ArrayList<Point>());
+        attachedPoints.put(ConnectLocationType.TOP, new ArrayList<RelationshipPoint>());
         connectPoints.put(ConnectLocationType.BOTTOM, new Point(0, 0));
-        attachedPoints.put(ConnectLocationType.BOTTOM, new ArrayList<Point>());
+        attachedPoints.put(ConnectLocationType.BOTTOM, new ArrayList<RelationshipPoint>());
         connectPoints.put(ConnectLocationType.LEFT, new Point(0, 0));
-        attachedPoints.put(ConnectLocationType.LEFT, new ArrayList<Point>());
+        attachedPoints.put(ConnectLocationType.LEFT, new ArrayList<RelationshipPoint>());
         connectPoints.put(ConnectLocationType.RIGHT, new Point(0, 0));
-        attachedPoints.put(ConnectLocationType.RIGHT, new ArrayList<Point>());
+        attachedPoints.put(ConnectLocationType.RIGHT, new ArrayList<RelationshipPoint>());
 
         super.init(xLoc, yLoc, n, "Class");
     }
@@ -131,12 +132,19 @@ public class ClassElement extends AbstractElement implements Serializable {
                 //highlight if close enough to connect
                 if(relationshipDragPoint.distance(point) < CONNECT_CLOSE_DIST)
                 {
-                    ArrayList<Point> points = attachedPoints.get(entry.getKey());
+                    ArrayList<RelationshipPoint> points = attachedPoints.get(entry.getKey());
                     g.setColor(colorScheme);
                     if(!points.contains(relationshipDragPoint))
                     {
                         relationshipDragPoint.setLocation(point.x+CONNECT_HALF_SIZE, point.y+CONNECT_HALF_SIZE);
                         points.add(relationshipDragPoint);
+                        //tell relationship if this is the source or dest class
+                        if(relationshipDragPoint.getType() == RelationshipElement.MovePointType.SOURCE) {
+                            relationshipDragPoint.getParent().setSrce(this);
+                        }
+                        else if(relationshipDragPoint.getType() == RelationshipElement.MovePointType.DESTINATION) {
+                            relationshipDragPoint.getParent().setDest(this);
+                        }
                     }
                 }
                 else
@@ -145,9 +153,9 @@ public class ClassElement extends AbstractElement implements Serializable {
 
                 if(!isSelected){ //only look for moved points if we aren't moving this class
                     //look for points that have been moved away
-                    ArrayList<Point> removePoints = new ArrayList<Point>();
-                    ArrayList<Point> points = attachedPoints.get(entry.getKey());
-                    for(Point attachPoint : points){
+                    ArrayList<RelationshipPoint> removePoints = new ArrayList<RelationshipPoint>();
+                    ArrayList<RelationshipPoint> points = attachedPoints.get(entry.getKey());
+                    for(RelationshipPoint attachPoint : points){
                         if(Math.abs(attachPoint.x - point.x) > CONNECT_CLOSE_DIST*2 ||
                                 Math.abs(attachPoint.y - point.y) > CONNECT_CLOSE_DIST*2){
                             removePoints.add(attachPoint); //cant remove from list while iterating through same list
@@ -155,13 +163,20 @@ public class ClassElement extends AbstractElement implements Serializable {
                     }
                     for(Point removePoint : removePoints){
                         points.remove(removePoint);
+                        //if removing point then clear relationship source or dest class
+                        if(relationshipDragPoint.getType() == RelationshipElement.MovePointType.SOURCE) {
+                            relationshipDragPoint.getParent().setSrce(null);
+                        }
+                        else if(relationshipDragPoint.getType() == RelationshipElement.MovePointType.DESTINATION) {
+                            relationshipDragPoint.getParent().setDest(null);
+                        }
                     }
                 }
             }
         }
 
         //move any attached points
-        for (Map.Entry<ConnectLocationType, ArrayList<Point>> entry : attachedPoints.entrySet()) {
+        for (Map.Entry<ConnectLocationType, ArrayList<RelationshipPoint>> entry : attachedPoints.entrySet()) {
             for(Point point : entry.getValue()) {
                 Point centerPoint = connectPoints.get(entry.getKey());
                 point.setLocation(centerPoint.x+CONNECT_HALF_SIZE, centerPoint.y+CONNECT_HALF_SIZE);
@@ -236,56 +251,86 @@ public class ClassElement extends AbstractElement implements Serializable {
         }
     }
 
+    public void changeProtection(int xLoc, int yLoc, ProtectionEnum protection){
+        AttributeElement attribute = getAttributeAtLocation(xLoc, yLoc);
+        if(attribute != null) {
+            attribute.setProtection(protection);
+            return;
+        }
+
+        MethodElement method = getMethodAtLocation(xLoc, yLoc);
+        if (method != null) {
+            method.setProtection(protection);
+        }
+    }
+
     @Override
     public void setEditedString(int xLoc, int yLoc, String s){
-        if(!contains(new Point(xLoc, yLoc)))
-            return;
 
-        int attributeHeight = getAttributes().size()*LINE_HEIGHT;
-        int index = 0;
-        if(yLoc < y+TITLE_HEIGHT){ //title
+        if(yLoc < y+TITLE_HEIGHT){
             name = s;
+            return;
         }
-        else if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
-            index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
-            if(index >= 0 && index < getAttributes().size()){ //make sure in range
-                getAttributes().get(index).setString(s);
-            }
+
+        AttributeElement attribute = getAttributeAtLocation(xLoc, yLoc);
+        if(attribute != null) {
+            attribute.setString(s);
+            return;
         }
-        else { //methods
-            index = (yLoc-y-TITLE_HEIGHT-attributeHeight)/LINE_HEIGHT;
-            if(index >= 0 && index < methods.size()){ //make sure in range
-                methods.get(index).setString(s);
-            }
+
+        MethodElement method = getMethodAtLocation(xLoc, yLoc);
+        if (method != null) {
+            method.setString(s);
         }
     }
 
     @Override
     public String getStringAtLocation(int xLoc, int yLoc){
         String string = "";
+
+        AttributeElement attribute = getAttributeAtLocation(xLoc, yLoc);
+        MethodElement method = getMethodAtLocation(xLoc, yLoc);
+        if(attribute != null) {
+            string = attribute.getString();
+        }
+        else if (method != null) {
+            string = method.getString();
+        }
+        return string;
+    }
+
+    public MethodElement getMethodAtLocation(int xLoc, int yLoc){
+        MethodElement method = null;
         if(!contains(new Point(xLoc, yLoc))){
-            return string;
+            return method;
         }
 
         int attributeHeight = getAttributes().size()*LINE_HEIGHT;
-        int methodHeight = methods.size()*LINE_HEIGHT;
         int index = 0;
-        if(yLoc < y+TITLE_HEIGHT){ //title
-            string = name;
-        }
-        else if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
-            index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
-            if(index >= 0 && index < getAttributes().size()){ //make sure in range
-                string = getAttributes().get(index).getString();
-            }
-        }
-        else { //methods
+        if(yLoc > y+TITLE_HEIGHT+attributeHeight) { //attributes
             index = (yLoc-y-TITLE_HEIGHT-attributeHeight)/LINE_HEIGHT;
             if(index >= 0 && index < methods.size()){ //make sure in range
-                string = methods.get(index).getString();
+                method = methods.get(index);
             }
         }
-        return string;
+        return method;
+    }
+
+    public AttributeElement getAttributeAtLocation(int xLoc, int yLoc){
+        AttributeElement attribute = null;
+        if(!contains(new Point(xLoc, yLoc))){
+            return attribute;
+        }
+
+        int attributeHeight = getAttributes().size()*LINE_HEIGHT;
+        int index = 0;
+        if(yLoc < y+TITLE_HEIGHT+attributeHeight) { //attributes
+            index = (yLoc-y-TITLE_HEIGHT)/LINE_HEIGHT;
+            if(index >= 0 && index < getAttributes().size()){ //make sure in range
+                attribute = getAttributes().get(index);
+            }
+        }
+        return attribute;
     }
 
     @Override
@@ -325,7 +370,7 @@ public class ClassElement extends AbstractElement implements Serializable {
         drawConnectPoints = draw;
     }
 
-    public void setRelationshipDragPoint(Point point){
+    public void setRelationshipDragPoint(RelationshipPoint point){
         relationshipDragPoint = point;
     }
 

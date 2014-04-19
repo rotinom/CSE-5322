@@ -26,10 +26,10 @@ public class RelationshipElement extends AbstractElement implements Serializable
         NONE, SOURCE, INTERIM1, INTERIM2, DESTINATION
     }
 
-    public Map<MovePointType, Point> movePoints = new HashMap<MovePointType, Point>();
+    public Map<MovePointType, RelationshipPoint> movePoints = new HashMap<MovePointType, RelationshipPoint>();
     private Type type = Type.ASSOCIATION;
     private MovePointType moveType = MovePointType.NONE;
-    private Point dragPoint = null;
+    private RelationshipPoint dragPoint = null;
     private FontMetrics metrics = null;
     private boolean isDragText = false;
     private ClassElement srce; // Source
@@ -48,10 +48,10 @@ public class RelationshipElement extends AbstractElement implements Serializable
     }
 
     public void init(int xLoc, int yLoc, String n, String type){
-        movePoints.put(MovePointType.SOURCE, new Point(xLoc-45, yLoc));
-        movePoints.put(MovePointType.INTERIM1, new Point(xLoc-15, yLoc));
-        movePoints.put(MovePointType.INTERIM2, new Point(xLoc+15, yLoc));
-        movePoints.put(MovePointType.DESTINATION, new Point(xLoc+45, yLoc));
+        movePoints.put(MovePointType.SOURCE, new RelationshipPoint(xLoc-45, yLoc, MovePointType.SOURCE, this));
+        movePoints.put(MovePointType.INTERIM1, new RelationshipPoint(xLoc-15, yLoc, MovePointType.INTERIM1, this));
+        movePoints.put(MovePointType.INTERIM2, new RelationshipPoint(xLoc+15, yLoc, MovePointType.INTERIM2, this));
+        movePoints.put(MovePointType.DESTINATION, new RelationshipPoint(xLoc+45, yLoc, MovePointType.DESTINATION, this));
 
         //go ahead and offset for text
         super.init(xLoc-45, yLoc-15, n, "Relationship");
@@ -136,7 +136,7 @@ public class RelationshipElement extends AbstractElement implements Serializable
         //draw src/dest points
         g.fillOval(movePoints.get(MovePointType.SOURCE).x - HALF_END,
                 movePoints.get(MovePointType.SOURCE).y - HALF_END, END_SIZE, END_SIZE);
-        Point destPoint = movePoints.get(MovePointType.DESTINATION);
+        RelationshipPoint destPoint = movePoints.get(MovePointType.DESTINATION);
 
         //draw end type
         switch(type){
@@ -189,7 +189,7 @@ public class RelationshipElement extends AbstractElement implements Serializable
         moveType = MovePointType.NONE;
         dragPoint = null;
 
-        for (Map.Entry<MovePointType, Point> entry : movePoints.entrySet()) {
+        for (Map.Entry<MovePointType, RelationshipPoint> entry : movePoints.entrySet()) {
             if(entry.getValue().x-END_SIZE < p.getX() && entry.getValue().y-END_SIZE < p.getY() &&
                     entry.getValue().x+END_SIZE > p.getX() && entry.getValue().y+END_SIZE > p.getY())
             {
@@ -220,10 +220,10 @@ public class RelationshipElement extends AbstractElement implements Serializable
         }
 
         //otherwise this is an interim point
-        Point point = movePoints.get(moveType);
+        RelationshipPoint point = movePoints.get(moveType);
         //make interim points snap to src/dest/each other
         if(moveType == MovePointType.INTERIM1 || (moveType == MovePointType.INTERIM2)) {
-            Point point2, point3;
+            RelationshipPoint point2, point3;
             if(moveType == MovePointType.INTERIM1){
                 point2 = movePoints.get(MovePointType.INTERIM2);
                 point3 = movePoints.get(MovePointType.SOURCE);
@@ -243,7 +243,7 @@ public class RelationshipElement extends AbstractElement implements Serializable
         point.setLocation(xLoc, yLoc);
     }
 
-    public Point getDragPoint(){
+    public RelationshipPoint getDragPoint(){
         return dragPoint;
     }
 
