@@ -1,11 +1,8 @@
 package RocketUML.ui;
 
 import RocketUML.model.*;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 
 public class ModelViewController {
     int classCounter = 0;
@@ -245,7 +242,7 @@ public class ModelViewController {
     public void serializeElements(String fileName)
     {
         Serialization ser = new Serialization();
-        //ser.Serialize(fileName, elements);
+        ser.Serialize(fileName, ProjectElement.getInstance());
     }
 
     public void deserializeElements(String fileName)
@@ -256,7 +253,6 @@ public class ModelViewController {
 
     public void resetDiagramForOpen()
     {
-        //elements.clear();
         classCounter = 0;
         relationshipCounter = 0;
         xOffset = 0;
@@ -264,16 +260,9 @@ public class ModelViewController {
         selectedElement = null;
     }
 
-    public void rebuildElementsArray(HashMap<String, ArrayList<AbstractElement>> loadElements)
+    public void rebuildProject(ProjectElement project)
     {
-        //elements.clear();
-        for (String key : loadElements.keySet()) {
-            //elements.put(key, new ArrayList<AbstractElement>());
-            ArrayList<AbstractElement> elementList = loadElements.get(key);
-            for (AbstractElement element : elementList) {
-                //elements.get(key).add(element);
-            }
-        }
+        ProjectElement.getInstance().overwriteInstance(project);
     }
 
     public String getCurrentDiagram(){
