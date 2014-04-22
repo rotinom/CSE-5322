@@ -1,5 +1,6 @@
 package RocketUML.ui;
 import RocketUML.model.AbstractElement;
+import RocketUML.model.ProjectElement;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,13 +10,13 @@ public class Serialization
 {
     ModelViewController controller = ModelViewController.getInstance();
 
-    public void Serialize (String fileName, HashMap<String, ArrayList<AbstractElement>> elementsOut)
+    public void Serialize (String fileName, ProjectElement projectOut)
     {
         try
         {
             FileOutputStream fileOut = new FileOutputStream(fileName);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(elementsOut);
+            out.writeObject(projectOut);
             out.close();
             fileOut.close();
             System.out.printf("File saved to " + fileName + "%n");
@@ -28,7 +29,7 @@ public class Serialization
 
     public void Deserialize (String fileName)
     {
-        HashMap<String, ArrayList<AbstractElement>> elementsIn;
+        ProjectElement projectIn;
         File checkFile = new File(fileName);
 
         if (checkFile.exists())
@@ -39,7 +40,7 @@ public class Serialization
             {
                 FileInputStream fileIn = new FileInputStream(fileName);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                elementsIn = (HashMap<String, ArrayList<AbstractElement>>) in.readObject();
+                projectIn = (ProjectElement)in.readObject();
                 System.out.printf("File opened from " + fileName + "%n");
                 in.close();
                 fileIn.close();
@@ -56,7 +57,7 @@ public class Serialization
                 return;
             }
 
-            controller.rebuildElementsArray(elementsIn);
+            controller.rebuildProject(projectIn);
         }
         else
         {
