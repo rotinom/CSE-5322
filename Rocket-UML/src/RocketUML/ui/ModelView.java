@@ -196,8 +196,29 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
             }
         });
 
+        JMenuItem menuItem = new JMenuItem("Change Source Multiplicity");
+        relationPopup.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String string = JOptionPane.showInputDialog("Please enter new source multiplicity:");
+                controller.setRelationSrcMulti(string);
+                repaint();
+            }
+        });
+
+        menuItem = new JMenuItem("Change Destination Multiplicity");
+        relationPopup.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String string = JOptionPane.showInputDialog("Please enter new destination multiplicity:");
+                controller.setRelationDestMulti(string);
+                repaint();
+            }
+        });
+
         relationPopup.addSeparator();
-        JMenuItem menuItem = new JMenuItem("Remove Relationship");
+        menuItem = new JMenuItem("Remove Relationship");
         relationPopup.add(menuItem);
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -212,9 +233,6 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         super.paintComponent(g);
         controller.drawElement(g);
     }
-
-    //public String getName(){ return name;}
-   // public void setName(String name){this.name = name;}
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////// INPUT HANDLERS //////////////////////////////

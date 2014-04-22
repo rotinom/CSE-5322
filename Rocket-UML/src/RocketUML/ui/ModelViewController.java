@@ -102,10 +102,6 @@ public class ModelViewController {
         }
     }
 
-    public void setSelectedElement(AbstractElement element) {
-
-    }
-
     public void changeRelationshipType(RelationshipElement.Type type) {
         if(selectedElement != null && selectedElement.getClass() == RelationshipElement.class) {
             ((RelationshipElement) selectedElement).setType(type);
@@ -226,16 +222,24 @@ public class ModelViewController {
         return (selectedElement != null);
     }
 
-    public int getNumDiagrams() {
-        return ProjectElement.getInstance().getDiagrams().size();
-    }
-
     public ArrayList<String> getDiagramNames() {
         ArrayList<String> names = new ArrayList<String>();
         for (String key : ProjectElement.getInstance().getDiagrams().keySet()) {
             names.add(key);
         }
         return names;
+    }
+
+    public void setRelationSrcMulti(String multi) {
+        if(selectedElement != null) {
+            ((RelationshipElement)selectedElement).setSrceMultiplicity(multi);
+        }
+    }
+
+    public void setRelationDestMulti(String multi) {
+        if(selectedElement != null) {
+            ((RelationshipElement)selectedElement).setDestMultiplicity(multi);
+        }
     }
 
     public void serializeElements(String fileName)

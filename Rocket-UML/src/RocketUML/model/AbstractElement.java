@@ -41,12 +41,6 @@ public abstract class AbstractElement {
         return this;
     }
 
-    //@Override
-    public void paintComponent(Graphics g) {
-        //super.paintComponent(g);
-        draw(g);
-    }
-
     public void draw(Graphics graphics){
         //meant to be overridden
     }
@@ -61,28 +55,12 @@ public abstract class AbstractElement {
         return false;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public int getX() {
         return x;
     }
 
     public int getY() {
         return y;
-    }
-
-    //public String getType() {
-    //    return elementType;
-    //}
-
-    public boolean getSelected() {
-        return isSelected;
     }
 
     public void setSelected(boolean selected){

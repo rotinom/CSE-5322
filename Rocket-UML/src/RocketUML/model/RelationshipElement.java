@@ -36,8 +36,8 @@ public class RelationshipElement extends AbstractElement implements Serializable
     private ClassElement dest; // Destination
     private ClassElement assc; // Associated class
 
-    private String srceMultiplicity;
-    private String destMultiplicity;
+    private String srceMultiplicity = "";
+    private String destMultiplicity = "";
 
     private RelationshipType type_ = RelationshipType.Composition;
 
@@ -170,14 +170,29 @@ public class RelationshipElement extends AbstractElement implements Serializable
         g.fillOval(movePoints.get(MovePointType.INTERIM2).x - HALF_GRAB,
                 movePoints.get(MovePointType.INTERIM2).y - HALF_GRAB, GRAB_SIZE, GRAB_SIZE);
 
-
         g.setColor(Color.BLACK);
         g.drawString(name, x, y);
+
+        drawTextAlongLine(movePoints.get(MovePointType.SOURCE).x, movePoints.get(MovePointType.SOURCE).y,
+                          movePoints.get(MovePointType.INTERIM1).x, movePoints.get(MovePointType.INTERIM1).y,
+                          20, srceMultiplicity, g);
+        drawTextAlongLine(movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y,
+                          movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
+                          40, destMultiplicity, g);
 
         //save metrics for later
         if(metrics == null){
             metrics = g.getFontMetrics(g.getFont());
         }
+    }
+
+    public void drawTextAlongLine(int x1, int y1, int x2, int y2, int offset, String text, Graphics g){
+        //compute a point along the line from src to interim 1 a given distance from src
+        double srcAngle = Math.atan2(y2 - y1, x2 - x1);
+        int srcSin = (int)(Math.sin(srcAngle) * offset);
+        int srcCos = (int)(Math.cos(srcAngle) * offset);
+        Point srcTextLoc = new Point(x1 + srcCos, y1 + srcSin);
+        g.drawString(text, srcTextLoc.x, srcTextLoc.y);
     }
 
     @Override
@@ -190,8 +205,8 @@ public class RelationshipElement extends AbstractElement implements Serializable
         dragPoint = null;
 
         for (Map.Entry<MovePointType, RelationshipPoint> entry : movePoints.entrySet()) {
-            if(entry.getValue().x-END_SIZE < p.getX() && entry.getValue().y-END_SIZE < p.getY() &&
-                    entry.getValue().x+END_SIZE > p.getX() && entry.getValue().y+END_SIZE > p.getY())
+            if(entry.getValue().x-GRAB_SIZE < p.getX() && entry.getValue().y-GRAB_SIZE < p.getY() &&
+                    entry.getValue().x+GRAB_SIZE > p.getX() && entry.getValue().y+GRAB_SIZE > p.getY())
             {
                 contains = true;
                 moveType = entry.getKey();
