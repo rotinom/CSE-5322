@@ -2,13 +2,12 @@ package RocketUML.model;
 
 import RocketUML.visitor.Visitor;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
-public class ProjectElement extends AbstractElement{
+public class ProjectElement extends AbstractElement implements Serializable {
 
+    private static final long serialVersionUID = -1251902129877229405L;
     private static ProjectElement instance = new ProjectElement();
     private HashMap<String,DiagramElement> diagramList = new HashMap<String,DiagramElement>();
 
@@ -73,5 +72,10 @@ public class ProjectElement extends AbstractElement{
     public ProjectElement setName(String n) {
         super.setName(n);
         return this;
+    }
+
+    public void overwriteInstance(ProjectElement projectElement)
+    {
+        instance = projectElement;
     }
 }
