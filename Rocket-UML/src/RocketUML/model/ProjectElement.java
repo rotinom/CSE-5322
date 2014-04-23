@@ -1,5 +1,6 @@
 package RocketUML.model;
 
+import RocketUML.ui.Serialization;
 import RocketUML.visitor.Visitor;
 
 import java.io.Serializable;
@@ -74,8 +75,25 @@ public class ProjectElement extends AbstractElement implements Serializable {
         return this;
     }
 
-    public void overwriteInstance(ProjectElement projectElement)
+    public void serializeElements(String fileName)
     {
-        instance = projectElement;
+        Serialization ser = new Serialization();
+        ser.Serialize(fileName, diagramList);
+    }
+
+    public void deserializeElements(String fileName)
+    {
+        Serialization deser = new Serialization();
+        deser.Deserialize(fileName);
+    }
+
+    public void resetDiagramForOpen()
+    {
+        diagramList.clear();
+    }
+
+    public void rebuildDiagrams(HashMap<String,DiagramElement> diagramsIn)
+    {
+        diagramList = diagramsIn;
     }
 }
