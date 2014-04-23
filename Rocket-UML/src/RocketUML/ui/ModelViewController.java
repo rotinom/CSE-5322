@@ -239,32 +239,6 @@ public class ModelViewController {
         }
     }
 
-    public void serializeElements(String fileName)
-    {
-        Serialization ser = new Serialization();
-        ser.Serialize(fileName, ProjectElement.getInstance());
-    }
-
-    public void deserializeElements(String fileName)
-    {
-        Serialization deser = new Serialization();
-        deser.Deserialize(fileName);
-    }
-
-    public void resetDiagramForOpen()
-    {
-        classCounter = 0;
-        relationshipCounter = 0;
-        xOffset = 0;
-        yOffset = 0;
-        selectedElement = null;
-    }
-
-    public void rebuildProject(ProjectElement project)
-    {
-        ProjectElement.getInstance().overwriteInstance(project);
-    }
-
     public String getCurrentDiagram(){
         return currentDiagram;
     }
