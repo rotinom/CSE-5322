@@ -21,7 +21,7 @@ public class Menu extends JFrame implements ActionListener {
   	private Main gui;
     private String pathName;
 
-    ModelViewController controller = ModelViewController.getInstance();
+    ProjectElement projectElement = ProjectElement.getInstance();
 	
   	public Menu(Main in)
 	{
@@ -110,7 +110,7 @@ public class Menu extends JFrame implements ActionListener {
 			if(val == JFileChooser.APPROVE_OPTION)
 			{
 				pathName = openChooser.getSelectedFile().getPath();
-                controller.deserializeElements(pathName);
+                projectElement.deserializeElements(pathName);
                 gui.loadDiagrams();
                 gui.repaint();
 			}
@@ -122,7 +122,7 @@ public class Menu extends JFrame implements ActionListener {
 			if(val == JFileChooser.APPROVE_OPTION)
 			{
 				pathName = openChooser.getSelectedFile().getPath();
-                controller.serializeElements(pathName);
+                projectElement.serializeElements(pathName);
 			}
 		}
 		else if (e.getSource() == addClassItem)
