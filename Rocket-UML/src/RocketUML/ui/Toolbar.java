@@ -7,12 +7,12 @@ import java.awt.event.ActionListener;
 
 public class Toolbar extends JPanel implements ActionListener
 {
-	ImageIcon undoImage = new ImageIcon("resources/undo.png");
-	ImageIcon redoImage = new ImageIcon("resources/redo.png");
-    ImageIcon addClassImage = new ImageIcon("resources/add_class.png");
-    ImageIcon removeClassImage = new ImageIcon("resources/remove_class.png");
-    ImageIcon exportCppImage = new ImageIcon("resources/export_cplusplus.png");
-    ImageIcon exportJavaImage = new ImageIcon("resources/export_java.png");
+    ImageIcon undoImage = new ImageIcon(getClass().getResource("/undo.png"));
+    ImageIcon redoImage = new ImageIcon(getClass().getResource("/redo.png"));
+    ImageIcon addClassImage = new ImageIcon(getClass().getResource("/add_class.png"));
+    ImageIcon removeClassImage = new ImageIcon(getClass().getResource("/remove_class.png"));
+    ImageIcon exportCppImage = new ImageIcon(getClass().getResource("/export_cplusplus.png"));
+    ImageIcon exportJavaImage = new ImageIcon(getClass().getResource("/export_java.png"));
 	JPanel panel = new JPanel();
 	JToolBar toolbar = new JToolBar();
 
@@ -65,7 +65,6 @@ public class Toolbar extends JPanel implements ActionListener
         controller = ModelViewController.getInstance();
 
     }
-
 
     public void actionPerformed(ActionEvent e)
     {
