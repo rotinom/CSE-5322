@@ -71,9 +71,11 @@ public class ProjectElement extends AbstractElement {
         return this;
     }
 
-    public void resetDiagramForOpen()
+    public void resetProject()
     {
         diagramList.clear();
+        createDiagram("Diagram 1");
+
     }
 
     public void rebuildDiagrams(HashMap<String,DiagramElement> diagramsIn)
