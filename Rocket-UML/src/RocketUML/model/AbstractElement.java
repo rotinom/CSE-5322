@@ -4,12 +4,12 @@ import RocketUML.visitor.Visitor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.UUID;
+import java.io.Serializable;
 
 /**
  * Represents an abstract element
  */
-public abstract class AbstractElement {
+public abstract class AbstractElement implements Serializable {
 
     protected String name = "";
     protected String elementType = "";
@@ -19,9 +19,7 @@ public abstract class AbstractElement {
     protected int height = 0;
     protected boolean isSelected = false;
 
-    protected AbstractElement(){
-        name = this.getClass().getSimpleName() + "-" + UUID.randomUUID().toString().replace("-", "");
-    }
+    public AbstractElement(){}
 
     public void init(int xLoc, int yLoc, String n, String type) {
         x = xLoc;

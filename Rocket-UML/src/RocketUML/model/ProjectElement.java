@@ -1,14 +1,10 @@
 package RocketUML.model;
 
-import RocketUML.ui.Serialization;
 import RocketUML.visitor.Visitor;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
-public class ProjectElement extends AbstractElement implements Serializable {
-
-    private static final long serialVersionUID = -1251902129877229405L;
+public class ProjectElement extends AbstractElement {
     private static ProjectElement instance = new ProjectElement();
     private HashMap<String,DiagramElement> diagramList = new HashMap<String,DiagramElement>();
 
@@ -29,7 +25,7 @@ public class ProjectElement extends AbstractElement implements Serializable {
      * @return The new DiagramElement
      */
     public DiagramElement createDiagram(String name){
-        DiagramElement ret = new DiagramElement(this);
+        DiagramElement ret = new DiagramElement();
         ret.setName(name);
         diagramList.put(name, ret);
         return ret;
@@ -73,18 +69,6 @@ public class ProjectElement extends AbstractElement implements Serializable {
     public ProjectElement setName(String n) {
         super.setName(n);
         return this;
-    }
-
-    public void serializeElements(String fileName)
-    {
-        Serialization ser = new Serialization();
-        ser.Serialize(fileName, diagramList);
-    }
-
-    public void deserializeElements(String fileName)
-    {
-        Serialization deser = new Serialization();
-        deser.Deserialize(fileName);
     }
 
     public void resetDiagramForOpen()

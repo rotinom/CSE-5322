@@ -110,7 +110,7 @@ public class Menu extends JFrame implements ActionListener {
 			if(val == JFileChooser.APPROVE_OPTION)
 			{
 				pathName = openChooser.getSelectedFile().getPath();
-                projectElement.deserializeElements(pathName);
+                Serialization.getInstance().deserialize(pathName);
                 gui.loadDiagrams();
                 gui.repaint();
 			}
@@ -122,7 +122,7 @@ public class Menu extends JFrame implements ActionListener {
 			if(val == JFileChooser.APPROVE_OPTION)
 			{
 				pathName = openChooser.getSelectedFile().getPath();
-                projectElement.serializeElements(pathName);
+                Serialization.getInstance().serialize(pathName);
 			}
 		}
 		else if (e.getSource() == addClassItem)

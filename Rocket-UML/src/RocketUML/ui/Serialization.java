@@ -1,24 +1,35 @@
 package RocketUML.ui;
-import RocketUML.model.AbstractElement;
-import RocketUML.model.DiagramElement;
-import RocketUML.model.ProjectElement;
+import RocketUML.model.*;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Serialization
 {
     ProjectElement projectElement = ProjectElement.getInstance();
 
-    public void Serialize (String fileName, HashMap<String,DiagramElement> diagramsOut)
+    private static Serialization instance_ = null;
+
+    private Serialization() {	}
+
+    public static synchronized Serialization getInstance() {
+        if (instance_ == null) {
+            instance_ = new Serialization ();
+        }
+        return instance_;
+    }
+
+    public void serialize (String fileName)
     {
+        HashMap<String,DiagramElement> diagramsOut = projectElement.getDiagrams();
         try
         {
             FileOutputStream fileOut = new FileOutputStream(fileName);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(diagramsOut);
+            out.flush();
             out.close();
+            fileOut.flush();
             fileOut.close();
             System.out.printf("File saved to " + fileName + "%n");
         }
@@ -28,7 +39,7 @@ public class Serialization
         }
     }
 
-    public void Deserialize (String fileName)
+    public void deserialize (String fileName)
     {
         HashMap<String,DiagramElement> diagramsIn;
         File checkFile = new File(fileName);

@@ -2,13 +2,7 @@ package RocketUML.model;
 
 import RocketUML.visitor.Visitor;
 
-import javax.management.Attribute;
-import java.io.Serializable;
-
-/**
- * Created by rotinom on 2/26/14.
- */
-public class AttributeElement extends AbstractElement implements Serializable {
+public class AttributeElement extends AbstractElement {
 
     private String type;
     private ProtectionEnum protection;
@@ -53,7 +47,6 @@ public class AttributeElement extends AbstractElement implements Serializable {
     }
 
     public String getString() {
-        //return type + " " + getName();
         String string = "";
         switch (protection) {
             case PUBLIC: string += "+ "; break;

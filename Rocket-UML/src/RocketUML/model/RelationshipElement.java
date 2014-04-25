@@ -4,12 +4,10 @@ package RocketUML.model;
 import RocketUML.visitor.Visitor;
 
 ;import java.awt.*;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RelationshipElement extends AbstractElement implements Serializable {
-
+public class RelationshipElement extends AbstractElement {
 
     public static final int GRAB_SIZE = 6;
     public static final int END_SIZE = 4;

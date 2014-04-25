@@ -3,21 +3,17 @@ package RocketUML.model;
 import RocketUML.visitor.Visitor;
 
 import javax.swing.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by rotinom on 2/26/14.
- */
-public class MethodElement extends AbstractElement implements Serializable {
+public class MethodElement extends AbstractElement {
+
     private ProtectionEnum protection; /// public/protected/private
     private String returnType; /// return value
     private String name;
 
     private ArrayList<MethodParameter> parameters = new ArrayList<MethodParameter>();
 
-    private MethodElement(){
-    }
+    private MethodElement(){}
 
     public static MethodElement create() {
         return new MethodElement();

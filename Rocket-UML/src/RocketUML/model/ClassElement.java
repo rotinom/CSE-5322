@@ -7,12 +7,11 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClassElement extends AbstractElement implements Serializable {
+public class ClassElement extends AbstractElement {
 
     public static final int TITLE_HEIGHT = 30;
     public static final int LINE_HEIGHT = 20;
@@ -40,8 +39,7 @@ public class ClassElement extends AbstractElement implements Serializable {
     /**
      * CTOR
      */
-    public ClassElement() {
-    }
+   public ClassElement() {}
 
     @Override
     public void accept(Visitor v) {
