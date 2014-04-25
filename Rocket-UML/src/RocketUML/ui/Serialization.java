@@ -46,7 +46,7 @@ public class Serialization
 
         if (checkFile.exists())
         {
-            projectElement.resetDiagramForOpen();
+            projectElement.resetProject();
 
             try
             {
