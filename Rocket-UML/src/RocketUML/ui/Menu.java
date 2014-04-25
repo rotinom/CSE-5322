@@ -2,6 +2,7 @@ package RocketUML.ui;
 
 import RocketUML.model.AbstractElement;
 import RocketUML.model.AbstractFactory;
+import RocketUML.model.DiagramElement;
 import RocketUML.model.ProjectElement;
 import RocketUML.visitor.CodeGenerationController;
 
@@ -22,6 +23,7 @@ public class Menu extends JFrame implements ActionListener {
     private String pathName;
 
     ProjectElement projectElement = ProjectElement.getInstance();
+    ModelViewController controller = ModelViewController.getInstance();
 	
   	public Menu(Main in)
 	{
@@ -100,7 +102,9 @@ public class Menu extends JFrame implements ActionListener {
 	{
 		if(e.getSource() == newMenuItem)
 		{
-			gui.getContentPane().removeAll();
+            projectElement.resetProject();
+            gui.loadDiagrams();
+            controller.resetController();
 			gui.repaint();
 		}
 		else if(e.getSource() == openMenuItem)
