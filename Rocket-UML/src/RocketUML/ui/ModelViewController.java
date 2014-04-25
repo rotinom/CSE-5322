@@ -258,6 +258,16 @@ public class ModelViewController {
         ProjectElement.getInstance().changeName(oldName, newName);
     }
 
+    public void resetController()
+    {
+        classCounter = 0;
+        relationshipCounter = 0;
+        xOffset = 0;
+        yOffset = 0;
+        undoCounter = 0;
+        selectedElement = null;
+    }
+
     public void saveToMemento()
     {
        // int size = elements.get(currentDiagram).size();
