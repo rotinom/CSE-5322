@@ -1,5 +1,8 @@
 package RocketUML.ui;
 
+import RocketUML.model.ProjectElement;
+import RocketUML.visitor.CodeGenerationController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -100,10 +103,28 @@ public class Toolbar extends JPanel implements ActionListener
         }
         else if(e.getSource() == exportCpp)
         {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int val = chooser.showSaveDialog(Toolbar.this);
+            if(val == JFileChooser.APPROVE_OPTION)
+            {
+                pathName = chooser.getSelectedFile().getPath();
+                CodeGenerationController cgc = CodeGenerationController.create();
+                cgc.generateCppCode(ProjectElement.getInstance(), pathName);
+            }
 
         }
         else if(e.getSource() == exportJava)
         {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int val = chooser.showSaveDialog(Toolbar.this);
+            if(val == JFileChooser.APPROVE_OPTION)
+            {
+                pathName = chooser.getSelectedFile().getPath();
+                CodeGenerationController cgc = CodeGenerationController.create();
+                cgc.generateJavaCode(ProjectElement.getInstance(), pathName);
+            }
 
         }
     }
