@@ -90,8 +90,8 @@ public class Main extends JFrame {
         tabPanel.setOpaque(false);
 
         JLabel title = new JLabel(name);
-        ImageIcon icon = new ImageIcon("resources/closeTabDisabled.png");
-        ImageIcon activeIcon = new ImageIcon("resources/closeTabEnabled.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/closeTabDisabled.png"));
+        ImageIcon activeIcon = new ImageIcon(getClass().getResource("/closeTabEnabled.png"));
         JButton closeButton = new JButton();
         closeButton.setIcon(icon);
         closeButton.setRolloverIcon(activeIcon);
@@ -129,8 +129,8 @@ public class Main extends JFrame {
         JPanel tabPanel = new JPanel(f);
         tabPanel.setOpaque(false);
 
-        ImageIcon icon = new ImageIcon("resources/newTabDisabled.png");
-        ImageIcon activeIcon = new ImageIcon("resources/newTabEnabled.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/newTabDisabled.png"));
+        ImageIcon activeIcon = new ImageIcon(getClass().getResource("/newTabEnabled.png"));
         JButton closeButton = new JButton();
         closeButton.setIcon(icon);
         closeButton.setRolloverIcon(activeIcon);
