@@ -9,34 +9,34 @@ public class Toolbar extends JPanel implements ActionListener
 {
     ImageIcon undoImage = new ImageIcon(getClass().getResource("/undo.png"));
     ImageIcon redoImage = new ImageIcon(getClass().getResource("/redo.png"));
-    ImageIcon addClassImage = new ImageIcon(getClass().getResource("/add_class.png"));
-    ImageIcon removeClassImage = new ImageIcon(getClass().getResource("/remove_class.png"));
     ImageIcon exportCppImage = new ImageIcon(getClass().getResource("/export_cplusplus.png"));
     ImageIcon exportJavaImage = new ImageIcon(getClass().getResource("/export_java.png"));
+    ImageIcon saveImage = new ImageIcon(getClass().getResource("/save.png"));
+    ImageIcon openImage = new ImageIcon(getClass().getResource("/open.png"));
 	JPanel panel = new JPanel();
 	JToolBar toolbar = new JToolBar();
 
     private Main gui;
+    private String pathName;
 
-    JButton  addClass, removeClass, undo, redo, exportCpp, exportJava;
+    JButton  save, open, undo, redo, exportCpp, exportJava;
 
     ModelViewController controller = ModelViewController.getInstance();
 
 	public Toolbar(Main in)
 	{
-
         gui = in;
 		toolbar.setFloatable(false);
 
-        addClass = new JButton(addClassImage);
-        addClass.setToolTipText("Add Class");
-        addClass.addActionListener(this);
-        toolbar.add(addClass);
+        save = new JButton(saveImage);
+        save.setToolTipText("Save Project");
+        save.addActionListener(this);
+        toolbar.add(save);
 
-        removeClass = new JButton(removeClassImage);
-        removeClass.setToolTipText("Remove Class");
-        removeClass.addActionListener(this);
-        toolbar.add(removeClass);
+        open = new JButton(openImage);
+        open.setToolTipText("Open Project");
+        open.addActionListener(this);
+        toolbar.add(open);
 
 		undo = new JButton(undoImage);
         undo.setToolTipText("Undo");
@@ -63,19 +63,31 @@ public class Toolbar extends JPanel implements ActionListener
 		panel.add(toolbar);
 
         controller = ModelViewController.getInstance();
-
     }
 
     public void actionPerformed(ActionEvent e)
     {
-        if(e.getSource() == addClass)
+        if(e.getSource() == save)
         {
-            controller.createElement("","Class",gui.getWidth()/3, gui.getHeight()/3);
-            gui.repaint();
+            JFileChooser openChooser = new JFileChooser();
+            int val = openChooser.showSaveDialog(Toolbar.this);
+            if(val == JFileChooser.APPROVE_OPTION)
+            {
+                pathName = openChooser.getSelectedFile().getPath();
+                Serialization.getInstance().serialize(pathName);
+            }
         }
-        else if(e.getSource() == removeClass)
+        else if(e.getSource() == open)
         {
-
+            JFileChooser openChooser = new JFileChooser();
+            int val = openChooser.showOpenDialog(Toolbar.this);
+            if(val == JFileChooser.APPROVE_OPTION)
+            {
+                pathName = openChooser.getSelectedFile().getPath();
+                Serialization.getInstance().deserialize(pathName);
+                gui.loadDiagrams();
+                gui.repaint();
+            }
         }
         else if(e.getSource() == undo)
         {
