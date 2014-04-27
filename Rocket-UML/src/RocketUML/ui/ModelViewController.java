@@ -68,7 +68,9 @@ public class ModelViewController {
                 selectedElement.setLocation(x - xOffset, y - yOffset);
             }
         }
-        SaveState();
+        if(selectedElement == null) {
+            SaveState();
+        }
     }
 
     public void setSelectedElement(int mouseX, int mouseY){
