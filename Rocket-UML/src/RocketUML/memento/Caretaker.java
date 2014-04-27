@@ -38,30 +38,26 @@ public class Caretaker {
 
     public Memento getUndoState()
     {
-        /*
         if(undoCounter >= 0)
         {
-            int temp = undoCounter;
             undoCounter--;
-            return savedStates.get(temp);
         }
-        else
+        else {
             return savedStates.get(0);
-            */
-        return savedStates.get(2);
+        }
+        return savedStates.get(undoCounter);
     }
 
     public Memento getRedoState()
     {
         if(undoCounter <= 9)
         {
-            int temp = undoCounter;
             undoCounter++;
-            return savedStates.get(temp);
         }
         else
         {
             return savedStates.get(9);
         }
+        return savedStates.get(undoCounter);
     }
 }

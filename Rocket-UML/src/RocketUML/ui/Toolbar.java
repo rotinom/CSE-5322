@@ -100,7 +100,9 @@ public class Toolbar extends JPanel implements ActionListener
         }
         else if(e.getSource() == redo)
         {
-
+            controller.RedoState();
+            gui.loadDiagrams();
+            gui.repaint();
         }
         else if(e.getSource() == exportCpp)
         {

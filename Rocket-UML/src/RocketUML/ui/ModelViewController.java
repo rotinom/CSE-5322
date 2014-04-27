@@ -283,4 +283,11 @@ public class ModelViewController {
         Originator.getInstance().setMemento(memento);
         ProjectElement.getInstance().rebuildDiagrams(Originator.getInstance().getState());
     }
+
+    public void RedoState()
+    {
+        Memento memento = Caretaker.getInstance().getRedoState();
+        Originator.getInstance().setMemento(memento);
+        ProjectElement.getInstance().rebuildDiagrams(Originator.getInstance().getState());
+    }
 }
