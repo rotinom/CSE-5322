@@ -100,48 +100,56 @@ public class ModelViewController {
             yOffset = mouseY - selectedElement.getY();
             selectedElement.setSelected(true);
         }
+        SaveState();
     }
 
     public void changeRelationshipType(RelationshipElement.Type type) {
         if(selectedElement != null && selectedElement.getClass() == RelationshipElement.class) {
             ((RelationshipElement) selectedElement).setType(type);
         }
+        SaveState();
     }
 
     public void addClassAttribute(String attribute) {
         if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
             ((ClassElement)selectedElement).addAttribute(attribute);
         }
+        SaveState();
     }
 
     public void addClassMethod(String method) {
         if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
             ((ClassElement)selectedElement).addMethod(method);
         }
+        SaveState();
     }
 
     public void editString(int mouseX, int mouseY) {
         if(selectedElement != null) {
             selectedElement.editString(mouseX, mouseY);
         }
+        SaveState();
     }
 
     public void removeAttribute(int mouseX, int mouseY){
         if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
             ((ClassElement)selectedElement).removeAttribute(getStringAtLocation(mouseX, mouseY));
         }
+        SaveState();
     }
 
     public void removeMethod(int mouseX, int mouseY){
         if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
             ((ClassElement)selectedElement).removeMethod(getStringAtLocation(mouseX, mouseY));
         }
+        SaveState();
     }
 
     public void changeProtection(int mouseX, int mouseY, ProtectionEnum protection){
         if(selectedElement != null && selectedElement.getClass() == ClassElement.class) {
             ((ClassElement)selectedElement).changeProtection(mouseX, mouseY, protection);
         }
+        SaveState();
     }
 
     public void removeElement() {
@@ -149,6 +157,7 @@ public class ModelViewController {
             ProjectElement.getInstance().getDiagram(currentDiagram).removeElement(selectedElement);
             selectedElement = null;
         }
+        SaveState();
     }
 
     public void drawElement(Graphics g) {
