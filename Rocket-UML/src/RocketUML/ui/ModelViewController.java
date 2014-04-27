@@ -1,6 +1,10 @@
 package RocketUML.ui;
 
+import RocketUML.memento.Caretaker;
+import RocketUML.memento.Memento;
+import RocketUML.memento.Originator;
 import RocketUML.model.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -9,11 +13,9 @@ public class ModelViewController {
     int relationshipCounter = 0;
     private int xOffset = 0;
     private int yOffset = 0;
-    private int undoCounter = 0;
     private AbstractElement selectedElement = null; //keep current element to facilitate modifications
     private String currentDiagram;
 
-    protected  ArrayList<ArrayList<AbstractElement>> savedStates = new ArrayList();
     private static ModelViewController instance_ = null;
 
     private ModelViewController() {	}
@@ -44,8 +46,8 @@ public class ModelViewController {
         if(ProjectElement.getInstance().getDiagram(currentDiagram) != null) {
             ProjectElement.getInstance().getDiagram(currentDiagram).addElement(element);
         }
-        saveToMemento();
         selectedElement = element;
+        SaveState();
     }
 
     public void setLocation(int x, int y) {
@@ -66,6 +68,7 @@ public class ModelViewController {
                 selectedElement.setLocation(x - xOffset, y - yOffset);
             }
         }
+        SaveState();
     }
 
     public void setSelectedElement(int mouseX, int mouseY){
@@ -264,30 +267,20 @@ public class ModelViewController {
         relationshipCounter = 0;
         xOffset = 0;
         yOffset = 0;
-        undoCounter = 0;
         selectedElement = null;
     }
 
-    public void saveToMemento()
+    public void SaveState()
     {
-       // int size = elements.get(currentDiagram).size();
-        //savedStates.add(undoCounter,new ArrayList<AbstractElement>());
-        //for(int i = 0; i < size; i++)
-        //{
-        //    savedStates.get(undoCounter).add(i, elements.get(currentDiagram).get(i));
-       // }
-        //undoCounter++;
+        Originator.getInstance().setState(ProjectElement.getInstance().getDiagrams());
+        Memento memento = Originator.getInstance().createMemento();
+        Caretaker.getInstance().setState(memento);
     }
 
-    public void undoMemento()
+    public void UndoState()
     {
-       // if(undoCounter < savedStates.size()) {
-        //elements.clear();
-        //elements.put(currentDiagram,new ArrayList<AbstractElement>());
-        //int size = savedStates.get(2).size();
-        //for(int i = 0; i < size; i++)
-        //{
-        //    elements.get(currentDiagram).add(i,savedStates.get(2).get(i));
-       // }
+        Memento memento = Caretaker.getInstance().getUndoState();
+        Originator.getInstance().setMemento(memento);
+        ProjectElement.getInstance().rebuildDiagrams(Originator.getInstance().getState());
     }
 }

@@ -2,7 +2,6 @@ package RocketUML.ui;
 
 import RocketUML.model.AbstractElement;
 import RocketUML.model.AbstractFactory;
-import RocketUML.model.DiagramElement;
 import RocketUML.model.ProjectElement;
 import RocketUML.visitor.CodeGenerationController;
 
