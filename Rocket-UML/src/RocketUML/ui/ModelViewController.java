@@ -9,8 +9,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ModelViewController {
-    int classCounter = 0;
-    int relationshipCounter = 0;
     private int xOffset = 0;
     private int yOffset = 0;
     private AbstractElement selectedElement = null; //keep current element to facilitate modifications
@@ -30,19 +28,7 @@ public class ModelViewController {
     public void createElement(String name, String type, int x, int y)
     {
         AbstractElement element = AbstractFactory.getElement(type);
-        if (name.equals("")){
-            if (type.equals("Class")){
-                element.init(x, y, "New Class " + classCounter++, type);
-            }
-            else{
-                element.init(x, y, "New Relationship " + relationshipCounter++, type);
-            }
-        }
-        else
-        {
-            element.init(x, y, name, type);
-        }
-
+        element.setLocation(x, y);
         if(ProjectElement.getInstance().getDiagram(currentDiagram) != null) {
             ProjectElement.getInstance().getDiagram(currentDiagram).addElement(element);
         }
@@ -274,8 +260,7 @@ public class ModelViewController {
 
     public void resetController()
     {
-        classCounter = 0;
-        relationshipCounter = 0;
+        AbstractFactory.reset();
         xOffset = 0;
         yOffset = 0;
         selectedElement = null;
