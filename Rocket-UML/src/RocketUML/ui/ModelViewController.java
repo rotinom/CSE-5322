@@ -30,7 +30,7 @@ public class ModelViewController {
 
     public void createElement(String name, String type, int x, int y)
     {
-        AbstractElement element = AbstractFactory.getElement(type, x, y);
+        AbstractElement element = ElementFactory.getElement(type, x, y);
         if(ProjectElement.getInstance().getDiagram(currentDiagram) != null) {
             ProjectElement.getInstance().getDiagram(currentDiagram).addElement(element);
         }
@@ -267,7 +267,7 @@ public class ModelViewController {
 
     public void resetController()
     {
-        AbstractFactory.reset();
+        ElementFactory.reset();
         xOffset = 0;
         yOffset = 0;
         selectedElement = null;
