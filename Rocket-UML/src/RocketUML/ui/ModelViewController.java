@@ -76,7 +76,6 @@ public class ModelViewController {
             for (AbstractElement testElement : ProjectElement.getInstance().getDiagram(currentDiagram).getClasses()){
                 if (testElement.contains(new Point(mouseX, mouseY))){
                     selectedElement = testElement;
-                    SaveState();
                     break;
                 }
             }
@@ -85,7 +84,6 @@ public class ModelViewController {
                 for (AbstractElement testElement : ProjectElement.getInstance().getDiagram(currentDiagram).getRelationships()){
                     if (testElement.contains(new Point(mouseX, mouseY))){
                         selectedElement = testElement;
-                        SaveState();
                         break;
                     }
                 }

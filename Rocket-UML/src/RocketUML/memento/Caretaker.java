@@ -20,7 +20,6 @@ public class Caretaker {
 
     public void setState(Memento memento)
     {
-     //   HashMap<String,DiagramElement> diagramList = ProjectElement.getInstance().getDiagrams();
         undoStates.push(memento);
     }
 
@@ -36,12 +35,11 @@ public class Caretaker {
 
     public Memento getRedoState()
     {
-
         Memento redo = null;
         if(redoStates.size() != 0) {
            redo = redoStates.pop();
             undoStates.push(redo);
-        };
+        }
         return redo;
     }
 }
