@@ -1,7 +1,7 @@
 package RocketUML.model;
 
 /**
- * Created by rotinom on 3/5/14.
+ * Represents class protection enumerations
  */
 public enum ProtectionEnum{
     PUBLIC,

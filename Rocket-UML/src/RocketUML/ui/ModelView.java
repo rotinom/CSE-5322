@@ -1,9 +1,6 @@
 package RocketUML.ui;
 
-import RocketUML.model.AttributeElement;
-import RocketUML.model.MethodElement;
-import RocketUML.model.ProtectionEnum;
-import RocketUML.model.RelationshipElement;
+import RocketUML.model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,21 +58,21 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
         menuAssc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.createElement("", "Relationship", mouseX, mouseY);
-                controller.changeRelationshipType(RelationshipElement.Type.ASSOCIATION);
+                controller.changeRelationshipType(RelationshipType.Association);
                 repaint();
             }
         });
         menuAggr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.createElement("", "Relationship", mouseX, mouseY);
-                controller.changeRelationshipType(RelationshipElement.Type.AGGREGATION);
+                controller.changeRelationshipType(RelationshipType.Aggregation);
                 repaint();
             }
         });
         menuInhr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.createElement("", "Relationship", mouseX, mouseY);
-                controller.changeRelationshipType(RelationshipElement.Type.INHERITANCE);
+                controller.changeRelationshipType(RelationshipType.Inheritance);
                 repaint();
             }
         });
@@ -179,19 +176,19 @@ class ModelView extends JPanel implements MouseMotionListener,MouseListener,KeyL
 
         menuAssc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.changeRelationshipType(RelationshipElement.Type.ASSOCIATION);
+                controller.changeRelationshipType(RelationshipType.Association);
                 repaint();
             }
         });
         menuAggr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.changeRelationshipType(RelationshipElement.Type.AGGREGATION);
+                controller.changeRelationshipType(RelationshipType.Aggregation);
                 repaint();
             }
         });
         menuInhr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controller.changeRelationshipType(RelationshipElement.Type.INHERITANCE);
+                controller.changeRelationshipType(RelationshipType.Inheritance);
                 repaint();
             }
         });

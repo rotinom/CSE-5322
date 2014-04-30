@@ -60,11 +60,9 @@ public class Menu extends JFrame implements ActionListener {
         fileMenu.add(exitProgramItem);
         
         undoMenuItem = new JMenuItem("Undo");
-        //menuItem.addActionListener(new clearScreen());
         editMenu.add(undoMenuItem);
         
         redoMenuItem = new JMenuItem("Redo");
-        //menuItem.addActionListener(new openFile());
         editMenu.add(redoMenuItem);
 
         aboutMenuItem = new JMenuItem("About GED");
@@ -82,9 +80,6 @@ public class Menu extends JFrame implements ActionListener {
         clearScreenItem = new JMenuItem("Clear");
         clearScreenItem.addActionListener(this);
         optionMenu.add(clearScreenItem);
-
-        //generateCodeItem = new JMenuItem("Generate Code");
-        //generateCodeItem.addActionListener(this);
         optionMenu.add(generateMenu);
 
         generateCppItem = new JMenuItem("C++");
@@ -140,8 +135,7 @@ public class Menu extends JFrame implements ActionListener {
 				int x = Integer.parseInt(class_x_coord);
 				int y = Integer.parseInt(class_y_coord);
 
-                AbstractElement classElement = AbstractFactory.getElement("Class");
-				classElement.init(x,y,className, "Class");
+                AbstractFactory.getElement("Class", x, y);
 			}
 		}
         else if (e.getSource() == exitProgramItem)
@@ -160,8 +154,7 @@ public class Menu extends JFrame implements ActionListener {
 				int x = Integer.parseInt(relationship_x_coord);
 				int y = Integer.parseInt(relationship_y_coord);
 
-                AbstractElement relationshipElement = AbstractFactory.getElement("Relationship");
-				relationshipElement.init(x, y, null, "Relationship");
+                AbstractFactory.getElement("Relationship", x, y);
 			}
 		}
 		else if (e.getSource() == aboutMenuItem)

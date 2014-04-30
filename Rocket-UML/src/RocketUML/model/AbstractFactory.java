@@ -1,18 +1,17 @@
 package RocketUML.model;
 
-import RocketUML.model.AbstractElement;
-import RocketUML.model.ClassElement;
-import RocketUML.model.RelationshipElement;
-
 import java.util.HashMap;
 
+/**
+ * Factory for creating specific element types
+ */
 public class AbstractFactory {
     private static int classCounter = 0;
     private static int relationshipCounter = 0;
 
 	private static final HashMap elements = new HashMap();
 	
-	public static AbstractElement getElement(String objName)
+	public static AbstractElement getElement(String objName, int initX, int initY)
 	{
         AbstractElement containerElement = (AbstractElement) elements.get(objName);
 
@@ -21,12 +20,12 @@ public class AbstractFactory {
 			if(objName.equals("Class"))
 			{
 				containerElement = new ClassElement();
-                containerElement.init(0, 0, "New Class " + classCounter++, "");
+                containerElement.init(initX, initY, "New Class " + classCounter++, "");
 			}
 			if(objName.equals("Relationship"))
 			{
 				containerElement = new RelationshipElement();
-                containerElement.init(0, 0, "New Relationship " + relationshipCounter++, "");
+                containerElement.init(initX, initY, "New Relationship " + relationshipCounter++, "");
 			}
 		}
 		return containerElement;

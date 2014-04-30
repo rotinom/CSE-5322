@@ -2,6 +2,9 @@ package RocketUML.model;
 
 import RocketUML.visitor.Visitor;
 
+/**
+ * Represents a class Attribute element
+ */
 public class AttributeElement extends AbstractElement {
 
     private String type;
@@ -46,6 +49,9 @@ public class AttributeElement extends AbstractElement {
         return this;
     }
 
+    /**
+     * Get formatted string with appropriate symbology for protection
+     */
     public String getString() {
         String string = "";
         switch (protection) {
@@ -57,6 +63,9 @@ public class AttributeElement extends AbstractElement {
         return string + type + " " + name;
     }
 
+    /**
+     * Parse out and tokenize the string to get name/type
+     */
     public void setString(String str) {
         protection = ProtectionEnum.PUBLIC;
         String cleanStr = str.replaceAll(";", "");

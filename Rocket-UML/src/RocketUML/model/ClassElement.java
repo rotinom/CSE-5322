@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a Class element
+ */
 public class ClassElement extends AbstractElement {
 
     public static final int TITLE_HEIGHT = 30;
@@ -36,10 +39,7 @@ public class ClassElement extends AbstractElement {
     private ArrayList<MethodElement> methods =
             new ArrayList<MethodElement>();
 
-    /**
-     * CTOR
-     */
-   public ClassElement() {}
+    public ClassElement() {}
 
     @Override
     public void accept(Visitor v) {
@@ -63,10 +63,6 @@ public class ClassElement extends AbstractElement {
         super.init(xLoc, yLoc, n, "Class");
     }
 
-    /**
-     * Set the name of the class
-     * @param n The name to set
-     */
     public ClassElement setName(String n){
         super.setName(n);
         return this;
@@ -97,6 +93,7 @@ public class ClassElement extends AbstractElement {
         img = op.filter(img, null);
         g.drawImage(img, x, y, null);
 
+        //draw title bar
         g.setColor(Color.WHITE);
         g.fillRect(x, y, width, height);
         g.setColor(colorScheme);
@@ -183,7 +180,7 @@ public class ClassElement extends AbstractElement {
     }
 
     /**
-     * Add an attribute to the class
+     * Add an Attribute to the class
      */
     public AttributeElement createAttribute(){
         AttributeElement ae = AttributeElement.create();
@@ -192,7 +189,7 @@ public class ClassElement extends AbstractElement {
     }
 
     /**
-     * Add a method to the class
+     * Add a Method to the class
      * @return
      */
     public MethodElement createMethod(){
@@ -214,6 +211,9 @@ public class ClassElement extends AbstractElement {
         createAttribute().setString(s);
     }
 
+    /**
+     * Remove Attribute based on selected string
+     */
     public void removeAttribute(String s){
         AttributeElement removeAttribute = null;
         ArrayList<AttributeElement> attributes = getAttributes();
@@ -236,6 +236,9 @@ public class ClassElement extends AbstractElement {
         return methods;
     }
 
+    /**
+     * Remove Method based on selected string
+     */
     public void removeMethod(String s){
         MethodElement removeMethod = null;
         for (MethodElement method : methods){
@@ -262,6 +265,9 @@ public class ClassElement extends AbstractElement {
         }
     }
 
+    /**
+     * Determine what string was clicked on and set to new string value
+     */
     @Override
     public void setEditedString(int xLoc, int yLoc, String s){
 
@@ -282,6 +288,9 @@ public class ClassElement extends AbstractElement {
         }
     }
 
+    /**
+     * Get string based on x/y position and return value
+     */
     @Override
     public String getStringAtLocation(int xLoc, int yLoc){
         String string = "";
@@ -297,6 +306,9 @@ public class ClassElement extends AbstractElement {
         return string;
     }
 
+    /**
+     * Determine the Method at the x/y position and return MethodElement
+     */
     public MethodElement getMethodAtLocation(int xLoc, int yLoc){
         MethodElement method = null;
         if(!contains(new Point(xLoc, yLoc))){
@@ -314,6 +326,9 @@ public class ClassElement extends AbstractElement {
         return method;
     }
 
+    /**
+     * Determine the Attribute at the x/y position and return AttributeElement
+     */
     public AttributeElement getAttributeAtLocation(int xLoc, int yLoc){
         AttributeElement attribute = null;
         if(!contains(new Point(xLoc, yLoc))){
@@ -331,6 +346,9 @@ public class ClassElement extends AbstractElement {
         return attribute;
     }
 
+    /**
+     * Determine if this Class contains point p
+     */
     @Override
     public boolean contains(Point p){
         return (x < p.getX() && y < p.getY() &&

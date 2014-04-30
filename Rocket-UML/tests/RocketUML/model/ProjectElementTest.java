@@ -13,17 +13,17 @@ public class ProjectElementTest {
         ProjectElement pe = ProjectElement.create();
         DiagramElement d1 = pe.createDiagram("Diagram 1");
 
-        ClassElement class1 = (ClassElement)AbstractFactory.getElement("Class");
+        ClassElement class1 = (ClassElement)AbstractFactory.getElement("Class", 0, 0);
         ClassElement base = class1.setName("base");
 
-        ClassElement class2 = (ClassElement)AbstractFactory.getElement("Class");
+        ClassElement class2 = (ClassElement)AbstractFactory.getElement("Class", 0, 0);
         ClassElement c1 = class2.setName("foo");
         AttributeElement ae1 = c1.createAttribute().setName("attrib1");
         ae1.setProtection(ProtectionEnum.PRIVATE);
         ae1.setType("String");
 
         // Use the builder pattern
-        RelationshipElement relation = (RelationshipElement)AbstractFactory.getElement("Relationship");
+        RelationshipElement relation = (RelationshipElement)AbstractFactory.getElement("Relationship", 0, 0);
         RelationshipElement re =
                 relation
                 .setType(RelationshipType.Inheritance)
@@ -42,7 +42,7 @@ public class ProjectElementTest {
         mp2.setType("std::string");
 
 
-        ClassElement class3 = (ClassElement)AbstractFactory.getElement("Class");
+        ClassElement class3 = (ClassElement)AbstractFactory.getElement("Class", 0, 0);
         ClassElement c2 = class3.setName("Class2");
 
         CodeGenerationController cgc = CodeGenerationController.create();

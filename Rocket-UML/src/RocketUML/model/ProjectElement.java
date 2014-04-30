@@ -4,6 +4,9 @@ import RocketUML.visitor.Visitor;
 
 import java.util.HashMap;
 
+/**
+ * Represents Project element
+ */
 public class ProjectElement extends AbstractElement {
     private static ProjectElement instance = new ProjectElement();
     private HashMap<String,DiagramElement> diagramList = new HashMap<String,DiagramElement>();
@@ -74,8 +77,8 @@ public class ProjectElement extends AbstractElement {
     public void resetProject()
     {
         diagramList.clear();
+        //go ahead and create first tab/diagram
         createDiagram("Diagram 1");
-
     }
 
     public void rebuildDiagrams(HashMap<String,DiagramElement> diagramsIn)

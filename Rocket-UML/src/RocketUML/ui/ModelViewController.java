@@ -8,6 +8,9 @@ import RocketUML.model.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Represents a View Controller
+ */
 public class ModelViewController {
     private int xOffset = 0;
     private int yOffset = 0;
@@ -27,8 +30,7 @@ public class ModelViewController {
 
     public void createElement(String name, String type, int x, int y)
     {
-        AbstractElement element = AbstractFactory.getElement(type);
-        element.setLocation(x, y);
+        AbstractElement element = AbstractFactory.getElement(type, x, y);
         if(ProjectElement.getInstance().getDiagram(currentDiagram) != null) {
             ProjectElement.getInstance().getDiagram(currentDiagram).addElement(element);
         }
@@ -36,6 +38,9 @@ public class ModelViewController {
         SaveState();
     }
 
+    /**
+     * Set location of currently selected element
+     */
     public void setLocation(int x, int y) {
         if(selectedElement != null) {
             //special handling for Relationship
@@ -59,6 +64,9 @@ public class ModelViewController {
         }
     }
 
+    /**
+     * Sets the currently selected element based on a x/y position
+     */
     public void setSelectedElement(int mouseX, int mouseY){
         if(selectedElement != null)
             selectedElement.setSelected(false);
@@ -83,7 +91,7 @@ public class ModelViewController {
         }
           
         if(selectedElement != null){
-            //save off offset between shape and mouse
+            //save off offset between shape and mouse for dragging
             xOffset = mouseX - selectedElement.getX();
             yOffset = mouseY - selectedElement.getY();
             selectedElement.setSelected(true);
@@ -91,7 +99,7 @@ public class ModelViewController {
         SaveState();
     }
 
-    public void changeRelationshipType(RelationshipElement.Type type) {
+    public void changeRelationshipType(RelationshipType type) {
         if(selectedElement != null && selectedElement.getClass() == RelationshipElement.class) {
             ((RelationshipElement) selectedElement).setType(type);
         }

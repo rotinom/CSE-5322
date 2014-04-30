@@ -7,7 +7,7 @@ import java.awt.*;
 import java.io.Serializable;
 
 /**
- * Represents an abstract element
+ * Represents an Abstract element
  */
 public abstract class AbstractElement implements Serializable {
 
@@ -39,9 +39,7 @@ public abstract class AbstractElement implements Serializable {
         return this;
     }
 
-    public void draw(Graphics graphics){
-        //meant to be overridden
-    }
+    public void draw(Graphics graphics){}
 
     public void setLocation(int xLoc, int yLoc){
         x = xLoc;
@@ -49,7 +47,6 @@ public abstract class AbstractElement implements Serializable {
     }
 
     public boolean contains(Point p){
-        //meant to be overridden
         return false;
     }
 
@@ -72,11 +69,9 @@ public abstract class AbstractElement implements Serializable {
     }
 
     public void setEditedString(int xLoc, int yLoc, String s){
-        //meant to be overridden
     }
 
     public String getStringAtLocation(int xLoc, int yLoc){
-        //meant to be overridden
         return "";
     }
 }

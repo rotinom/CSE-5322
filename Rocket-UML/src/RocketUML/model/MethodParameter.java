@@ -3,7 +3,7 @@ package RocketUML.model;
 import RocketUML.visitor.Visitor;
 
 /**
- * Created by rotinom on 3/1/14.
+ * Represents Method Parameter element
  */
 public class MethodParameter extends AbstractElement {
     private String type;

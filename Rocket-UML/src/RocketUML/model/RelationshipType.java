@@ -1,7 +1,5 @@
 package RocketUML.model;
 
 public enum RelationshipType{
-    Inheritance,
-    Composition,
-    Association
+    Association, Aggregation, Inheritance
 }

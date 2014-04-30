@@ -2,6 +2,9 @@ package RocketUML.model;
 
 import java.awt.*;
 
+/**
+ * Represents a Relationship Point to help associate a Class/Relationship
+ */
 public class RelationshipPoint extends Point {
     RelationshipElement parent;
     RelationshipElement.MovePointType type;

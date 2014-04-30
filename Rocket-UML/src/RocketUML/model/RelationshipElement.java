@@ -3,10 +3,13 @@ package RocketUML.model;
 
 import RocketUML.visitor.Visitor;
 
-;import java.awt.*;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a Relationship element
+ */
 public class RelationshipElement extends AbstractElement {
 
     public static final int GRAB_SIZE = 6;
@@ -17,15 +20,12 @@ public class RelationshipElement extends AbstractElement {
     public static final double SYMBOL_ANGLE = Math.PI/6; //30 degree angle
     public static final int SNAP_TO_DIST = 10;
 
-    public enum Type {
-        ASSOCIATION, AGGREGATION, INHERITANCE
-    }
     public enum MovePointType {
         NONE, SOURCE, INTERIM1, INTERIM2, DESTINATION
     }
 
     public Map<MovePointType, RelationshipPoint> movePoints = new HashMap<MovePointType, RelationshipPoint>();
-    private Type type = Type.ASSOCIATION;
+    private RelationshipType type = RelationshipType.Association;
     private MovePointType moveType = MovePointType.NONE;
     private RelationshipPoint dragPoint = null;
     private FontMetrics metrics = null;
@@ -36,8 +36,6 @@ public class RelationshipElement extends AbstractElement {
 
     private String srceMultiplicity = "";
     private String destMultiplicity = "";
-
-    private RelationshipType type_ = RelationshipType.Composition;
 
     public RelationshipElement() {}
 
@@ -61,11 +59,11 @@ public class RelationshipElement extends AbstractElement {
     }
 
     public RelationshipElement setType(RelationshipType t) {
-        type_ = t;
+        type = t;
         return this;
     }
 
-    public RelationshipType getType() {return type_;}
+    public RelationshipType getType() {return type;}
 
     public String getSrceMultiplicity() {
         return srceMultiplicity;
@@ -138,17 +136,17 @@ public class RelationshipElement extends AbstractElement {
 
         //draw end type
         switch(type){
-            case ASSOCIATION:
+            case Association:
                 g.drawLine(movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
                         movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y);
                 break;
 
-            case AGGREGATION:
+            case Aggregation:
                 drawAggregation(g, movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
                         movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y);
                 break;
 
-            case INHERITANCE:
+            case Inheritance:
                 drawInheritance(g, movePoints.get(MovePointType.INTERIM2).x, movePoints.get(MovePointType.INTERIM2).y,
                         movePoints.get(MovePointType.DESTINATION).x, movePoints.get(MovePointType.DESTINATION).y);
                 break;
@@ -258,10 +256,6 @@ public class RelationshipElement extends AbstractElement {
 
     public RelationshipPoint getDragPoint(){
         return dragPoint;
-    }
-
-    public void setType(Type relationshipType){
-        type = relationshipType;
     }
 
     @Override

@@ -5,6 +5,9 @@ import RocketUML.visitor.Visitor;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Represents a Diagram element
+ */
 public class DiagramElement extends AbstractElement {
     private ArrayList<ClassElement> classes = new ArrayList<ClassElement>();
     private ArrayList<RelationshipElement> relationships = new ArrayList<RelationshipElement>();
