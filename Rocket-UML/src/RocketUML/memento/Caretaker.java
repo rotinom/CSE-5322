@@ -1,20 +1,19 @@
 package RocketUML.memento;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Caretaker {
 
-    protected ArrayList<Memento> savedStates = new ArrayList();
-
-    private static int maxObjectCounter;
-    private static int undoCounter;
+    protected Deque<Memento> undoStates = new ArrayDeque<Memento>();
+    protected Deque<Memento> redoStates = new ArrayDeque<Memento>();
 
     private static Caretaker instance = new Caretaker();
 
+
+
     private Caretaker()
     {
-        maxObjectCounter = 0;
-        undoCounter = maxObjectCounter;
     }
 
     public static Caretaker getInstance(){return instance;}
@@ -22,42 +21,27 @@ public class Caretaker {
     public void setState(Memento memento)
     {
      //   HashMap<String,DiagramElement> diagramList = ProjectElement.getInstance().getDiagrams();
-        maxObjectCounter++;
-        if(maxObjectCounter <= 9) {
-            savedStates.add(memento);
-            undoCounter = maxObjectCounter;
-        }
-        else
-        {
-            savedStates.remove(0);
-            savedStates.add(memento);
-            maxObjectCounter = 10;
-            undoCounter = maxObjectCounter;
-        }
+        undoStates.push(memento);
     }
 
     public Memento getUndoState()
     {
-        if(undoCounter >= 0)
-        {
-            undoCounter--;
+        Memento undo = null;
+        if(undoStates.size() != 0) {
+           undo = undoStates.pop();
+            redoStates.push(undo);
         }
-        else {
-            return savedStates.get(0);
-        }
-        return savedStates.get(undoCounter);
+        return undo;
     }
 
     public Memento getRedoState()
     {
-        if(undoCounter <= 9)
-        {
-            undoCounter++;
-        }
-        else
-        {
-            return savedStates.get(9);
-        }
-        return savedStates.get(undoCounter);
+
+        Memento redo = null;
+        if(redoStates.size() != 0) {
+           redo = redoStates.pop();
+            undoStates.push(redo);
+        };
+        return redo;
     }
 }

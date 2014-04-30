@@ -76,6 +76,7 @@ public class ModelViewController {
             for (AbstractElement testElement : ProjectElement.getInstance().getDiagram(currentDiagram).getClasses()){
                 if (testElement.contains(new Point(mouseX, mouseY))){
                     selectedElement = testElement;
+                    SaveState();
                     break;
                 }
             }
@@ -84,6 +85,7 @@ public class ModelViewController {
                 for (AbstractElement testElement : ProjectElement.getInstance().getDiagram(currentDiagram).getRelationships()){
                     if (testElement.contains(new Point(mouseX, mouseY))){
                         selectedElement = testElement;
+                        SaveState();
                         break;
                     }
                 }
@@ -96,7 +98,6 @@ public class ModelViewController {
             yOffset = mouseY - selectedElement.getY();
             selectedElement.setSelected(true);
         }
-        SaveState();
     }
 
     public void changeRelationshipType(RelationshipType type) {
@@ -284,14 +285,18 @@ public class ModelViewController {
     public void UndoState()
     {
         Memento memento = Caretaker.getInstance().getUndoState();
-        Originator.getInstance().setMemento(memento);
+        if(memento != null) {
+            Originator.getInstance().setMemento(memento);
+        }
         ProjectElement.getInstance().rebuildDiagrams(Originator.getInstance().getState());
     }
 
     public void RedoState()
     {
         Memento memento = Caretaker.getInstance().getRedoState();
-        Originator.getInstance().setMemento(memento);
+        if(memento != null) {
+            Originator.getInstance().setMemento(memento);
+        }
         ProjectElement.getInstance().rebuildDiagrams(Originator.getInstance().getState());
     }
 }
