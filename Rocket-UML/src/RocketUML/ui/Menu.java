@@ -1,6 +1,6 @@
 package RocketUML.ui;
 
-import RocketUML.model.ElementFactory;
+import RocketUML.model.ElementCreator;
 import RocketUML.model.ProjectElement;
 import RocketUML.visitor.CodeGenerationController;
 
@@ -134,7 +134,7 @@ public class Menu extends JFrame implements ActionListener {
 				int x = Integer.parseInt(class_x_coord);
 				int y = Integer.parseInt(class_y_coord);
 
-                ElementFactory.getElement("Class", x, y);
+                ElementCreator.getElement("Class", x, y);
 			}
 		}
         else if (e.getSource() == exitProgramItem)
@@ -153,7 +153,7 @@ public class Menu extends JFrame implements ActionListener {
 				int x = Integer.parseInt(relationship_x_coord);
 				int y = Integer.parseInt(relationship_y_coord);
 
-                ElementFactory.getElement("Relationship", x, y);
+                ElementCreator.getElement("Relationship", x, y);
 			}
 		}
 		else if (e.getSource() == aboutMenuItem)

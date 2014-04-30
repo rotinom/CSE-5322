@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Factory for creating specific element types
  */
-public class ElementFactory {
+public class ElementCreator {
     private static int classCounter = 0;
     private static int relationshipCounter = 0;
 
